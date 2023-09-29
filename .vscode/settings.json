@@ -1,0 +1,5 @@
+{
+  "typescript.preferences.importModuleSpecifier": "non-relative", 
+  "tailwindCSS.rootFontSize": 14,
+  "editor.tabSize": 2
+}

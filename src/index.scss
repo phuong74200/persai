@@ -1,0 +1,18 @@
+@import url('./styles/font.scss');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.center {
+  @apply flex items-center justify-center;
+}
+
+@layer components {
+  
+}
+
+/* 
+html {
+  scrollbar-gutter: stable;
+} */

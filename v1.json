@@ -1,0 +1,3059 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Swagger API Doc for Aladin Web Service",
+        "description": "This is list of endpoints and documentations of REST API for Aladin Web Service",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://aladinv1.ap-southeast-1.elasticbeanstalk.com/api",
+            "description": "Development server domain for profile aws"
+        },
+        {
+            "url": "https://www.aladin.id.vn/api",
+            "description": "Development server domain for profile aws"
+        }
+    ],
+    "security": [
+        {
+            "token_auth": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Welcome",
+            "description": "REST API endpoints for testing welcoming users"
+        },
+        {
+            "name": "Authenticate",
+            "description": "REST API endpoints for getting authenticate tokens and carry out specific authenticate actions"
+        },
+        {
+            "name": "Login",
+            "description": "REST API endpoints for login into system"
+        },
+        {
+            "name": "Register",
+            "description": "REST API endpoints for registering users via normal or google method"
+        },
+        {
+            "name": "Code confirmation",
+            "description": "REST API endpoints for confirming verification code (can not be used with Forgetting Password feature"
+        },
+        {
+            "name": "Password forgetting",
+            "description": "REST API endpoints for retrieving password when forgetting"
+        },
+        {
+            "name": "General User",
+            "description": "REST API endpoints for interacting with basic users (just be used for management purpose)"
+        },
+        {
+            "name": "Manager",
+            "description": "REST API endpoints for interacting with managers"
+        },
+        {
+            "name": "Student",
+            "description": "REST API endpoints for interacting with students"
+        },
+        {
+            "name": "Manager - Student",
+            "description": "REST API endpoints for managers to manage student accounts"
+        },
+        {
+            "name": "Teaching Assistant",
+            "description": "REST API endpoints for interacting with teaching assistants"
+        },
+        {
+            "name": "Manager - Teaching Assistant",
+            "description": "REST API endpoints for managers to manage TA accounts"
+        },
+        {
+            "name": "TA - Manager bank account",
+            "description": "REST API endpoints for managers and TAs to retrieve bank account info"
+        },
+        {
+            "name": "Institution",
+            "description": "REST API endpoints for interacting with institutions"
+        },
+        {
+            "name": "Major",
+            "description": "REST API endpoints for interacting with majors of institution"
+        },
+        {
+            "name": "Subject",
+            "description": "REST API endpoints for interacting with subjects"
+        },
+        {
+            "name": "Payment methods",
+            "description": "REST API endpoints for payment methods"
+        },
+        {
+            "name": "Fixed classroom",
+            "description": "REST API endpoints for fixed classroom info"
+        },
+        {
+            "name": "Fixed classroom - Student",
+            "description": "REST API endpoints for students to register studying fixed classroom"
+        },
+        {
+            "name": "Fixed classroom - Teaching Assistant",
+            "description": "REST API endpoints for TAs to register teaching fixed classroom"
+        },
+        {
+            "name": "Fixed classroom - Manager",
+            "description": "REST API endpoints for managers to manage fixed classroom"
+        },
+        {
+            "name": "Private group",
+            "description": "REST API endpoints for private group info"
+        },
+        {
+            "name": "Private group - Student",
+            "description": "REST API endpoints for students to register private group"
+        },
+        {
+            "name": "Private group - Teaching Assistant",
+            "description": "REST API endpoints for TAs to register teaching private group"
+        },
+        {
+            "name": "Private group - Manager",
+            "description": "REST API endpoints for managers to manage private group"
+        }
+    ],
+    "paths": {
+        "/v1/verification/code-resend": {
+            "put": {
+                "tags": [
+                    "Code confirmation"
+                ],
+                "operationId": "resendCode",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/verification/code-confirm/{code}": {
+            "put": {
+                "tags": [
+                    "Code confirmation"
+                ],
+                "operationId": "confirmCode",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/current": {
+            "get": {
+                "tags": [
+                    "General User"
+                ],
+                "operationId": "getCurrentUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "General User"
+                ],
+                "operationId": "updateCurrentUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/current/password-update/process": {
+            "put": {
+                "tags": [
+                    "General User"
+                ],
+                "operationId": "updatePassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/current/password-update/code-request": {
+            "put": {
+                "tags": [
+                    "General User"
+                ],
+                "operationId": "requestCodeForUpdatingPassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/bank-accounts/{bank_account_id}": {
+            "put": {
+                "tags": [
+                    "TA - Manager bank account"
+                ],
+                "operationId": "updateBankAccountById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "TA - Manager bank account"
+                ],
+                "operationId": "deleteBankAccountById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ta/current": {
+            "get": {
+                "tags": [
+                    "Teaching Assistant"
+                ],
+                "operationId": "getCurrentTA",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TAResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Teaching Assistant"
+                ],
+                "operationId": "updateCurrentTA",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/register/ta": {
+            "put": {
+                "tags": [
+                    "Teaching Assistant"
+                ],
+                "operationId": "updateTARegistration",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterTARequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TARegistrationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Teaching Assistant"
+                ],
+                "operationId": "registerTA",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterTARequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TARegistrationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/private-group/teaching-register": {
+            "put": {
+                "tags": [
+                    "Private group - Teaching Assistant"
+                ],
+                "operationId": "registerTeachingPrivateGroup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/password-forget/account/{email}": {
+            "put": {
+                "tags": [
+                    "Password forgetting"
+                ],
+                "operationId": "getAccountByEmailToChangePassword",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/password-forget/account/{email}/new-password": {
+            "put": {
+                "tags": [
+                    "Password forgetting"
+                ],
+                "operationId": "updatePasswordWhenForgetting",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/password-forget/account/{email}/code-resend": {
+            "put": {
+                "tags": [
+                    "Password forgetting"
+                ],
+                "operationId": "resendCodeForChangingPasswordWhenForgetting",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/password-forget/account/{email}/code-confirm/{code}": {
+            "put": {
+                "tags": [
+                    "Password forgetting"
+                ],
+                "operationId": "confirmCodeForChangingPasswordWhenForgetting",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/unban/ta/{user_id}": {
+            "put": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "unbanTaById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/unban/student/{user_id}": {
+            "put": {
+                "tags": [
+                    "Manager - Student"
+                ],
+                "operationId": "unbanStudentById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/unban/manager_account/{manager_id}": {
+            "put": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "unbanManagerById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ta/registration/reject": {
+            "put": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "rejectTARegistration",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyTARequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ta/registration/confirm": {
+            "put": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "confirmTARegistration",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyTARequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/manager_account/{manager_id}": {
+            "put": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "updateOtherManagerAccount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "deleteManagerById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/current": {
+            "get": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "getCurrentManager",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "updateCurrentManager",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ban/ta/{user_id}": {
+            "put": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "banTaById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ban/student/{user_id}": {
+            "put": {
+                "tags": [
+                    "Manager - Student"
+                ],
+                "operationId": "banStudentById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ban/manager_account/{manager_id}": {
+            "put": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "banManagerById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/{institution_id}": {
+            "get": {
+                "tags": [
+                    "Institution"
+                ],
+                "operationId": "getInstitutionById",
+                "parameters": [
+                    {
+                        "name": "institution_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstitutionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Institution"
+                ],
+                "operationId": "updateInstitutionById",
+                "parameters": [
+                    {
+                        "name": "institution_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateInstitutionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstitutionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Institution"
+                ],
+                "operationId": "deleteInstitutionById",
+                "parameters": [
+                    {
+                        "name": "institution_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major/{major_id}": {
+            "get": {
+                "tags": [
+                    "Major"
+                ],
+                "operationId": "getMajorById",
+                "parameters": [
+                    {
+                        "name": "major_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MajorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Major"
+                ],
+                "operationId": "updateMajorById",
+                "parameters": [
+                    {
+                        "name": "major_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateMajorRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MajorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Major"
+                ],
+                "operationId": "deleteMajorById",
+                "parameters": [
+                    {
+                        "name": "major_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major/subject/{subject_id}": {
+            "get": {
+                "tags": [
+                    "Subject"
+                ],
+                "operationId": "getSubjectById",
+                "parameters": [
+                    {
+                        "name": "subject_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubjectResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Subject"
+                ],
+                "operationId": "updateSubjectById",
+                "parameters": [
+                    {
+                        "name": "subject_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSubjectRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubjectResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major/subject/{subject_id}/restore": {
+            "put": {
+                "tags": [
+                    "Subject"
+                ],
+                "operationId": "restoreSubjectById",
+                "parameters": [
+                    {
+                        "name": "subject_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major/subject/{subject_id}/hide": {
+            "put": {
+                "tags": [
+                    "Subject"
+                ],
+                "operationId": "hideSubjectById",
+                "parameters": [
+                    {
+                        "name": "subject_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/google/register/institution": {
+            "put": {
+                "tags": [
+                    "Register"
+                ],
+                "operationId": "registerInstitution",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterInstitutionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom/{class_id}": {
+            "get": {
+                "tags": [
+                    "Fixed classroom"
+                ],
+                "operationId": "getFixedClassroomById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Fixed classroom - Manager"
+                ],
+                "operationId": "updateFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom/teaching-register": {
+            "put": {
+                "tags": [
+                    "Fixed classroom - Manager"
+                ],
+                "operationId": "registerTeachingFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom/reopen/{class_id}": {
+            "put": {
+                "tags": [
+                    "Fixed classroom - Manager"
+                ],
+                "operationId": "reopenCanceledFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom/cancel/{class_id}": {
+            "put": {
+                "tags": [
+                    "Fixed classroom - Manager"
+                ],
+                "operationId": "cancelFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/bank-accounts": {
+            "get": {
+                "tags": [
+                    "TA - Manager bank account"
+                ],
+                "operationId": "getCurrentBankAccounts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "TA - Manager bank account"
+                ],
+                "operationId": "addMoreBankAccount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/register/student": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "operationId": "registerStudent",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterUserRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GeneralResponseLoginResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/private-group": {
+            "get": {
+                "tags": [
+                    "Private group - Manager"
+                ],
+                "operationId": "getAllPrivateGroups",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Private group - Student"
+                ],
+                "operationId": "createPrivateGroup",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/manager-account": {
+            "post": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "createManagerAccount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "operationId": "loginUser",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/login/google": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "operationId": "loginUserViaGoogle",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution": {
+            "get": {
+                "tags": [
+                    "Institution"
+                ],
+                "operationId": "getAllInstitutions",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/InstitutionResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Institution"
+                ],
+                "operationId": "createInstitution",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateInstitutionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InstitutionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major": {
+            "post": {
+                "tags": [
+                    "Major"
+                ],
+                "operationId": "createMajor",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateMajorRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MajorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major/subject": {
+            "post": {
+                "tags": [
+                    "Subject"
+                ],
+                "operationId": "createSubject",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSubjectRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubjectResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom": {
+            "get": {
+                "tags": [
+                    "Fixed classroom"
+                ],
+                "operationId": "getAllFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fixed classroom - Manager"
+                ],
+                "operationId": "createFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom/study-register": {
+            "get": {
+                "tags": [
+                    "Fixed classroom - Student"
+                ],
+                "operationId": "getAllStudyingRegistrationOfCurrentStudent",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Fixed classroom - Teaching Assistant"
+                ],
+                "operationId": "registerStudyingFixedClassroom",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/welcome": {
+            "get": {
+                "tags": [
+                    "Welcome"
+                ],
+                "operationId": "welcomeUser",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/{userId}": {
+            "get": {
+                "tags": [
+                    "General User"
+                ],
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ta": {
+            "get": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "getAllTAs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/ta/{user_id}": {
+            "get": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "getTAById",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TAResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/student": {
+            "get": {
+                "tags": [
+                    "Manager - Student"
+                ],
+                "operationId": "getAllStudents",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StudentResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/student/{user_id}": {
+            "get": {
+                "tags": [
+                    "Manager - Student"
+                ],
+                "operationId": "getStudentById",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/student/current": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "operationId": "getCurrentStudent",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StudentResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/register/ta/current": {
+            "get": {
+                "tags": [
+                    "Teaching Assistant"
+                ],
+                "operationId": "getCurrentTARegistration",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TARegistrationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/private-group/{group_id}": {
+            "get": {
+                "tags": [
+                    "Private group"
+                ],
+                "operationId": "getPrivateById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/payment": {
+            "get": {
+                "tags": [
+                    "Payment methods"
+                ],
+                "operationId": "getPaymentList",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/payment/{paymentId}": {
+            "get": {
+                "tags": [
+                    "Payment methods"
+                ],
+                "operationId": "getPaymentById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/new-access-token": {
+            "get": {
+                "tags": [
+                    "Authenticate"
+                ],
+                "summary": "Get new Access token by Refresh token",
+                "description": "Include refresh token as bearer token in request header to get new access token together with new refresh token",
+                "operationId": "getNewAccessTokenFromRefreshToken",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/{manager_id}": {
+            "get": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "getManagerById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ta/registration": {
+            "get": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "getAllTARegistrations",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "PENDING",
+                                "FAIL",
+                                "SUCCEED",
+                                "CANCEL"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TARegistrationResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ta/registration/{ta_id}": {
+            "get": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "getTARegistrationById",
+                "parameters": [
+                    {
+                        "name": "ta_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TARegistrationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/all": {
+            "get": {
+                "tags": [
+                    "Manager"
+                ],
+                "operationId": "getAllManagers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/{institution_id}/major": {
+            "get": {
+                "tags": [
+                    "Major"
+                ],
+                "operationId": "getAllMajorsOfInstitution",
+                "parameters": [
+                    {
+                        "name": "institution_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MajorResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/institution/major/{major_id}/subject": {
+            "get": {
+                "tags": [
+                    "Subject"
+                ],
+                "operationId": "getAllSubjectsOfMajor",
+                "parameters": [
+                    {
+                        "name": "major_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "integer",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 20
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SubjectResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/fixed-classroom/study-register/{class_id}": {
+            "get": {
+                "tags": [
+                    "Fixed classroom - Student"
+                ],
+                "operationId": "getStudyingRegistrationOfCurrentStudentById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/ta/{user_id}": {
+            "delete": {
+                "tags": [
+                    "Manager - Teaching Assistant"
+                ],
+                "operationId": "deleteTaById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/manager/student/{user_id}": {
+            "delete": {
+                "tags": [
+                    "Manager - Student"
+                ],
+                "operationId": "deleteStudentById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "GeneralResponseObject": {
+                "type": "object",
+                "properties": {
+                    "returnObject": {
+                        "type": "object"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UpdateUserRequest": {
+                "required": [
+                    "fullName",
+                    "gender",
+                    "phoneNumber"
+                ],
+                "type": "object",
+                "properties": {
+                    "fullName": {
+                        "pattern": "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9\\s_]+$",
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "pattern": "^\\d{10}$",
+                        "type": "string"
+                    },
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "MALE",
+                            "FEMALE"
+                        ]
+                    }
+                }
+            },
+            "UserResponse": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "institutionId": {
+                        "type": "string"
+                    },
+                    "institutionName": {
+                        "type": "string"
+                    },
+                    "fullName": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string",
+                        "enum": [
+                            "MALE",
+                            "FEMALE"
+                        ]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "DELETED",
+                            "BANNED",
+                            "VERIFICATION_REQUIRED",
+                            "INSTITUTION_REQUIRED",
+                            "FULL_INFORMATION_REQUIRED",
+                            "SUCCEED"
+                        ]
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    },
+                    "roleId": {
+                        "type": "string"
+                    },
+                    "havingPassword": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ChangePasswordRequest": {
+                "required": [
+                    "confirmNewPassword",
+                    "newPassword",
+                    "signature"
+                ],
+                "type": "object",
+                "properties": {
+                    "signature": {
+                        "type": "string",
+                        "description": "Required when forgetting password"
+                    },
+                    "oldPassword": {
+                        "type": "string",
+                        "description": "Can be omitted when using for forgetting password"
+                    },
+                    "newPassword": {
+                        "pattern": "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$",
+                        "type": "string"
+                    },
+                    "confirmNewPassword": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RegisterTARequest": {
+                "required": [
+                    "linkFacebook",
+                    "studentCode",
+                    "subjectRegisters"
+                ],
+                "type": "object",
+                "properties": {
+                    "studentCode": {
+                        "type": "string"
+                    },
+                    "linkFacebook": {
+                        "type": "string"
+                    },
+                    "usedToBeTA": {
+                        "type": "boolean"
+                    },
+                    "teachingExperience": {
+                        "type": "string"
+                    },
+                    "personalImage": {
+                        "type": "string"
+                    },
+                    "subjectRegisters": {
+                        "type": "array",
+                        "description": "This field is required when registering to be TA",
+                        "items": {
+                            "$ref": "#/components/schemas/SubjectRegister"
+                        }
+                    },
+                    "referenceTAPhoneNumber": {
+                        "type": "string",
+                        "description": "Not required when registering. When updating registration and updating TA info, this field cannot be used"
+                    }
+                }
+            },
+            "SubjectRegister": {
+                "required": [
+                    "gpa",
+                    "linkResource",
+                    "subjectId"
+                ],
+                "type": "object",
+                "properties": {
+                    "subjectId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gpa": {
+                        "type": "number"
+                    },
+                    "linkResource": {
+                        "type": "string"
+                    }
+                },
+                "description": "This field is required when registering to be TA"
+            },
+            "TARegistrationResponse": {
+                "type": "object",
+                "properties": {
+                    "userResponse": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    },
+                    "studentCode": {
+                        "type": "string"
+                    },
+                    "linkFacebook": {
+                        "type": "string"
+                    },
+                    "referenceTAPhoneNumber": {
+                        "type": "string"
+                    },
+                    "referenceTAName": {
+                        "type": "string"
+                    },
+                    "usedToBeTA": {
+                        "type": "boolean"
+                    },
+                    "teachingExperience": {
+                        "type": "string"
+                    },
+                    "personalImage": {
+                        "type": "string"
+                    },
+                    "numberOfRegisteredSubjects": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "taSubjectRegisters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TASubjectRegisterResponse"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "FAIL",
+                            "SUCCEED",
+                            "CANCEL"
+                        ]
+                    }
+                }
+            },
+            "TASubjectRegisterResponse": {
+                "type": "object",
+                "properties": {
+                    "taSubjectRegisterId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "subjectId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "subjectName": {
+                        "type": "string"
+                    },
+                    "gpa": {
+                        "type": "number"
+                    },
+                    "linkResource": {
+                        "type": "string"
+                    },
+                    "confirmed": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "VerifyTARequest": {
+                "required": [
+                    "contractLink",
+                    "taId"
+                ],
+                "type": "object",
+                "properties": {
+                    "taId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "contractLink": {
+                        "type": "string",
+                        "description": "Required when confirm TA request"
+                    }
+                }
+            },
+            "CreateInstitutionRequest": {
+                "required": [
+                    "institutionId",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "institutionId": {
+                        "type": "string",
+                        "description": "Only required when create new institution"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "InstitutionResponse": {
+                "type": "object",
+                "properties": {
+                    "institutionId": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "numberOfMajors": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "CreateMajorRequest": {
+                "required": [
+                    "institutionId",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "institutionId": {
+                        "type": "string",
+                        "description": "Only required when create new major in an institution"
+                    }
+                }
+            },
+            "MajorResponse": {
+                "type": "object",
+                "properties": {
+                    "majorId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "institutionId": {
+                        "type": "string"
+                    },
+                    "institutionName": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "numberOfSubjects": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "CreateSubjectRequest": {
+                "required": [
+                    "majorId",
+                    "name"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "subjectCode": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "recommendedSessionNumber": {
+                        "type": "integer",
+                        "description": "Not required, default is 1",
+                        "format": "int32"
+                    },
+                    "resource": {
+                        "type": "string"
+                    },
+                    "exams": {
+                        "type": "string"
+                    },
+                    "ebook": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "majorId": {
+                        "type": "integer",
+                        "description": "Only required when create new subject",
+                        "format": "int32"
+                    }
+                }
+            },
+            "SubjectResponse": {
+                "type": "object",
+                "properties": {
+                    "subjectId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "subjectCode": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "recommendedSessionNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "resource": {
+                        "type": "string"
+                    },
+                    "exams": {
+                        "type": "string"
+                    },
+                    "ebook": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "majorId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "majorName": {
+                        "type": "string"
+                    },
+                    "institutionId": {
+                        "type": "string"
+                    },
+                    "institutionName": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "RegisterInstitutionRequest": {
+                "required": [
+                    "institutionId"
+                ],
+                "type": "object",
+                "properties": {
+                    "institutionId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RegisterUserRequest": {
+                "required": [
+                    "confirmPassword",
+                    "email",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "pattern": "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",
+                        "type": "string",
+                        "example": "example@gmail.com"
+                    },
+                    "password": {
+                        "pattern": "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$",
+                        "type": "string"
+                    },
+                    "confirmPassword": {
+                        "type": "string"
+                    },
+                    "institutionId": {
+                        "type": "string",
+                        "description": "When admin creates an account for user, if the role is not STU or TA, this field is default null"
+                    }
+                }
+            },
+            "GeneralResponseLoginResponse": {
+                "type": "object",
+                "properties": {
+                    "returnObject": {
+                        "$ref": "#/components/schemas/LoginResponse"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "userResponse": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    }
+                }
+            },
+            "LoginRequest": {
+                "required": [
+                    "email",
+                    "idToken",
+                    "password"
+                ],
+                "type": "object",
+                "properties": {
+                    "idToken": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "aladin@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "aladin"
+                    }
+                }
+            },
+            "BankAccountResponse": {
+                "type": "object",
+                "properties": {
+                    "bankAccountId": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "bankTypeId": {
+                        "type": "string"
+                    },
+                    "bankAccountNumber": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "note": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "TAResponse": {
+                "type": "object",
+                "properties": {
+                    "userResponse": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    },
+                    "studentCode": {
+                        "type": "string"
+                    },
+                    "linkFacebook": {
+                        "type": "string"
+                    },
+                    "referenceTAPhoneNumber": {
+                        "type": "string"
+                    },
+                    "referenceTAName": {
+                        "type": "string"
+                    },
+                    "usedToBeTA": {
+                        "type": "boolean"
+                    },
+                    "teachingExperience": {
+                        "type": "string"
+                    },
+                    "personalImage": {
+                        "type": "string"
+                    },
+                    "receivedAllowance": {
+                        "type": "number"
+                    },
+                    "upcomingAllowance": {
+                        "type": "number"
+                    },
+                    "allowanceStatus": {
+                        "type": "string",
+                        "enum": [
+                            "DONE",
+                            "UPCOMING"
+                        ]
+                    },
+                    "numberOfGroupTaught": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "numberOfClassTaught": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "numberOfRegisteredSubjects": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "contractLink": {
+                        "type": "string"
+                    },
+                    "signedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PENDING",
+                            "FAIL",
+                            "SUCCEED",
+                            "CANCEL"
+                        ]
+                    },
+                    "bankAccountResponses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BankAccountResponse"
+                        }
+                    },
+                    "taSubjectRegisters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TASubjectRegisterResponse"
+                        }
+                    },
+                    "tacode": {
+                        "type": "string"
+                    }
+                }
+            },
+            "StudentResponse": {
+                "type": "object",
+                "properties": {
+                    "userResponse": {
+                        "$ref": "#/components/schemas/UserResponse"
+                    },
+                    "studiedNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalSpending": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "token_auth": {
+                "type": "http",
+                "in": "header",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
