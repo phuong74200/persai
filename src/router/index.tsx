@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 
+import Error404 from "@/features/error/components/Error404";
 import { PublicLayout, StudentLayout } from "@/layouts";
 import AuthRouter from "@/modules/auth-router";
 import { LoginPage } from "@/pages/login";
@@ -40,17 +41,27 @@ export const BrowserRouter = new AuthRouter(
               path: "my-collection",
               Component: MyCollectionPage,
             },
+            {
+              path: "set",
+              Component: Outlet,
+              children: [
+                {
+                  path: ":setId",
+                  element: <h1>asd</h1>,
+                },
+              ],
+            },
           ],
         },
 
         {
           path: "*",
-          element: <h1>not found</h1>,
+          Component: Error404,
         },
         {
           path: "*",
           asModal: true,
-          element: <h1>not found</h1>,
+          Component: Error404,
         },
       ],
     },
