@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Anchor,
   Breadcrumbs,
@@ -14,6 +13,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { sentenceCase } from "change-case";
 
+import FloatNotification from "@/features/notification/components/float-notification";
 import useBreadcrumbs from "@/hooks/use-breadcrumbs";
 import useRedirect from "@/hooks/use-redirect";
 
@@ -83,31 +83,11 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface HeaderResponsiveProps {
-  links: { link: string; label: string }[];
-}
-
-export function StudentHeader({ links }: HeaderResponsiveProps) {
-  const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState("");
-  const { classes, cx } = useStyles();
+export function StudentHeader() {
+  const [opened, { toggle }] = useDisclosure(false);
+  const { classes } = useStyles();
   const paths = useBreadcrumbs();
   const { onRedirect } = useRedirect();
-
-  const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      className={cx(classes.link, { [classes.linkActive]: active === link.link })}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-        close();
-      }}
-    >
-      {link.label}
-    </a>
-  ));
 
   return (
     <Header height={HEADER_HEIGHT}>
@@ -120,7 +100,7 @@ export function StudentHeader({ links }: HeaderResponsiveProps) {
           ))}
         </Breadcrumbs>
         <Group spacing={5} className={classes.links}>
-          {items}
+          <FloatNotification />
         </Group>
 
         <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
@@ -128,7 +108,7 @@ export function StudentHeader({ links }: HeaderResponsiveProps) {
         <Transition transition="pop-top-right" duration={200} mounted={opened}>
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
-              {items}
+              xxx
             </Paper>
           )}
         </Transition>

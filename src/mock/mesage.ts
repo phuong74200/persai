@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-import { MessageDomain } from "@/domains/message";
+import { MessageDomain } from "@/features/gpt/domains/message";
 import generateFilledArray from "@/utils/generate-filled-array";
 
 export const messages = generateFilledArray(

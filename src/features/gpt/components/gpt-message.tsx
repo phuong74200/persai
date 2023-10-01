@@ -1,7 +1,7 @@
 import { Box, createStyles, Flex, Paper, Stack, Text } from "@mantine/core";
 
 import GPTIcon from "@/assets/svg/gpt-icon";
-import { MessageDomain } from "@/domains/message";
+import { MessageDomain } from "@/features/gpt/domains/message";
 
 const useStyles = createStyles((theme) => {
   const colors = theme.fn.variant({
