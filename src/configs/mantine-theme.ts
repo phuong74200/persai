@@ -5,16 +5,15 @@ import { toMantineBreakpoint } from "@/utils/breakpoint-converter";
 
 export const customMantineTheme: MantineThemeOverride = {
   breakpoints: toMantineBreakpoint(breakpoints),
-  primaryColor: "blue",
+  primaryColor: "green",
   colorScheme: "dark",
-  fontFamily: "Poppins, sans-serif",
+  // fontFamily: "Poppins, sans-serif",
   fontFamilyMonospace,
   colors: {},
   components: {
     AppShell: {
       styles: () => ({
         root: {
-          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
         },
@@ -29,6 +28,7 @@ export const customMantineTheme: MantineThemeOverride = {
     Container: {
       defaultProps: {
         sizes: toMantineBreakpoint(breakpoints),
+        size: "lg",
       },
     },
     Badge: {
