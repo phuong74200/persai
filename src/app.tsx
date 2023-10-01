@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FeatureFlagProvider, FLAGS, useFeatureFlag, useHelper } from "@/configs/feature-flag";
 import { customMantineTheme } from "@/configs/mantine-theme";
 import { defaultOptions, mutationCache, queryCache } from "@/configs/react-query";
-import { UserContextProvider } from "@/context/user";
 import SyncTailwindColorScheme from "@/modules/sync-tailwind-color-scheme";
 import { BrowserRouter } from "@/router";
 
@@ -44,13 +43,11 @@ function Theme() {
 
 function App() {
   return (
-    <UserContextProvider>
-      <FeatureFlagProvider>
-        <QueryClientProvider client={queryClient}>
-          <Theme />
-        </QueryClientProvider>
-      </FeatureFlagProvider>
-    </UserContextProvider>
+    <FeatureFlagProvider>
+      <QueryClientProvider client={queryClient}>
+        <Theme />
+      </QueryClientProvider>
+    </FeatureFlagProvider>
   );
 }
 
