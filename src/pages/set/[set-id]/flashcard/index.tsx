@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mantine/core";
+import { Box, Paper, Text, Title } from "@mantine/core";
 import { AnimatePresence } from "framer-motion";
 
 import Card from "@/features/flashcard/components/card";
@@ -10,19 +10,38 @@ import {
 export default function FlashCardPage() {
   return (
     <FlashCardContextProvider>
-      <Box
-        className="absolute top-[300px]"
-        style={{
-          perspective: 1000,
-        }}
-      >
+      <Box className="[perspective:3000px]">
         <FlashCardContext.Consumer>
           {(values) => (
             <AnimatePresence>
               {values.pool.map((item, i) => (
-                <Card key={item.id} index={i} color={item.color}>
-                  <Paper w={350} h={350} bg={item.color} shadow="md">
-                    {item.sides[0].text}
+                <Card
+                  key={item.id}
+                  index={i}
+                  color={item.color}
+                  className="[transform-style:preserve-3d]"
+                >
+                  <Paper
+                    w={600}
+                    h={600}
+                    bg={item.color}
+                    shadow="lg"
+                    p="md"
+                    className="[backface-visibility:hidden]"
+                  >
+                    <Title mb="md">Front side {item.index}</Title>
+                    <Text className="whitespace-pre-line">{item.sides[0].text}</Text>
+                  </Paper>
+                  <Paper
+                    w={600}
+                    h={600}
+                    bg={item.color}
+                    shadow="lg"
+                    p="md"
+                    className="absolute left-0 top-0 [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                  >
+                    <Title mb="md">Back side {item.index}</Title>
+                    <Text className="whitespace-pre-line">{item.sides[1].text}</Text>
                   </Paper>
                 </Card>
               ))}

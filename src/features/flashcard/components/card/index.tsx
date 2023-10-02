@@ -1,51 +1,55 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { useToggle } from "@mantine/hooks";
-import { motion, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { HTMLMotionProps, motion, useTransform } from "framer-motion";
 
+import { variants } from "@/features/flashcard/components/card/variants";
 import { useFlashCardContext } from "@/features/flashcard/contexts/flashcard-context";
-import useVariants from "@/features/flashcard/hooks/useVariants";
+import useDrag from "@/hooks/use-drag";
 
-interface Props {
+interface Props extends HTMLMotionProps<"div"> {
   index: number;
   color: string;
   children?: ReactNode;
 }
 
-export default function Card({ index, children }: Props) {
+export default function Card({ index, style, ...rest }: Props) {
   const ctx = useFlashCardContext();
 
   if (!ctx) throw new Error("Card must be used inside FlashCardContextProvider");
 
-  // determine the if the card onDragEnd is dragged to the left or right
-  const [direction, setDirection] = useState(0);
   const [isFlip, toggle] = useToggle([false, true]);
 
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-350, 0, 220], [-45, 0, 45], {
-    clamp: false,
+  const { ref, direction, handleDragEnd, motionValue, height, width } = useDrag<HTMLDivElement>({
+    handleDragEnd: (_, info) => {
+      if (Math.abs(info.offset.x) > width / 5) ctx.removeItem(index);
+    },
   });
 
-  const variants = useVariants(index, direction);
-
-  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    setDirection(info.offset.x / Math.abs(info.offset.x));
-    if (Math.abs(info.offset.x) > 200) ctx.removeItem(index);
-  };
+  const rotate = useTransform(
+    motionValue,
+    [-width * 1.5, 0, height * 1.5],
+    [-width / 5, 0, height / 5],
+    {
+      clamp: false,
+    },
+  );
 
   const handleFlip = () => {
-    if (x.get() === 0) toggle();
+    if (motionValue.get() === 0) toggle();
   };
 
   return (
     <motion.div
+      ref={ref}
       style={{
         rotate,
         scale: 0,
         willChange: "transform",
-        x,
+        x: motionValue,
         pointerEvents: index === 0 ? "auto" : "none", // Only allow dragging on the top card
+        position: "absolute",
+        ...style,
       }}
-      className="absolute"
       variants={variants}
       drag="x"
       dragConstraints={{
@@ -59,8 +63,8 @@ export default function Card({ index, children }: Props) {
       animate={isFlip ? "selected" : "animate"}
       exit="exit"
       onDragEnd={handleDragEnd}
-    >
-      {children}
-    </motion.div>
+      custom={{ itemsLength: ctx.items.length, index, direction }}
+      {...rest}
+    ></motion.div>
   );
 }

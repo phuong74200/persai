@@ -56,8 +56,12 @@ const items = generateFilledArray(300, () => ({
   }),
   sides: generateFilledArray(2, () => ({
     id: faker.string.uuid(),
-    text: faker.lorem.paragraph(),
+    text: faker.lorem.paragraphs({ min: 1, max: 3 }),
   })),
+})).map((e, index) => ({
+  ...e,
+  index,
 }));
+
 export const { FlashCardContextProvider, FlashCardContext, useFlashCardContext } =
   createFlashCardContext(items, 5);
