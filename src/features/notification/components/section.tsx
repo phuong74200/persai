@@ -5,7 +5,7 @@ import { Notification } from "@/features/notification/domains/notification";
 const useStyles = createStyles((theme, { isRead }: { isRead: boolean }) => {
   const colors = theme.fn.variant({
     variant: "light",
-    color: theme.primaryColor,
+    color: "gray",
   });
 
   return {

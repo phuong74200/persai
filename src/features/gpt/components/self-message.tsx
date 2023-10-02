@@ -22,7 +22,7 @@ export default function SelfMessage({ domain }: { domain: MessageDomain }) {
   const { classes } = useStyles();
 
   return (
-    <Stack spacing="xs">
+    <Stack spacing={2}>
       <Text size="xs" color="dimmed" ml="auto">
         {domain.formatChatDate}
       </Text>

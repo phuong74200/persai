@@ -27,7 +27,7 @@ export default function GPTMessage({ domain }: { domain: MessageDomain }) {
       <Box className="h-8 w-8 overflow-hidden rounded-[50%]">
         <GPTIcon />
       </Box>
-      <Stack className="flex-1" spacing="xs">
+      <Stack className="flex-1" spacing={2}>
         <Text size="xs" color="dimmed">
           {domain.formatChatDate}
         </Text>

@@ -20,7 +20,7 @@ export default function FloatNotification() {
   const theme = useMantineTheme();
 
   return (
-    <Popover width={350} position="bottom-end" shadow="md">
+    <Popover width={400} position="bottom-end" shadow="md">
       <Popover.Target>
         <Indicator inline label="9" size={16}>
           <ActionIcon

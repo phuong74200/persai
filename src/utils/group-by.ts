@@ -1,7 +1,7 @@
 type KeyFinderFunction<T> = (item: T) => string;
-type KeyType<T> = T extends Record<infer K, any> ? K : never;
+type KeyType<T> = T extends Record<infer K, unknown> ? K : never;
 
-export function groupBy<T extends Record<KeyType<T>, any>>(
+export function groupBy<T extends Record<KeyType<T>, never>>(
   values: T[],
   keyFinder: string | KeyFinderFunction<T>,
 ): Record<string, T[]> {
