@@ -21,7 +21,7 @@ export default function Card({ index, style, ...rest }: Props) {
 
   const { ref, direction, handleDragEnd, motionValue, height, width } = useDrag<HTMLDivElement>({
     handleDragEnd: (_, info) => {
-      if (Math.abs(info.offset.x) > width / 5) ctx.removeItem(index);
+      if (Math.abs(info.offset.x) > width / 5) ctx.next();
     },
   });
 
@@ -61,10 +61,10 @@ export default function Card({ index, style, ...rest }: Props) {
       onClick={handleFlip}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
       animate={isFlip ? "selected" : "animate"}
-      exit="exit"
+      exit={index === 0 ? "exit" : "backExit"}
       onDragEnd={handleDragEnd}
-      custom={{ itemsLength: ctx.items.length, index, direction }}
+      custom={{ itemsLength: ctx.startIndex, index, direction }}
       {...rest}
-    ></motion.div>
+    />
   );
 }

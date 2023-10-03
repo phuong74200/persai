@@ -1,43 +1,48 @@
-import {
-  createContext,
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useMemo } from "react";
 import { faker } from "@faker-js/faker";
+import { useHotkeys } from "@mantine/hooks";
 
+import usePagination from "@/features/flashcard/hooks/use-pagination";
+import logger from "@/utils/dev-log";
 import generateFilledArray from "@/utils/generate-filled-array";
 
 export default function createFlashCardContext<T = unknown>(cards: T[], poolSize = 5) {
   type Props = {
-    items: T[];
-    setItems: Dispatch<SetStateAction<T[]>>;
+    prev: () => void;
+    next: () => void;
     pool: T[];
-    removeItem: (index: number) => void;
+    startIndex: number;
+    itemsPerPage: number;
   };
 
   const FlashCardContext = createContext<Props>({} as Props);
 
   const FlashCardContextProvider = ({ children }: PropsWithChildren) => {
-    const [items, setItems] = useState<T[]>(cards);
+    const { currentView, next, prev, startIndex, itemsPerPage } = usePagination(cards, poolSize);
 
-    const pool = items.slice(0, poolSize);
-
-    const value = useMemo(() => ({ items, setItems, pool }), [items, setItems, pool]);
-
-    const removeItem = useCallback((index: number) => {
-      setItems((prev) => prev.filter((_, i) => i !== index));
-    }, []);
-
-    return (
-      <FlashCardContext.Provider value={{ ...value, removeItem }}>
-        {children}
-      </FlashCardContext.Provider>
+    const value = useMemo(
+      () => ({ prev, next, pool: currentView, startIndex, itemsPerPage }),
+      [currentView, itemsPerPage, next, prev, startIndex],
     );
+
+    logger.log(currentView);
+
+    useHotkeys([
+      [
+        "ArrowLeft",
+        () => {
+          prev();
+        },
+      ],
+      [
+        "ArrowRight",
+        () => {
+          next();
+        },
+      ],
+    ]);
+
+    return <FlashCardContext.Provider value={value}>{children}</FlashCardContext.Provider>;
   };
 
   const useFlashCardContext = () => useContext(FlashCardContext);
@@ -49,7 +54,7 @@ export default function createFlashCardContext<T = unknown>(cards: T[], poolSize
   };
 }
 
-const items = generateFilledArray(300, () => ({
+const items = generateFilledArray(10, () => ({
   id: faker.string.uuid(),
   color: faker.color.rgb({
     format: "hex",
