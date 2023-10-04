@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Error404 from "@/features/error/components/Error404";
+import { FlashCardContextProvider } from "@/features/flashcard/contexts/flashcard-context";
 import { PublicLayout, StudentLayout } from "@/layouts";
 import AuthRouter from "@/modules/auth-router";
 import { LoginPage } from "@/pages/login";
@@ -44,7 +45,7 @@ export const BrowserRouter = new AuthRouter(
             },
             {
               path: "set",
-              Component: Outlet,
+              Component: FlashCardContextProvider,
               children: [
                 {
                   path: ":setId",

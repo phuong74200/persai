@@ -1,9 +1,8 @@
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
+import { Outlet } from "react-router-dom";
 import { faker } from "@faker-js/faker";
-import { useHotkeys } from "@mantine/hooks";
 
 import usePagination from "@/features/flashcard/hooks/use-pagination";
-import logger from "@/utils/dev-log";
 import generateFilledArray from "@/utils/generate-filled-array";
 
 export default function createFlashCardContext<T = unknown>(cards: T[], poolSize = 5) {
@@ -13,36 +12,41 @@ export default function createFlashCardContext<T = unknown>(cards: T[], poolSize
     pool: T[];
     startIndex: number;
     itemsPerPage: number;
+    progress: number;
+    shuffle: () => void;
   };
 
   const FlashCardContext = createContext<Props>({} as Props);
 
-  const FlashCardContextProvider = ({ children }: PropsWithChildren) => {
-    const { currentView, next, prev, startIndex, itemsPerPage } = usePagination(cards, poolSize);
-
-    const value = useMemo(
-      () => ({ prev, next, pool: currentView, startIndex, itemsPerPage }),
-      [currentView, itemsPerPage, next, prev, startIndex],
+  const FlashCardContextProvider = () => {
+    const { currentView, next, prev, startIndex, itemsPerPage, setItems } = usePagination(
+      cards,
+      poolSize,
     );
 
-    logger.log(currentView);
-
-    useHotkeys([
-      [
-        "ArrowLeft",
-        () => {
-          prev();
+    const value = useMemo(
+      () => ({
+        prev,
+        next,
+        pool: currentView,
+        startIndex,
+        itemsPerPage,
+        progress: ((startIndex + 1) / cards.length) * 100,
+        shuffle: () => {
+          setItems((items) => {
+            const shuffled = [...items].sort(() => Math.random() - 0.5);
+            return shuffled;
+          });
         },
-      ],
-      [
-        "ArrowRight",
-        () => {
-          next();
-        },
-      ],
-    ]);
+      }),
+      [currentView, itemsPerPage, next, prev, setItems, startIndex],
+    );
 
-    return <FlashCardContext.Provider value={value}>{children}</FlashCardContext.Provider>;
+    return (
+      <FlashCardContext.Provider value={value}>
+        <Outlet />
+      </FlashCardContext.Provider>
+    );
   };
 
   const useFlashCardContext = () => useContext(FlashCardContext);

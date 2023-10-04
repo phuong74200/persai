@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
-import { AppShell } from "@mantine/core";
+import { Affix, AppShell, Stack } from "@mantine/core";
 
 import ChatBox from "@/features/gpt/components/chat-box";
+import Porodomo from "@/features/poromodo/components/poromodo";
 import { StudentHeader } from "@/layouts/student/header";
 import { NavbarNested } from "@/layouts/student/navbar";
 
@@ -20,7 +21,12 @@ export function StudentLayout() {
       navbar={<NavbarNested />}
       header={<StudentHeader />}
     >
-      <ChatBox />
+      <Affix position={{ bottom: "1rem", right: "1rem" }}>
+        <Stack>
+          <Porodomo />
+          <ChatBox />
+        </Stack>
+      </Affix>
       <Outlet />
     </AppShell>
   );

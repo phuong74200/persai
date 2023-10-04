@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Affix,
   Box,
   Flex,
   Popover,
@@ -29,11 +28,9 @@ export default function ChatBox() {
       }}
     >
       <Popover.Target>
-        <Affix position={{ bottom: "1rem", right: "1rem" }}>
-          <ActionIcon color="green" variant="filled" className="rounded-[50%]" size={14 * 3.5}>
-            <IconMessageChatbot size="1.5rem" />
-          </ActionIcon>
-        </Affix>
+        <ActionIcon color="green" variant="filled" className="rounded-[50%]" size={14 * 3.5}>
+          <IconMessageChatbot size="1.5rem" />
+        </ActionIcon>
       </Popover.Target>
       <Popover.Dropdown p={0}>
         <Stack spacing={0}>
