@@ -22,7 +22,7 @@ export function StudentLayout() {
       header={<StudentHeader />}
     >
       <Affix position={{ bottom: "1rem", right: "1rem" }}>
-        <Stack>
+        <Stack align="center" spacing={0}>
           <Porodomo />
           <ChatBox />
         </Stack>

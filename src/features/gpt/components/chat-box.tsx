@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Box,
+  Center,
   Flex,
   Popover,
   ScrollArea,
@@ -28,9 +29,11 @@ export default function ChatBox() {
       }}
     >
       <Popover.Target>
-        <ActionIcon color="green" variant="filled" className="rounded-[50%]" size={14 * 3.5}>
-          <IconMessageChatbot size="1.5rem" />
-        </ActionIcon>
+        <Center className="h-[60px] w-[60px]">
+          <ActionIcon color="green" variant="filled" className="rounded-[50%]" size="3rem">
+            <IconMessageChatbot size="1.5rem" />
+          </ActionIcon>
+        </Center>
       </Popover.Target>
       <Popover.Dropdown p={0}>
         <Stack spacing={0}>
