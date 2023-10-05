@@ -66,5 +66,12 @@ export const customMantineTheme: MantineThemeOverride = {
         },
       },
     },
+    Popover: {
+      styles: {
+        dropdown: {
+          border: "none",
+        },
+      },
+    },
   },
 };

@@ -58,19 +58,25 @@ export default function createFlashCardContext<T = unknown>(cards: T[], poolSize
   };
 }
 
-const items = generateFilledArray(10, () => ({
+export const studyItems = generateFilledArray(10, () => ({
   id: faker.string.uuid(),
   color: faker.color.rgb({
     format: "hex",
   }),
-  sides: generateFilledArray(2, () => ({
-    id: faker.string.uuid(),
-    text: faker.lorem.paragraphs({ min: 1, max: 3 }),
-  })),
+  sides: [
+    {
+      id: faker.string.uuid(),
+      text: faker.lorem.paragraphs({ min: 1, max: 3 }),
+    },
+    {
+      id: faker.string.uuid(),
+      text: faker.lorem.paragraphs({ min: 1, max: 3 }),
+    },
+  ] as const,
 })).map((e, index) => ({
   ...e,
   index,
 }));
 
 export const { FlashCardContextProvider, FlashCardContext, useFlashCardContext } =
-  createFlashCardContext(items, 5);
+  createFlashCardContext(studyItems, 5);

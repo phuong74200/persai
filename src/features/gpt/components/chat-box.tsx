@@ -30,7 +30,12 @@ export default function ChatBox() {
     >
       <Popover.Target>
         <Center className="h-[60px] w-[60px]">
-          <ActionIcon color="green" variant="filled" className="rounded-[50%]" size="3rem">
+          <ActionIcon
+            color={theme.primaryColor}
+            variant="filled"
+            className="rounded-[50%]"
+            size={53}
+          >
             <IconMessageChatbot size="1.5rem" />
           </ActionIcon>
         </Center>

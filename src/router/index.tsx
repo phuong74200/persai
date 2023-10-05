@@ -6,7 +6,9 @@ import { PublicLayout, StudentLayout } from "@/layouts";
 import AuthRouter from "@/modules/auth-router";
 import { LoginPage } from "@/pages/login";
 import MyCollectionPage from "@/pages/my-collection";
+import ViewSetPage from "@/pages/set/[set-id]";
 import FlashCardPage from "@/pages/set/[set-id]/flashcard";
+import TestPage from "@/pages/set/[set-id]/test";
 import StudySetPage from "@/pages/study-set";
 
 export const BrowserRouter = new AuthRouter(
@@ -45,11 +47,25 @@ export const BrowserRouter = new AuthRouter(
             },
             {
               path: "set",
-              Component: FlashCardContextProvider,
+              Component: Outlet,
               children: [
                 {
                   path: ":setId",
-                  Component: FlashCardPage,
+                  Component: ViewSetPage,
+                },
+                {
+                  path: ":setId",
+                  Component: FlashCardContextProvider,
+                  children: [
+                    {
+                      path: "flashcard",
+                      Component: FlashCardPage,
+                    },
+                    {
+                      path: "test",
+                      Component: TestPage,
+                    },
+                  ],
                 },
               ],
             },

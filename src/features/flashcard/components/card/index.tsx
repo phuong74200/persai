@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { clsx, Paper, PaperProps } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { HTMLMotionProps, motion, useTransform } from "framer-motion";
 
@@ -12,7 +13,7 @@ interface Props extends HTMLMotionProps<"div"> {
   children?: ReactNode;
 }
 
-export default function Card({ index, style, ...rest }: Props) {
+function _Card({ index, style, ...rest }: Props) {
   const ctx = useFlashCardContext();
 
   if (!ctx) throw new Error("Card must be used inside FlashCardContextProvider");
@@ -68,3 +69,35 @@ export default function Card({ index, style, ...rest }: Props) {
     />
   );
 }
+
+function Front({ className, ...rest }: PaperProps) {
+  return (
+    <Paper
+      shadow="lg"
+      p="md"
+      className={clsx(className, "h-full w-full [backface-visibility:hidden]")}
+      {...rest}
+    />
+  );
+}
+
+function Back({ className, ...rest }: PaperProps) {
+  return (
+    <Paper
+      shadow="lg"
+      p="md"
+      className={clsx(
+        className,
+        "absolute left-0 top-0 h-full w-full [backface-visibility:hidden] [transform:rotateY(180deg)]",
+      )}
+      {...rest}
+    />
+  );
+}
+
+const Card = Object.assign(_Card, {
+  Front,
+  Back,
+});
+
+export default Card;
