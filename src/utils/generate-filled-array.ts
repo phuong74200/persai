@@ -1,7 +1,7 @@
 export default function generateFilledArray<T>(
   length: number,
-  generator?: (v: T, i: number) => T,
+  generator?: (index: number) => T,
 ): T[] {
-  if (generator) return Array.from({ length }, generator);
+  if (generator) return Array.from({ length }, (_, index) => generator(index));
   return Array.from({ length }) as T[];
 }

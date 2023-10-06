@@ -15,3 +15,19 @@ export const studySets = generateFilledArray(10, () => ({
     },
   ],
 }));
+
+type Choice = "multiple-choice" | "single-choice";
+
+export const testOptions = generateFilledArray(14, (index) => ({
+  id: faker.string.uuid(),
+  index: index + 1,
+  question: faker.lorem.sentences(4),
+  type: faker.helpers.arrayElement<Choice>(["multiple-choice", "single-choice"]),
+  choices: generateFilledArray(4, (index) => ({
+    id: faker.string.uuid(),
+    index: index + 1,
+    content: faker.lorem.sentence().slice(0, 10),
+  })),
+}));
+
+export type Test = (typeof testOptions)[number];
