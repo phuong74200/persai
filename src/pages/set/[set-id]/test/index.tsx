@@ -1,4 +1,4 @@
-import { Button, Checkbox, Container, Stack, Title } from "@mantine/core";
+import { Button, Container, Stack, Title } from "@mantine/core";
 
 import CheckboxSection from "@/features/test/components/checkbox-section";
 import useTest from "@/features/test/hooks/use-test";
@@ -13,13 +13,14 @@ export default function TestPage() {
         <Title>EXE 101 TEST</Title>
         <Stack spacing="2rem">
           {set.map((quest, index) => (
-            <Checkbox.Group key={quest.id} {...form.getInputProps(quest.id)}>
-              <CheckboxSection
-                index={index + 1}
-                choices={quest.choices}
-                question={quest.question}
-              />
-            </Checkbox.Group>
+            <CheckboxSection
+              key={quest.id}
+              id={quest.id}
+              index={index + 1}
+              choices={quest.choices}
+              question={quest.question}
+              form={form}
+            />
           ))}
 
           <Button>Submit</Button>

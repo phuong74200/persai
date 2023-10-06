@@ -34,6 +34,7 @@ function Item({ index, label, isSelected, ...rest }: Props) {
 }
 
 interface CheckboxSectionProps extends Omit<CheckboxGroupProps, "children"> {
+  id: string;
   choices: {
     id: string;
     index: number;
@@ -41,10 +42,18 @@ interface CheckboxSectionProps extends Omit<CheckboxGroupProps, "children"> {
   }[];
   question: string;
   index: number;
-  form: UseFormReturnType<string[]>;
+  form: UseFormReturnType<{ [key: string]: string[] }>;
 }
 
-export default function CheckboxSection({ choices, question, index, form }: CheckboxSectionProps) {
+export default function CheckboxSection({
+  choices,
+  question,
+  index,
+  form,
+  id,
+}: CheckboxSectionProps) {
+  const isSelected = form.values[id]?.includes(id);
+
   return (
     <Paper p="md" shadow="sm">
       <Stack>
@@ -54,11 +63,11 @@ export default function CheckboxSection({ choices, question, index, form }: Chec
         <Text weight="bold" size="lg">
           {question}
         </Text>
-        <Checkbox.Group {...form.getInputProps("s")}>
+        <Checkbox.Group {...form.getInputProps(id)}>
           <SimpleGrid cols={2}>
             {choices.map((option) => (
               <Item
-                isSelected={false}
+                isSelected={isSelected}
                 key={option.id}
                 index={option.index}
                 value={option.id}
