@@ -8,6 +8,7 @@ import { AdminLayout } from "@/layouts/admin";
 import { NonLoginSetLayout } from "@/layouts/non-login-set";
 import AuthRouter from "@/modules/auth-router";
 import CreateSetPage from "@/pages/create";
+import HomePage from "@/pages/home";
 import { LoginPage } from "@/pages/login";
 import MyCollectionPage from "@/pages/my-collection";
 import ViewSetPage from "@/pages/set/[set-id]";
@@ -24,7 +25,7 @@ export const BrowserRouter = new AuthRouter(
       children: [
         {
           path: "",
-          element: <Navigate to="/login" />,
+          Component: HomePage,
         },
 
         {

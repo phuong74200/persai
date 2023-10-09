@@ -102,7 +102,7 @@ const columns: DataTableColumn<User>[] = [
 
 export default function UserPage() {
   const theme = useMantineTheme();
-  const { redirect, onRedirect } = useRedirect();
+  const { onRedirect } = useRedirect();
 
   const { data, isFetching } = useGetAllUser();
 
