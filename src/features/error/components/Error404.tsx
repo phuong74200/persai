@@ -1,8 +1,11 @@
 import { Box, Button, Container, Image, Stack, Text, Title } from "@mantine/core";
 
 import { ASSET_404 } from "@/assets";
+import useRedirect from "@/hooks/use-redirect";
 
 export default function Error404() {
+  const { onRedirect } = useRedirect();
+
   return (
     <Container h="100vh">
       <Stack justify="center" align="center" className="h-full" spacing="xl">
@@ -16,7 +19,7 @@ export default function Error404() {
           </Text>
         </Box>
         <Image src={ASSET_404} width={300} />
-        <Button>Go to home</Button>
+        <Button onClick={onRedirect("/login")}>Go to home</Button>
       </Stack>
     </Container>
   );

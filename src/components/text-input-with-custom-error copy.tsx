@@ -1,14 +1,12 @@
-import { TextInput, TextInputProps, ThemeIcon } from "@mantine/core";
+import { Textarea, TextareaProps, ThemeIcon } from "@mantine/core";
 import { IconExclamationMark } from "@tabler/icons-react";
 
 import ErrorTooltip from "@/features/error/components/error-tooltip";
 
-export default function TextInputWithCustomError({ error, ...other }: TextInputProps) {
+export default function TextAreaWithCustomError({ error, ...other }: TextareaProps) {
   return (
-    <TextInput
+    <Textarea
       withAsterisk
-      label="Tên trường"
-      placeholder="IU"
       {...other}
       rightSection={
         error && (

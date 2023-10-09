@@ -4,227 +4,86 @@
  */
 
 export interface paths {
-  "/v1/verification/code-resend": {
-    put: operations["resendCode"];
+  "/api/v1/user/unban/{user_id}": {
+    /** Unban a user (only for ADMIN) */
+    put: operations["unbanUser"];
   };
-  "/v1/verification/code-confirm/{code}": {
-    put: operations["confirmCode"];
+  "/api/v1/user/pomodoro-clock": {
+    /** Get pomodoro clock settings of current user */
+    get: operations["getPomodoroClockOfCurrentUser"];
+    /** Update pomodoro clock settings of current user */
+    put: operations["updatePomodoroClockOfCurrentUser"];
   };
-  "/v1/user/current": {
+  "/api/v1/user/current": {
+    /** Get current logged in user */
     get: operations["getCurrentUser"];
+    /** Update current logged in user */
     put: operations["updateCurrentUser"];
   };
-  "/v1/user/current/password-update/process": {
-    put: operations["updatePassword"];
+  "/api/v1/user/current/avatar": {
+    /** Update avatar of current logged in user */
+    put: operations["updateAvatarOfCurrentUser"];
   };
-  "/v1/user/current/password-update/code-request": {
-    put: operations["requestCodeForUpdatingPassword"];
+  "/api/v1/user/ban/{user_id}": {
+    /** Ban a user (only for ADMIN) */
+    put: operations["banUser"];
   };
-  "/v1/user/bank-accounts/{bank_account_id}": {
-    put: operations["updateBankAccountById"];
-    delete: operations["deleteBankAccountById"];
+  "/api/v1/study-set/{study_set_id}": {
+    /** Get study set by ID */
+    get: operations["getStudySetById"];
+    /** Update pre-exist study set (under development) */
+    put: operations["updateStudySet"];
+    /** Delete study set by ID */
+    delete: operations["deleteStudySet"];
   };
-  "/v1/ta/current": {
-    get: operations["getCurrentTA"];
-    put: operations["updateCurrentTA"];
+  "/api/v1/study-set/question/{question_id}/note": {
+    /** Create or update note for a question of a study set (for current logged in user) */
+    put: operations["createNoteOfCurrentQuestionForCurrentUser"];
   };
-  "/v1/register/ta": {
-    put: operations["updateTARegistration"];
-    post: operations["registerTA"];
+  "/api/v1/study-set": {
+    /** Get all study sets */
+    get: operations["getAllStudySets"];
+    /** Create new study set */
+    post: operations["createStudySet"];
   };
-  "/v1/private-group/teaching-register": {
-    put: operations["registerTeachingPrivateGroup"];
-  };
-  "/v1/password-forget/account/{email}": {
-    put: operations["getAccountByEmailToChangePassword"];
-  };
-  "/v1/password-forget/account/{email}/new-password": {
-    put: operations["updatePasswordWhenForgetting"];
-  };
-  "/v1/password-forget/account/{email}/code-resend": {
-    put: operations["resendCodeForChangingPasswordWhenForgetting"];
-  };
-  "/v1/password-forget/account/{email}/code-confirm/{code}": {
-    put: operations["confirmCodeForChangingPasswordWhenForgetting"];
-  };
-  "/v1/manager/unban/ta/{user_id}": {
-    put: operations["unbanTaById"];
-  };
-  "/v1/manager/unban/student/{user_id}": {
-    put: operations["unbanStudentById"];
-  };
-  "/v1/manager/unban/manager_account/{manager_id}": {
-    put: operations["unbanManagerById"];
-  };
-  "/v1/manager/ta/registration/reject": {
-    put: operations["rejectTARegistration"];
-  };
-  "/v1/manager/ta/registration/confirm": {
-    put: operations["confirmTARegistration"];
-  };
-  "/v1/manager/manager_account/{manager_id}": {
-    put: operations["updateOtherManagerAccount"];
-    delete: operations["deleteManagerById"];
-  };
-  "/v1/manager/current": {
-    get: operations["getCurrentManager"];
-    put: operations["updateCurrentManager"];
-  };
-  "/v1/manager/ban/ta/{user_id}": {
-    put: operations["banTaById"];
-  };
-  "/v1/manager/ban/student/{user_id}": {
-    put: operations["banStudentById"];
-  };
-  "/v1/manager/ban/manager_account/{manager_id}": {
-    put: operations["banManagerById"];
-  };
-  "/v1/institution/{institution_id}": {
-    get: operations["getInstitutionById"];
-    put: operations["updateInstitutionById"];
-    delete: operations["deleteInstitutionById"];
-  };
-  "/v1/institution/major/{major_id}": {
-    get: operations["getMajorById"];
-    put: operations["updateMajorById"];
-    delete: operations["deleteMajorById"];
-  };
-  "/v1/institution/major/subject/{subject_id}": {
-    get: operations["getSubjectById"];
-    put: operations["updateSubjectById"];
-  };
-  "/v1/institution/major/subject/{subject_id}/restore": {
-    put: operations["restoreSubjectById"];
-  };
-  "/v1/institution/major/subject/{subject_id}/hide": {
-    put: operations["hideSubjectById"];
-  };
-  "/v1/google/register/institution": {
-    put: operations["registerInstitution"];
-  };
-  "/v1/fixed-classroom/{class_id}": {
-    get: operations["getFixedClassroomById"];
-    put: operations["updateFixedClassroom"];
-  };
-  "/v1/fixed-classroom/teaching-register": {
-    put: operations["registerTeachingFixedClassroom"];
-  };
-  "/v1/fixed-classroom/reopen/{class_id}": {
-    put: operations["reopenCanceledFixedClassroom"];
-  };
-  "/v1/fixed-classroom/cancel/{class_id}": {
-    put: operations["cancelFixedClassroom"];
-  };
-  "/v1/user/bank-accounts": {
-    get: operations["getCurrentBankAccounts"];
-    post: operations["addMoreBankAccount"];
-  };
-  "/v1/register/student": {
-    post: operations["registerStudent"];
-  };
-  "/v1/private-group": {
-    get: operations["getAllPrivateGroups"];
-    post: operations["createPrivateGroup"];
-  };
-  "/v1/manager/manager-account": {
-    post: operations["createManagerAccount"];
-  };
-  "/v1/login": {
-    post: operations["loginUser"];
-  };
-  "/v1/login/google": {
+  "/api/v1/login/google": {
+    /** API for logging in via Google */
     post: operations["loginUserViaGoogle"];
   };
-  "/v1/institution": {
-    get: operations["getAllInstitutions"];
-    post: operations["createInstitution"];
-  };
-  "/v1/institution/major": {
-    post: operations["createMajor"];
-  };
-  "/v1/institution/major/subject": {
-    post: operations["createSubject"];
-  };
-  "/v1/fixed-classroom": {
-    get: operations["getAllFixedClassroom"];
-    post: operations["createFixedClassroom"];
-  };
-  "/v1/fixed-classroom/study-register": {
-    get: operations["getAllStudyingRegistrationOfCurrentStudent"];
-    post: operations["registerStudyingFixedClassroom"];
-  };
-  "/v1/welcome": {
+  "/api/v1/welcome": {
+    /** API for testing welcome users from server */
     get: operations["welcomeUser"];
   };
-  "/v1/user/{userId}": {
+  "/api/v1/user": {
+    /** Get all users - students (only for ADMIN) */
+    get: operations["getAllUsers"];
+  };
+  "/api/v1/user/{user_id}": {
+    /** Get user by user ID (only for ADMIN) */
     get: operations["getUserById"];
   };
-  "/v1/ta": {
-    get: operations["getAllTAs"];
+  "/api/v1/subscription": {
+    /** Get all subscriptions */
+    get: operations["getAllSubscription"];
   };
-  "/v1/ta/{user_id}": {
-    get: operations["getTAById"];
+  "/api/v1/subscription/{subscription_id}": {
+    /** Get subscription by ID */
+    get: operations["getSubscriptionById"];
   };
-  "/v1/student": {
-    get: operations["getAllStudents"];
+  "/api/v1/study-set/current": {
+    /** Get all study sets of current user */
+    get: operations["getAllStudySetsOfCurrentUser"];
   };
-  "/v1/student/{user_id}": {
-    get: operations["getStudentById"];
-  };
-  "/v1/student/current": {
-    get: operations["getCurrentStudent"];
-  };
-  "/v1/role": {
-    get: operations["getAllRole"];
-  };
-  "/v1/role/{role_id}": {
-    get: operations["getRoleById"];
-  };
-  "/v1/register/ta/current": {
-    get: operations["getCurrentTARegistration"];
-  };
-  "/v1/private-group/{group_id}": {
-    get: operations["getPrivateById"];
-  };
-  "/v1/payment": {
-    get: operations["getPaymentList"];
-  };
-  "/v1/payment/{paymentId}": {
-    get: operations["getPaymentById"];
-  };
-  "/v1/new-access-token": {
+  "/api/v1/new-access-token": {
     /**
      * Get new Access token by Refresh token
      * @description Include refresh token as bearer token in request header to get new access token together with new refresh token
      */
     get: operations["getNewAccessTokenFromRefreshToken"];
   };
-  "/v1/manager/{manager_id}": {
-    get: operations["getManagerById"];
-  };
-  "/v1/manager/ta/registration": {
-    get: operations["getAllTARegistrations"];
-  };
-  "/v1/manager/ta/registration/{ta_id}": {
-    get: operations["getTARegistrationById"];
-  };
-  "/v1/manager/all": {
-    get: operations["getAllManagers"];
-  };
-  "/v1/institution/{institution_id}/major": {
-    get: operations["getAllMajorsOfInstitution"];
-  };
-  "/v1/institution/major/{major_id}/subject": {
-    get: operations["getAllSubjectsOfMajor"];
-  };
-  "/v1/fixed-classroom/study-register/{class_id}": {
-    get: operations["getStudyingRegistrationOfCurrentStudentById"];
-  };
-  "/v1/manager/ta/{user_id}": {
-    delete: operations["deleteTaById"];
-  };
-  "/v1/manager/student/{user_id}": {
-    delete: operations["deleteStudentById"];
+  "/api/v1/image/{fe_image_name}": {
+    /** View public image */
+    get: operations["viewImageByImageName"];
   };
 }
 
@@ -232,276 +91,225 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    GeneralResponseObject: {
-      returnObject?: Record<string, never>;
-      message?: string;
+    UpdatePomodoroRequest: {
+      /**
+       * Format: int32
+       * @description min: 300(s)
+       * @example 1500
+       */
+      studyTime?: number;
+      /**
+       * Format: int32
+       * @description min: 60(s)
+       * @example 300
+       */
+      shortBreak?: number;
+      /**
+       * Format: int32
+       * @description min: 300(s)
+       * @example 900
+       */
+      longBreak?: number;
+      /**
+       * Format: int32
+       * @description min: 2
+       * @example 4
+       */
+      longBreakInterval?: number;
+      /**
+       * @description ON or OFF
+       * @enum {string}
+       */
+      status: "ON" | "OFF";
+    };
+    PomodoroResponse: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: uuid */
+      userId?: string;
+      userFullName?: string;
+      /** Format: int32 */
+      studyTime?: number;
+      /** Format: int32 */
+      shortBreak?: number;
+      /** Format: int32 */
+      longBreak?: number;
+      /** Format: int32 */
+      longBreakInterval?: number;
+      /** @enum {string} */
+      learningMethod?: "ALL";
+      /** @enum {string} */
+      status?: "ON" | "OFF";
     };
     UpdateUserRequest: {
-      fullName: string;
-      phoneNumber: string;
-      avatar?: string;
-      description?: string;
-      /** @enum {string} */
-      gender: "MALE" | "FEMALE";
+      fullName?: string;
+      /**
+       * @description DEFAULT, GRAY, RED, PINK, GRAPE, VIOLET, INDIGO, BLUE, CYAN, TEAL, GREEN, LIME, YELLOW, ORANGE
+       * @enum {string}
+       */
+      theme?:
+        | "Theme.DEFAULT"
+        | "Theme.GRAY"
+        | "Theme.RED"
+        | "Theme.PINK"
+        | "Theme.GRAPE"
+        | "Theme.VIOLET"
+        | "Theme.INDIGO"
+        | "Theme.BLUE"
+        | "Theme.CYAN"
+        | "Theme.TEAL"
+        | "Theme.GREEN"
+        | "Theme.LIME"
+        | "Theme.YELLOW"
+        | "Theme.ORANGE";
+    };
+    ReferralCodeResponse: {
+      referralCode?: string;
+      /** Format: int32 */
+      referenceNumber?: number;
+      usingReferralCode?: boolean;
     };
     UserResponse: {
       /** Format: uuid */
-      userId?: string;
-      institutionId?: string;
-      institutionName?: string;
-      fullName?: string;
-      phoneNumber?: string;
+      id?: string;
       email?: string;
-      avatar?: string;
-      description?: string;
+      fullName?: string;
+      feImageName?: string;
       /** @enum {string} */
-      gender?: "MALE" | "FEMALE";
+      role?: "ADMIN" | "STUDENT";
+      earnedMoney?: number;
+      /** Format: int32 */
+      gptRemainingUsage?: number;
+      /** @enum {string} */
+      theme?:
+        | "Theme.DEFAULT"
+        | "Theme.GRAY"
+        | "Theme.RED"
+        | "Theme.PINK"
+        | "Theme.GRAPE"
+        | "Theme.VIOLET"
+        | "Theme.INDIGO"
+        | "Theme.BLUE"
+        | "Theme.CYAN"
+        | "Theme.TEAL"
+        | "Theme.GREEN"
+        | "Theme.LIME"
+        | "Theme.YELLOW"
+        | "Theme.ORANGE";
+      /** @enum {string} */
+      status?: "DELETED" | "SUCCEED";
+      enabled?: boolean;
+      referralCode?: components["schemas"]["ReferralCodeResponse"];
+      subscription?: components["schemas"]["UserSubscriptionResponse"];
       /** Format: date-time */
       createdAt?: string;
       /** Format: date-time */
       updatedAt?: string;
+    };
+    UserSubscriptionResponse: {
+      currentSubscriptionId?: string;
+      paidSubscriptionId?: string;
       /** @enum {string} */
-      status?:
-        | "DELETED"
-        | "BANNED"
-        | "VERIFICATION_REQUIRED"
-        | "INSTITUTION_REQUIRED"
-        | "FULL_INFORMATION_REQUIRED"
-        | "SUCCEED";
-      enabled?: boolean;
-      roleId?: string;
-      permissions?: string[];
-      havingPassword?: boolean;
-    };
-    ChangePasswordRequest: {
-      /** @description Required when forgetting password */
-      signature: string;
-      /** @description Can be omitted when using for forgetting password */
-      oldPassword?: string;
-      newPassword: string;
-      confirmNewPassword: string;
-    };
-    RegisterTARequest: {
-      studentCode: string;
-      linkFacebook: string;
-      usedToBeTA?: boolean;
-      teachingExperience?: string;
-      personalImage?: string;
-      /** @description This field is required when registering to be TA */
-      subjectRegisters: components["schemas"]["SubjectRegister"][];
-      /** @description Not required when registering. When updating registration and updating TA info, this field cannot be used */
-      referenceTAPhoneNumber?: string;
-    };
-    /** @description This field is required when registering to be TA */
-    SubjectRegister: {
-      /** Format: int32 */
-      subjectId: number;
-      gpa: number;
-      linkResource: string;
-    };
-    TARegistrationResponse: {
-      userResponse?: components["schemas"]["UserResponse"];
-      studentCode?: string;
-      linkFacebook?: string;
-      referenceTAPhoneNumber?: string;
-      referenceTAName?: string;
-      usedToBeTA?: boolean;
-      teachingExperience?: string;
-      personalImage?: string;
-      /** Format: int32 */
-      numberOfRegisteredSubjects?: number;
-      taSubjectRegisters?: components["schemas"]["TASubjectRegisterResponse"][];
+      paidType?: "NO" | "MONTHLY" | "YEARLY";
       /** Format: date-time */
-      createdAt?: string;
-      /** @enum {string} */
-      status?: "PENDING" | "FAIL" | "SUCCEED" | "CANCEL";
+      expiredDatetime?: string;
     };
-    TASubjectRegisterResponse: {
+    QuestionResponse: {
       /** Format: int32 */
-      taSubjectRegisterId?: number;
-      /** Format: int32 */
-      subjectId?: number;
-      subjectName?: string;
-      gpa?: number;
-      linkResource?: string;
-      confirmed?: boolean;
-      /** Format: date-time */
-      createdAt?: string;
+      id?: number;
+      question?: string;
+      answers?: string[];
+      correctAnswer?: string;
+      fullGptAnswer?: string;
+      note?: string;
+      gptGenerated?: boolean;
     };
-    VerifyTARequest: {
+    StudySetResponse: {
+      /** Format: int32 */
+      id?: number;
+      studySetName?: string;
+      feImageName?: string;
       /** Format: uuid */
-      taId: string;
-      message?: string;
-      /** @description Required when confirm TA request */
-      contractLink: string;
-    };
-    CreateInstitutionRequest: {
-      /** @description Only required when create new institution */
-      institutionId: string;
-      name: string;
-      image?: string;
-      description?: string;
-    };
-    InstitutionResponse: {
-      institutionId?: string;
-      name?: string;
-      description?: string;
-      image?: string;
+      userId?: string;
+      userFullName?: string;
+      /** @enum {string} */
+      visibility?: "PUBLIC" | "PRIVATE";
       status?: boolean;
-      /** Format: int32 */
-      numberOfMajors?: number;
+      /** Format: date-time */
+      createdAt?: string;
+      /** Format: date-time */
+      updatedAt?: string;
+      questionResponses?: components["schemas"]["QuestionResponse"][];
     };
-    CreateMajorRequest: {
-      name: string;
-      description?: string;
-      /** @description Only required when create new major in an institution */
-      institutionId: string;
+    CreateUserQuestionNoteRequest: {
+      note: string;
     };
-    MajorResponse: {
+    UserQuestionNoteResponse: {
+      /** Format: uuid */
+      userId?: string;
       /** Format: int32 */
-      majorId?: number;
-      name?: string;
-      description?: string;
-      institutionId?: string;
-      institutionName?: string;
-      status?: boolean;
-      /** Format: int32 */
-      numberOfSubjects?: number;
+      questionId?: number;
+      note?: string;
     };
-    CreateSubjectRequest: {
-      name: string;
-      subjectCode?: string;
-      description?: string;
+    CreateQuestionRequest: {
+      question: string;
+      answers: string[];
+      /** @description Can be blank when you want GPT to generate answer */
+      correctAnswer?: string;
+      gptGenerated?: boolean;
+    };
+    CreateStudySetRequest: {
+      studySetName: string;
       /**
-       * Format: int32
-       * @description Not required, default is 1
+       * @description BASIC only support PUBLIC, PRO can create PUBLIC or PRIVATE set
+       * @enum {string}
        */
-      recommendedSessionNumber?: number;
-      resource?: string;
-      exams?: string;
-      ebook?: string;
-      image?: string;
-      /**
-       * Format: int32
-       * @description Only required when create new subject
-       */
-      majorId: number;
+      visibility: "PUBLIC" | "PRIVATE";
+      questionsList: components["schemas"]["CreateQuestionRequest"][];
     };
-    SubjectResponse: {
-      /** Format: int32 */
-      subjectId?: number;
-      name?: string;
-      subjectCode?: string;
-      description?: string;
-      /** Format: int32 */
-      recommendedSessionNumber?: number;
-      resource?: string;
-      exams?: string;
-      ebook?: string;
-      image?: string;
-      /** Format: int32 */
-      majorId?: number;
-      majorName?: string;
-      institutionId?: string;
-      institutionName?: string;
-      status?: boolean;
-    };
-    RegisterInstitutionRequest: {
-      institutionId: string;
-    };
-    RegisterUserRequest: {
-      /** @example example@gmail.com */
-      email: string;
-      password: string;
-      confirmPassword: string;
-      /** @description When admin creates an account for user, if the role is not STU or TA, this field is default null */
-      institutionId?: string;
-    };
-    GeneralResponseLoginResponse: {
-      returnObject?: components["schemas"]["LoginResponse"];
-      message?: string;
+    LoginRequest: {
+      idToken: string;
     };
     LoginResponse: {
       accessToken?: string;
       refreshToken?: string;
       userResponse?: components["schemas"]["UserResponse"];
     };
-    CreateManagerRequest: {
-      /** @example example@gmail.com */
-      email: string;
-      password?: string;
-      roleId: string;
-      department?: string;
-      position?: string;
-      contractLink?: string;
-    };
-    BankAccountResponse: {
-      /** Format: int32 */
-      bankAccountId?: number;
-      name?: string;
-      bankTypeId?: string;
-      bankAccountNumber?: string;
-      phoneNumber?: string;
-      note?: string;
-      status?: boolean;
-    };
-    ManagerResponse: {
-      userResponse?: components["schemas"]["UserResponse"];
-      linkFacebook?: string;
-      department?: string;
-      position?: string;
-      contractLink?: string;
-      bankAccountResponses?: components["schemas"]["BankAccountResponse"][];
-    };
-    LoginRequest: {
-      idToken: string;
-      /** @example aladin@gmail.com */
-      email: string;
-      /** @example aladin */
-      password: string;
-    };
-    TAResponse: {
-      userResponse?: components["schemas"]["UserResponse"];
-      studentCode?: string;
-      linkFacebook?: string;
-      referenceTAPhoneNumber?: string;
-      referenceTAName?: string;
-      usedToBeTA?: boolean;
-      teachingExperience?: string;
-      personalImage?: string;
-      receivedAllowance?: number;
-      upcomingAllowance?: number;
+    BasicUserResponse: {
+      /** Format: uuid */
+      id?: string;
+      email?: string;
+      fullName?: string;
+      feImageName?: string;
       /** @enum {string} */
-      allowanceStatus?: "DONE" | "UPCOMING";
+      status?: "DELETED" | "SUCCEED";
+      subscription?: components["schemas"]["UserSubscriptionResponse"];
+    };
+    SubscriptionResponse: {
+      id?: string;
+      subscriptionName?: string;
+      description?: string;
+      pricePerMonth?: number;
+      pricePerYear?: number;
+      supportedFeatures?: string;
+      gptModel?: string;
       /** Format: int32 */
-      numberOfGroupTaught?: number;
+      gptLimit?: number;
+    };
+    BasicStudySetResponse: {
       /** Format: int32 */
-      numberOfClassTaught?: number;
-      /** Format: int32 */
-      numberOfRegisteredSubjects?: number;
+      id?: number;
+      studySetName?: string;
+      feImageName?: string;
+      /** Format: uuid */
+      userId?: string;
+      userFullName?: string;
+      /** @enum {string} */
+      visibility?: "PUBLIC" | "PRIVATE";
       /** Format: date-time */
       createdAt?: string;
-      contractLink?: string;
       /** Format: date-time */
-      signedAt?: string;
-      /** @enum {string} */
-      status?: "PENDING" | "FAIL" | "SUCCEED" | "CANCEL";
-      bankAccountResponses?: components["schemas"]["BankAccountResponse"][];
-      taSubjectRegisters?: components["schemas"]["TASubjectRegisterResponse"][];
-      tacode?: string;
-    };
-    StudentResponse: {
-      userResponse?: components["schemas"]["UserResponse"];
-      /** Format: int32 */
-      studiedNumber?: number;
-      totalSpending?: number;
-    };
-    RoleResponse: {
-      roleId?: string;
-      name?: string;
-      description?: string;
-      permissions?: string[];
-      status?: boolean;
+      updatedAt?: string;
     };
   };
   responses: never;
@@ -516,31 +324,50 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-  resendCode: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  confirmCode: {
+  /** Unban a user (only for ADMIN) */
+  unbanUser: {
     parameters: {
       path: {
-        code: string;
+        user_id: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
+          "*/*": string;
         };
       };
     };
   };
+  /** Get pomodoro clock settings of current user */
+  getPomodoroClockOfCurrentUser: {
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["PomodoroResponse"];
+        };
+      };
+    };
+  };
+  /** Update pomodoro clock settings of current user */
+  updatePomodoroClockOfCurrentUser: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpdatePomodoroRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["PomodoroResponse"];
+        };
+      };
+    };
+  };
+  /** Get current logged in user */
   getCurrentUser: {
     responses: {
       /** @description OK */
@@ -551,6 +378,7 @@ export interface operations {
       };
     };
   };
+  /** Update current logged in user */
   updateCurrentUser: {
     requestBody: {
       content: {
@@ -566,627 +394,144 @@ export interface operations {
       };
     };
   };
-  updatePassword: {
-    requestBody: {
+  /** Update avatar of current logged in user */
+  updateAvatarOfCurrentUser: {
+    requestBody?: {
       content: {
-        "application/json": components["schemas"]["ChangePasswordRequest"];
+        "application/json": string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
+          "*/*": string;
         };
       };
     };
   };
-  requestCodeForUpdatingPassword: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ChangePasswordRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  updateBankAccountById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  deleteBankAccountById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getCurrentTA: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["TAResponse"];
-        };
-      };
-    };
-  };
-  updateCurrentTA: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  updateTARegistration: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RegisterTARequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["TARegistrationResponse"];
-        };
-      };
-    };
-  };
-  registerTA: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RegisterTARequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["TARegistrationResponse"];
-        };
-      };
-    };
-  };
-  registerTeachingPrivateGroup: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getAccountByEmailToChangePassword: {
+  /** Ban a user (only for ADMIN) */
+  banUser: {
     parameters: {
       path: {
-        email: string;
+        user_id: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
+          "*/*": string;
         };
       };
     };
   };
-  updatePasswordWhenForgetting: {
+  /** Get study set by ID */
+  getStudySetById: {
     parameters: {
       path: {
-        email: string;
+        study_set_id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["StudySetResponse"];
+        };
+      };
+    };
+  };
+  /** Update pre-exist study set (under development) */
+  updateStudySet: {
+    parameters: {
+      path: {
+        study_set_id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["StudySetResponse"];
+        };
+      };
+    };
+  };
+  /** Delete study set by ID */
+  deleteStudySet: {
+    parameters: {
+      path: {
+        study_set_id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": string;
+        };
+      };
+    };
+  };
+  /** Create or update note for a question of a study set (for current logged in user) */
+  createNoteOfCurrentQuestionForCurrentUser: {
+    parameters: {
+      path: {
+        question_id: number;
       };
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["ChangePasswordRequest"];
+        "application/json": components["schemas"]["CreateUserQuestionNoteRequest"];
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
+          "*/*": components["schemas"]["UserQuestionNoteResponse"];
         };
       };
     };
   };
-  resendCodeForChangingPasswordWhenForgetting: {
+  /** Get all study sets */
+  getAllStudySets: {
     parameters: {
-      path: {
-        email: string;
+      query?: {
+        search?: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
+          "*/*": components["schemas"]["BasicStudySetResponse"][];
         };
       };
     };
   };
-  confirmCodeForChangingPasswordWhenForgetting: {
-    parameters: {
-      path: {
-        email: string;
-        code: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  unbanTaById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  unbanStudentById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  unbanManagerById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  rejectTARegistration: {
-    requestBody: {
+  /** Create new study set */
+  createStudySet: {
+    requestBody?: {
       content: {
-        "application/json": components["schemas"]["VerifyTARequest"];
+        "application/json": {
+          /** @description Send image as form data with key "image" */
+          image: File;
+          create_study_set_request: components["schemas"]["CreateStudySetRequest"];
+        };
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
+          "*/*": components["schemas"]["StudySetResponse"];
         };
       };
     };
   };
-  confirmTARegistration: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["VerifyTARequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  updateOtherManagerAccount: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  deleteManagerById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getCurrentManager: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  updateCurrentManager: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  banTaById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  banStudentById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  banManagerById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getInstitutionById: {
-    parameters: {
-      path: {
-        institution_id: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["InstitutionResponse"];
-        };
-      };
-    };
-  };
-  updateInstitutionById: {
-    parameters: {
-      path: {
-        institution_id: string;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateInstitutionRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["InstitutionResponse"];
-        };
-      };
-    };
-  };
-  deleteInstitutionById: {
-    parameters: {
-      path: {
-        institution_id: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  getMajorById: {
-    parameters: {
-      path: {
-        major_id: number;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["MajorResponse"];
-        };
-      };
-    };
-  };
-  updateMajorById: {
-    parameters: {
-      path: {
-        major_id: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateMajorRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["MajorResponse"];
-        };
-      };
-    };
-  };
-  deleteMajorById: {
-    parameters: {
-      path: {
-        major_id: number;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  getSubjectById: {
-    parameters: {
-      path: {
-        subject_id: number;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["SubjectResponse"];
-        };
-      };
-    };
-  };
-  updateSubjectById: {
-    parameters: {
-      path: {
-        subject_id: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateSubjectRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["SubjectResponse"];
-        };
-      };
-    };
-  };
-  restoreSubjectById: {
-    parameters: {
-      path: {
-        subject_id: number;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  hideSubjectById: {
-    parameters: {
-      path: {
-        subject_id: number;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseObject"];
-        };
-      };
-    };
-  };
-  registerInstitution: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RegisterInstitutionRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["UserResponse"];
-        };
-      };
-    };
-  };
-  getFixedClassroomById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  updateFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  registerTeachingFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  reopenCanceledFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  cancelFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getCurrentBankAccounts: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  addMoreBankAccount: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  registerStudent: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RegisterUserRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["GeneralResponseLoginResponse"];
-        };
-      };
-    };
-  };
-  getAllPrivateGroups: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  createPrivateGroup: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  createManagerAccount: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateManagerRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["ManagerResponse"];
-        };
-      };
-    };
-  };
-  loginUser: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["LoginRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["LoginResponse"];
-        };
-      };
-    };
-  };
+  /** API for logging in via Google */
   loginUserViaGoogle: {
     requestBody: {
       content: {
@@ -1202,111 +547,7 @@ export interface operations {
       };
     };
   };
-  getAllInstitutions: {
-    parameters: {
-      query?: {
-        /** @description Zero-based page index (0..N) */
-        page?: number;
-        /** @description The size of the page to be returned */
-        size?: number;
-        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
-        sort?: string[];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["InstitutionResponse"][];
-        };
-      };
-    };
-  };
-  createInstitution: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateInstitutionRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["InstitutionResponse"];
-        };
-      };
-    };
-  };
-  createMajor: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateMajorRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["MajorResponse"];
-        };
-      };
-    };
-  };
-  createSubject: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["CreateSubjectRequest"];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["SubjectResponse"];
-        };
-      };
-    };
-  };
-  getAllFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  createFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getAllStudyingRegistrationOfCurrentStudent: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  registerStudyingFixedClassroom: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
+  /** API for testing welcome users from server */
   welcomeUser: {
     parameters: {
       query: {
@@ -1322,10 +563,27 @@ export interface operations {
       };
     };
   };
+  /** Get all users - students (only for ADMIN) */
+  getAllUsers: {
+    parameters: {
+      query?: {
+        status?: "DELETED" | "SUCCEED";
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["BasicUserResponse"][];
+        };
+      };
+    };
+  };
+  /** Get user by user ID (only for ADMIN) */
   getUserById: {
     parameters: {
       path: {
-        userId: string;
+        user_id: string;
       };
     };
     responses: {
@@ -1337,147 +595,45 @@ export interface operations {
       };
     };
   };
-  getAllTAs: {
+  /** Get all subscriptions */
+  getAllSubscription: {
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": Record<string, never>;
+          "*/*": components["schemas"]["SubscriptionResponse"][];
         };
       };
     };
   };
-  getTAById: {
+  /** Get subscription by ID */
+  getSubscriptionById: {
     parameters: {
       path: {
-        user_id: string;
+        subscription_id: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["TAResponse"];
+          "*/*": components["schemas"]["SubscriptionResponse"];
         };
       };
     };
   };
-  getAllStudents: {
+  /** Get all study sets of current user */
+  getAllStudySetsOfCurrentUser: {
     parameters: {
       query?: {
-        /** @description Zero-based page index (0..N) */
-        page?: number;
-        /** @description The size of the page to be returned */
-        size?: number;
-        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
-        sort?: string[];
+        search?: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["StudentResponse"][];
-        };
-      };
-    };
-  };
-  getStudentById: {
-    parameters: {
-      path: {
-        user_id: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["StudentResponse"];
-        };
-      };
-    };
-  };
-  getCurrentStudent: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["StudentResponse"];
-        };
-      };
-    };
-  };
-  getAllRole: {
-    parameters: {
-      query?: {
-        /** @description Zero-based page index (0..N) */
-        page?: number;
-        /** @description The size of the page to be returned */
-        size?: number;
-        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
-        sort?: string[];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["RoleResponse"][];
-        };
-      };
-    };
-  };
-  getRoleById: {
-    parameters: {
-      path: {
-        role_id: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["RoleResponse"];
-        };
-      };
-    };
-  };
-  getCurrentTARegistration: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["TARegistrationResponse"];
-        };
-      };
-    };
-  };
-  getPrivateById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getPaymentList: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getPaymentById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
+          "*/*": components["schemas"]["BasicStudySetResponse"][];
         };
       };
     };
@@ -1496,134 +652,18 @@ export interface operations {
       };
     };
   };
-  getManagerById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getAllTARegistrations: {
-    parameters: {
-      query?: {
-        status?: "PENDING" | "FAIL" | "SUCCEED" | "CANCEL";
-        /** @description Zero-based page index (0..N) */
-        page?: number;
-        /** @description The size of the page to be returned */
-        size?: number;
-        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
-        sort?: string[];
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["TARegistrationResponse"][];
-        };
-      };
-    };
-  };
-  getTARegistrationById: {
+  /** View public image */
+  viewImageByImageName: {
     parameters: {
       path: {
-        ta_id: string;
+        fe_image_name: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["TARegistrationResponse"];
-        };
-      };
-    };
-  };
-  getAllManagers: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  getAllMajorsOfInstitution: {
-    parameters: {
-      query?: {
-        /** @description Zero-based page index (0..N) */
-        page?: number;
-        /** @description The size of the page to be returned */
-        size?: number;
-        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
-        sort?: string[];
-      };
-      path: {
-        institution_id: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["MajorResponse"][];
-        };
-      };
-    };
-  };
-  getAllSubjectsOfMajor: {
-    parameters: {
-      query?: {
-        /** @description Zero-based page index (0..N) */
-        page?: number;
-        /** @description The size of the page to be returned */
-        size?: number;
-        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
-        sort?: string[];
-      };
-      path: {
-        major_id: number;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["SubjectResponse"][];
-        };
-      };
-    };
-  };
-  getStudyingRegistrationOfCurrentStudentById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  deleteTaById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
-        };
-      };
-    };
-  };
-  deleteStudentById: {
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": Record<string, never>;
+          "*/*": string[];
         };
       };
     };

@@ -1,21 +1,31 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   ActionIcon,
   Box,
   Center,
   Group,
+  List,
   Progress,
   Stack,
   Text,
-  Title,
+  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
-import { IconArrowsShuffle, IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import {
+  IconArrowsShuffle,
+  IconChevronLeft,
+  IconChevronRight,
+  IconRotateClockwise,
+} from "@tabler/icons-react";
 import { AnimatePresence } from "framer-motion";
 
-import Card from "@/features/flashcard/components/card";
-import { useFlashCardContext } from "@/features/flashcard/contexts/flashcard-context";
-import useDelayFn from "@/hooks/use-delay-fn";
+import Card from "@/features/study-sets/components/card";
+import { useFlashCardContext } from "@/features/study-sets/contexts/flashcard-context";
+import useGetStudySetById from "@/features/study-sets/hooks/use-get-study-set-by-id";
+import { useDelayFn } from "@/hooks/use-delay-fn";
 import { useHotkeys } from "@/hooks/use-hotkeys";
+import parseDec from "@/utils/parse-dec";
 
 const progressStyles = {
   bar: {
@@ -26,21 +36,26 @@ const progressStyles = {
 const DELAY = 200;
 
 export default function FlashCardPage() {
-  const { pool, next, prev, progress, shuffle } = useFlashCardContext();
-  const theme = useMantineTheme();
-  const {
-    fn: [delayNext, deplayPrev],
-  } = useDelayFn([next, prev, shuffle], DELAY);
+  const { setId } = useParams<{ setId: string }>();
+  const { data } = useGetStudySetById(parseDec(setId));
 
-  const {
-    fn: [delayShuffle],
-    delays: [isShuffleDelay],
-  } = useDelayFn([shuffle], 1000);
+  const { pool, next, prev, progress, shuffle, setItems, reset } = useFlashCardContext();
+  const theme = useMantineTheme();
+
+  const [delayShuffle, isShuffleDelay] = useDelayFn(shuffle, DELAY * 4);
+  const [delayReset, isResetDelay] = useDelayFn(reset, DELAY * 4);
+  const [delayNext] = useDelayFn(next, DELAY);
+  const [deplayPrev] = useDelayFn(prev, DELAY);
 
   useHotkeys([
-    ["arrowRight", delayNext, { delay: DELAY }],
-    ["arrowLeft", deplayPrev, { delay: DELAY }],
+    ["arrowRight", next, { delay: DELAY }],
+    ["arrowLeft", prev, { delay: DELAY }],
   ]);
+
+  useEffect(() => {
+    setItems(data?.questionResponses || []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setId, data?.id]);
 
   return (
     <>
@@ -59,16 +74,22 @@ export default function FlashCardPage() {
                 <Card
                   key={item.id}
                   index={i}
-                  color={item.color}
                   className="h-full w-full [transform-style:preserve-3d]"
                 >
-                  <Card.Front>
-                    <Title mb="md">Front side {item.index}</Title>
-                    <Text className="whitespace-pre-line">{item.sides[0].text}</Text>
+                  <Card.Front className="flex items-center justify-center" p="lg">
+                    <Stack>
+                      <Text className="whitespace-pre-line font-bold">{item.question}</Text>
+                      <List type="ordered">
+                        {item.answers?.map((answer, index) => (
+                          <List.Item key={index}>
+                            <Text className="whitespace-pre-line">{answer}</Text>
+                          </List.Item>
+                        ))}
+                      </List>
+                    </Stack>
                   </Card.Front>
-                  <Card.Back>
-                    <Title mb="md">Back side {item.index}</Title>
-                    <Text className="whitespace-pre-line">{item.sides[1].text}</Text>
+                  <Card.Back className="flex items-center justify-center" p="lg">
+                    <Text className="whitespace-pre-line font-bold">{item.correctAnswer}</Text>
                   </Card.Back>
                 </Card>
               ))}
@@ -82,17 +103,32 @@ export default function FlashCardPage() {
           </Box>
 
           <Group position="center">
-            <ActionIcon
-              variant="filled"
-              aria-label="Settings"
-              size="3rem"
-              color={theme.primaryColor}
-              radius="50%"
-              onClick={delayShuffle}
-              loading={isShuffleDelay}
-            >
-              <IconArrowsShuffle stroke={1.5} />
-            </ActionIcon>
+            <Tooltip.Floating label="Shuffle flashcards">
+              <ActionIcon
+                variant="filled"
+                aria-label="Settings"
+                size="3rem"
+                color={theme.primaryColor}
+                radius="50%"
+                onClick={delayShuffle}
+                loading={!isShuffleDelay}
+              >
+                <IconArrowsShuffle stroke={1.5} />
+              </ActionIcon>
+            </Tooltip.Floating>
+            <Tooltip.Floating label="Reset flashcards">
+              <ActionIcon
+                variant="filled"
+                aria-label="Settings"
+                size="3rem"
+                color={theme.primaryColor}
+                radius="50%"
+                onClick={delayReset}
+                loading={!isResetDelay}
+              >
+                <IconRotateClockwise stroke={1.5} />
+              </ActionIcon>
+            </Tooltip.Floating>
           </Group>
         </Stack>
       </Center>

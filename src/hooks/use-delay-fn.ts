@@ -1,39 +1,14 @@
-import { useMemo, useRef, useState } from "react";
+import { useState } from "react";
 
-export default function useDelayFn(arr: (() => void)[], delay = 0) {
-  const [delays, setDelays] = useState<boolean[]>([]);
-  const handlers = useRef<(() => void)[]>(arr);
+export const useDelayFn = (cb: () => void, delay = 200) => {
+  const [callable, setCallable] = useState(true);
 
-  const processedHandlers = useMemo(() => {
-    return handlers.current.map((handler, index) => {
-      setDelays((prev) => {
-        const newDelays = [...prev];
-        newDelays[index] = false;
-        return newDelays;
-      });
+  const handler = () => {
+    if (!callable) return;
+    cb();
+    setCallable(false);
+    setTimeout(() => setCallable(true), delay);
+  };
 
-      return () => {
-        if (delays[index]) return;
-
-        handler();
-
-        setDelays((prev) => {
-          const newDelays = [...prev];
-          newDelays[index] = true;
-          return newDelays;
-        });
-
-        setTimeout(() => {
-          setDelays((prev) => {
-            const newDelays = [...prev];
-            newDelays[index] = false;
-            return newDelays;
-          });
-        }, delay);
-      };
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [delay]);
-
-  return { fn: processedHandlers, delays };
-}
+  return [handler, callable] as const;
+};

@@ -6,6 +6,7 @@ function usePagination<T = unknown>(array: T[], itemsPerPage = 5) {
 
   const next = useCallback(() => {
     // prevent to remove the last item
+
     if (items.length + itemsPerPage - (startIndex + itemsPerPage) <= 1) return;
 
     setStartIndex((prev) => {
@@ -22,12 +23,16 @@ function usePagination<T = unknown>(array: T[], itemsPerPage = 5) {
     });
   }, []);
 
+  const reset = useCallback(() => {
+    setStartIndex(0);
+  }, []);
+
   const currentView = useMemo(
     () => items.slice(startIndex, startIndex + itemsPerPage),
     [items, itemsPerPage, startIndex],
   );
 
-  return { currentView, next, prev, startIndex, itemsPerPage, items, setItems };
+  return { currentView, next, prev, startIndex, itemsPerPage, items, setItems, reset };
 }
 
 export default usePagination;

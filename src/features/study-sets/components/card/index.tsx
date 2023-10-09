@@ -3,13 +3,12 @@ import { clsx, Paper, PaperProps } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { HTMLMotionProps, motion, useTransform } from "framer-motion";
 
-import { variants } from "@/features/flashcard/components/card/variants";
-import { useFlashCardContext } from "@/features/flashcard/contexts/flashcard-context";
+import { variants } from "@/features/study-sets/components/card/variants";
+import { useFlashCardContext } from "@/features/study-sets/contexts/flashcard-context";
 import useDrag from "@/hooks/use-drag";
 
 interface Props extends HTMLMotionProps<"div"> {
   index: number;
-  color: string;
   children?: ReactNode;
 }
 

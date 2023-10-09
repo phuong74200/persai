@@ -1,38 +1,43 @@
-// import { useState } from "react";
-// import { notifications } from "@mantine/notifications";
-// import { FirebaseError } from "firebase/app";
-// import { UserCredential } from "firebase/auth";
+import { useCallback } from "react";
+import { useLocalStorage } from "@mantine/hooks";
+import { CredentialResponse } from "@react-oauth/google";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-// import { signInWithGoogle } from "@/features/auth/services/google";
-// import setIdToken from "@/utils/set-id-token";
+import { queryKeys } from "@/api";
+import { client } from "@/api/openapi-fetch";
+import { components } from "@/api/v1";
 
-// export default function useGoogleLogin() {
-//   const [credential, setCredential] = useState<UserCredential | null>(null);
-//   const [error, setError] = useState<unknown | FirebaseError>(undefined);
-//   const [loading, setLoading] = useState(false);
+type RequestParams = components["schemas"]["LoginRequest"];
 
-//   const signIn = async () => {
-//     setLoading(true);
-//     try {
-//       const response = await signInWithGoogle();
-//       setCredential(response);
-//       const idToken = await response.user.getIdToken();
-//       setIdToken(idToken); // save the idToken into the local storage
-//       return response;
-//     } catch (e) {
-//       if (e instanceof FirebaseError) {
-//         setError(e);
-//         notifications.show({
-//           title: "Error",
-//           message: e.message,
-//           color: "red",
-//         });
-//       }
-//       setCredential(null);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+export default function useGoogleLogin() {
+  const queryClient = useQueryClient();
+  const [_, setToken] = useLocalStorage({ key: "token" });
 
-//   return { credential, error, signIn, loading };
-// }
+  const mutation = useMutation({
+    mutationFn: async (body: RequestParams) => {
+      const response = await client.POST("/api/v1/login/google", {
+        body,
+      });
+      return response;
+    },
+
+    onSuccess: async (data) => {
+      const queryKey = queryKeys.user.current().queryKey;
+
+      await queryClient.cancelQueries({ queryKey });
+
+      setToken(data.data?.accessToken || "");
+
+      queryClient.setQueryData(queryKey, { data: data.data?.userResponse });
+    },
+  });
+
+  const handleSuccess = useCallback(
+    (response: CredentialResponse) => {
+      if (response.credential) mutation.mutate({ idToken: response.credential });
+    },
+    [mutation],
+  );
+
+  return { ...mutation, handleSuccess };
+}

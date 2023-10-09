@@ -4,19 +4,24 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
 import { components } from "@/api/v1";
+import { FLAGS, useFeatureFlag } from "@/configs/feature-flag";
 import { queryCache } from "@/configs/react-query";
-import logger from "@/utils/dev-log";
 
 export default function useGetCurrentUser() {
   const [token, , removeToken] = useLocalStorage({ key: "token" });
   const queryClient = useQueryClient();
+  const [_, SET_FLAG_NOTE] = useFeatureFlag(FLAGS.NOTE);
 
   const query = useQuery({
-    ...queryKeys.generalUser.user("current"),
+    ...queryKeys.user.current(),
 
     onError: () => {
-      logger.log(token, "is invalid, remove it");
+      queryClient.resetQueries();
       removeToken();
+    },
+
+    onSuccess: (data) => {
+      if (data.data?.role === "ADMIN") SET_FLAG_NOTE(true);
     },
 
     enabled: Boolean(token),
@@ -31,6 +36,6 @@ export default function useGetCurrentUser() {
 
 export function useGetCurrentUserFromCache() {
   return queryCache.find<{ data: components["schemas"]["UserResponse"] }>(
-    queryKeys.generalUser.user("current").queryKey,
+    queryKeys.user.current().queryKey,
   );
 }

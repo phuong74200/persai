@@ -1,6 +1,6 @@
 import { useId } from "react";
 import { Avatar, Group, Paper, Radio, RadioProps, SimpleGrid, Stack, Text } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { UseFormReturnType } from "@mantine/form";
 
 interface Props extends RadioProps {
   index: number;
@@ -24,6 +24,7 @@ function Item({ index, label, isSelected, ...rest }: Props) {
 }
 
 interface RadioSectionProps {
+  id: string;
   choices: {
     id: string;
     index: number;
@@ -31,29 +32,24 @@ interface RadioSectionProps {
   }[];
   question: string;
   index: number;
+  form: UseFormReturnType<{ [key: string]: string }>;
 }
 
-export default function RadioSection({ choices, question, index }: RadioSectionProps) {
-  const form = useForm({
-    initialValues: {
-      selected: null,
-    },
-  });
-
+export default function RadioSection({ id, form, choices, question, index }: RadioSectionProps) {
   return (
     <Paper p="md" shadow="sm">
-      <Stack>
+      <Stack spacing="2rem">
         <Group>
           <Avatar variant="filled">{index}</Avatar>
         </Group>
         <Text weight="bold" size="lg">
           {question}
         </Text>
-        <Radio.Group {...form.getInputProps("selected")}>
+        <Radio.Group {...form.getInputProps(id)}>
           <SimpleGrid cols={2}>
             {choices.map((option) => (
               <Item
-                isSelected={option.id === form.values.selected}
+                isSelected={form.values[id] === option.id}
                 key={option.id}
                 index={option.index}
                 value={option.id}

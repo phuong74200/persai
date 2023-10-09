@@ -1,6 +1,6 @@
 import { Button, Container, Stack, Title } from "@mantine/core";
 
-import CheckboxSection from "@/features/test/components/checkbox-section";
+import RadioSection from "@/features/test/components/radio-section";
 import useTest from "@/features/test/hooks/use-test";
 import { testOptions } from "@/mock/study-sets";
 
@@ -11,9 +11,9 @@ export default function TestPage() {
     <Container size="sm">
       <Stack spacing="xl">
         <Title>EXE 101 TEST</Title>
-        <Stack spacing="2rem">
+        <Stack spacing="3rem">
           {set.map((quest, index) => (
-            <CheckboxSection
+            <RadioSection
               key={quest.id}
               id={quest.id}
               index={index + 1}

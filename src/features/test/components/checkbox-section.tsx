@@ -52,10 +52,8 @@ export default function CheckboxSection({
   form,
   id,
 }: CheckboxSectionProps) {
-  const isSelected = form.values[id]?.includes(id);
-
   return (
-    <Paper p="md" shadow="sm">
+    <Paper p="md">
       <Stack>
         <Group>
           <Avatar variant="filled">{index}</Avatar>
@@ -67,7 +65,7 @@ export default function CheckboxSection({
           <SimpleGrid cols={2}>
             {choices.map((option) => (
               <Item
-                isSelected={isSelected}
+                isSelected={form.values[id]?.includes(option.id)}
                 key={option.id}
                 index={option.index}
                 value={option.id}

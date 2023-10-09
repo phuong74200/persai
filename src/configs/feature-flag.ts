@@ -1,22 +1,13 @@
 import { useContext } from "react";
 
-import { FL_DEV, FL_TEST, MODE } from "@/configs/env";
 import FeatureFlagManager, { FeatureFlagManagerType } from "@/modules/feature-flag-manager";
 
 export enum FLAGS {
-  PROFILE = "profile",
-  DEV = "dev",
-  DEV_DARK_MODE = "dev_dark_mode",
-  TEST = "test",
-  DEV_CUSTOM_THEME = "dev_custom_theme",
+  NOTE = "note",
 }
 
 const featureFlagManager = new FeatureFlagManager({
-  [FLAGS.PROFILE]: true,
-  [FLAGS.DEV]: FL_DEV || MODE === "development",
-  [FLAGS.TEST]: FL_TEST || MODE === "test",
-  [FLAGS.DEV_DARK_MODE]: false,
-  [FLAGS.DEV_CUSTOM_THEME]: true,
+  [FLAGS.NOTE]: false,
 });
 
 export const FeatureFlagProvider = featureFlagManager.FeatureFlagProvider;

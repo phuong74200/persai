@@ -6,7 +6,7 @@ import { toMantineBreakpoint } from "@/utils/breakpoint-converter";
 export const customMantineTheme: MantineThemeOverride = {
   breakpoints: toMantineBreakpoint(breakpoints),
   primaryColor: "green",
-  colorScheme: "dark",
+  colorScheme: "light",
   // fontFamily: "Poppins, sans-serif",
   fontFamilyMonospace,
   colors: {},

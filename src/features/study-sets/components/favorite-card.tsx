@@ -1,27 +1,33 @@
-import { Card, Image, Progress, Stack, Text, Tooltip } from "@mantine/core";
+import { Card, Image, Stack, Text } from "@mantine/core";
+
+import { StudySet } from "@/features/study-sets/domains/study-set";
+import useRedirect from "@/hooks/use-redirect";
 
 interface Props {
-  id: string;
-  name: string;
-  createdAt: string;
-  image: string;
-  progress: number;
+  domain: StudySet;
 }
 
-export default function FavoriteCard({ createdAt, image, name, progress }: Props) {
+export default function FavoriteCard({ domain }: Props) {
+  const { onRedirect } = useRedirect();
+
   return (
-    <Card shadow="md" padding="lg" className="relative cursor-pointer">
+    <Card
+      onClick={onRedirect(`/set/${domain.id}`)}
+      shadow="md"
+      padding="lg"
+      className="relative cursor-pointer"
+    >
       <Card.Section>
-        <Image src={image} alt="Norway" height={300} />
+        <Image src={domain.feImageName} alt="Norway" height={300} />
         <Stack className="absolute bottom-0 left-0 w-full" spacing={0}>
-          {progress && (
+          {/* {domain.progress && (
             <Tooltip.Floating label={`${progress}%`}>
               <Progress value={progress} radius={0} />
             </Tooltip.Floating>
-          )}
+          )} */}
           <Stack p="lg" spacing={0} className="bg-oc-gray-0 bg-opacity-50 backdrop-blur-md">
-            <Text weight={500}>{name}</Text>
-            <Text size="xs">{createdAt}</Text>
+            <Text weight={500}>{domain.studySetName}</Text>
+            <Text size="xs">{domain.createdDay}</Text>
           </Stack>
         </Stack>
       </Card.Section>

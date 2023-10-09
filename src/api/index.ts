@@ -1,18 +1,7 @@
-import { createQueryKeys, mergeQueryKeys } from "@lukemorales/query-key-factory";
+import { mergeQueryKeys } from "@lukemorales/query-key-factory";
 
-import { generalUserKeys } from "@/api/general-user";
-import { institutionKeys } from "@/api/institution";
 import { loginKeys } from "@/api/login";
-import { majorKeys } from "@/api/major";
+import { studySetKeys } from "@/api/study-set";
+import { userKeys } from "@/api/user";
 
-export const welcomeKeys = createQueryKeys("welcome", {
-  queryKeys: ["welcome"],
-});
-
-export const queryKeys = mergeQueryKeys(
-  welcomeKeys,
-  generalUserKeys,
-  loginKeys,
-  institutionKeys,
-  majorKeys,
-);
+export const queryKeys = mergeQueryKeys(loginKeys, userKeys, studySetKeys);

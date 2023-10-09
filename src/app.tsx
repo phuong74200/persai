@@ -1,11 +1,12 @@
-import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { FeatureFlagProvider, FLAGS, useFeatureFlag, useHelper } from "@/configs/feature-flag";
+import { GOOGLE_CLIENT_ID } from "@/configs/env";
+import { FeatureFlagProvider } from "@/configs/feature-flag";
 import { customMantineTheme } from "@/configs/mantine-theme";
 import { defaultOptions, mutationCache, queryCache } from "@/configs/react-query";
-import SyncTailwindColorScheme from "@/modules/sync-tailwind-color-scheme";
 import { BrowserRouter } from "@/router";
 
 import "./index.scss";
@@ -17,37 +18,23 @@ export const queryClient = new QueryClient({
 });
 
 function Theme() {
-  const [colorScheme, setColorScheme] = useFeatureFlag(FLAGS.DEV_DARK_MODE);
-  const { all: checkDevCustomTheme } = useHelper(FLAGS.DEV, FLAGS.DEV_CUSTOM_THEME);
-
-  const customTheme = checkDevCustomTheme() ? customMantineTheme : undefined;
-
-  const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value === "dark");
-
-  const scheme = colorScheme ? "dark" : "light";
-
   return (
-    <ColorSchemeProvider colorScheme={scheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{ ...customTheme, colorScheme: scheme }}
-      >
-        <SyncTailwindColorScheme scheme={scheme} />
-        <Notifications />
-        <BrowserRouter.RouterProvider />
-      </MantineProvider>
-    </ColorSchemeProvider>
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={customMantineTheme}>
+      <Notifications />
+      <BrowserRouter.RouterProvider />
+    </MantineProvider>
   );
 }
 
 function App() {
   return (
-    <FeatureFlagProvider>
-      <QueryClientProvider client={queryClient}>
-        <Theme />
-      </QueryClientProvider>
-    </FeatureFlagProvider>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <FeatureFlagProvider>
+        <QueryClientProvider client={queryClient}>
+          <Theme />
+        </QueryClientProvider>
+      </FeatureFlagProvider>
+    </GoogleOAuthProvider>
   );
 }
 
