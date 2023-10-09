@@ -8,8 +8,7 @@
   "redirects": [
     {
       "source": "/(.*)/?",
-      "destination": "https://persai.space/$1",
-      "type": 308
+      "destination": "https://persai.space/$1"
     }
   ]
 }
