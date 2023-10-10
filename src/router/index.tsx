@@ -1,3 +1,4 @@
+import ReactGA from "react-ga4";
 import { Navigate, Outlet } from "react-router-dom";
 
 import useGetCurrentUser from "@/features/auth/hooks/use-get-current-user";
@@ -16,6 +17,7 @@ import FlashCardPage from "@/pages/set/[set-id]/flashcard";
 import TestPage from "@/pages/set/[set-id]/test";
 import StudySetPage from "@/pages/study-set";
 import UserPage from "@/pages/user";
+import logger from "@/utils/dev-log";
 
 export const BrowserRouter = new AuthRouter(
   [
@@ -155,6 +157,10 @@ export const BrowserRouter = new AuthRouter(
   {
     usePermission: () => {
       const { data, isFetching } = useGetCurrentUser();
+
+      ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+
+      logger.log({ hitType: "pageview", page: window.location.pathname });
 
       const auth = [data?.data?.role].filter(Boolean);
 
