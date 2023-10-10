@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useReducer } from "react";
 
 export function useToggle<T = boolean>(options: readonly T[] = [false, true] as any) {
