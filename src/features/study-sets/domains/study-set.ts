@@ -11,8 +11,7 @@ export class StudySet {
   public status;
   public studySetName;
   public updatedAt;
-  public userFullName;
-  public userId;
+  public creator;
   public visibility;
 
   constructor({
@@ -23,8 +22,7 @@ export class StudySet {
     status,
     studySetName,
     updatedAt,
-    userFullName,
-    userId,
+    creator,
     visibility,
   }: components["schemas"]["StudySetResponse"] = {}) {
     this.createdAt = createdAt;
@@ -34,8 +32,7 @@ export class StudySet {
     this.status = status;
     this.studySetName = studySetName;
     this.updatedAt = updatedAt;
-    this.userFullName = userFullName;
-    this.userId = userId;
+    this.creator = creator;
     this.visibility = visibility;
   }
 

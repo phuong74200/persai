@@ -7,8 +7,6 @@ import {
   useRoutes,
 } from "react-router-dom";
 
-import logger from "@/utils/dev-log";
-
 type AdvanceRouteObject<P = unknown> = Omit<NonIndexRouteObject, "children" | "path"> & {
   path: string;
   asModal?: boolean;
@@ -113,11 +111,6 @@ export default class AuthRouter<P = unknown> {
         this.collectAuthRoutes(this.immRoute, auth || [], false),
         background || location,
       );
-
-      logger.log("modalRoute", {
-        modalRoute,
-        fullPageRoute: this.collectAuthRoutes(this.immRoute, auth || [], false),
-      });
 
       return (
         <>

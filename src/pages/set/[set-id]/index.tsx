@@ -38,7 +38,7 @@ const LearningMethods = (props: GroupProps) => {
     <Group {...props}>
       <LearnOption Icon={IconCardsFilled} label="Flashcards" onClick={onRedirect("flashcard")} />
       <LearnOption Icon={IconBooks} label="Learn" />
-      <LearnOption Icon={IconAB2} label="Test" />
+      <LearnOption Icon={IconAB2} label="Test" onClick={onRedirect("test")} />
     </Group>
   );
 };

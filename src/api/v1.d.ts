@@ -28,6 +28,14 @@ export interface paths {
     /** Ban a user (only for ADMIN) */
     put: operations["banUser"];
   };
+  "/api/v1/subscription/upgrade": {
+    /** Make request to upgrade subscription for a specific user (ONLY ADMIN) */
+    put: operations["upgradeSubscription"];
+  };
+  "/api/v1/subscription/downgrade": {
+    /** Cron Job server automatically calls this API to downgrade subscription after expiredDateTime */
+    put: operations["downgradeSubscription"];
+  };
   "/api/v1/study-set/{study_set_id}": {
     /** Get study set by ID */
     get: operations["getStudySetById"];
@@ -214,6 +222,29 @@ export interface components {
       /** Format: date-time */
       expiredDatetime?: string;
     };
+    UpgradeSubscriptionRequest: {
+      studentEmail: string;
+      subscriptionId: string;
+      /**
+       * @description MONTHLY or YEARLY
+       * @example MONTHLY
+       * @enum {string}
+       */
+      paidType: "NO" | "MONTHLY" | "YEARLY";
+      amount: number;
+    };
+    DowngradeSubscriptionRequest: {
+      secretKey: string;
+      /** Format: uuid */
+      userId: string;
+    };
+    CreatorResponse: {
+      /** Format: uuid */
+      userId?: string;
+      userFullName?: string;
+      userEmail?: string;
+      userAvatar?: string;
+    };
     QuestionResponse: {
       /** Format: int32 */
       id?: number;
@@ -229,9 +260,7 @@ export interface components {
       id?: number;
       studySetName?: string;
       feImageName?: string;
-      /** Format: uuid */
-      userId?: string;
-      userFullName?: string;
+      creator?: components["schemas"]["CreatorResponse"];
       /** @enum {string} */
       visibility?: "PUBLIC" | "PRIVATE";
       status?: boolean;
@@ -275,16 +304,6 @@ export interface components {
       refreshToken?: string;
       userResponse?: components["schemas"]["UserResponse"];
     };
-    BasicUserResponse: {
-      /** Format: uuid */
-      id?: string;
-      email?: string;
-      fullName?: string;
-      feImageName?: string;
-      /** @enum {string} */
-      status?: "DELETED" | "SUCCEED";
-      subscription?: components["schemas"]["UserSubscriptionResponse"];
-    };
     SubscriptionResponse: {
       id?: string;
       subscriptionName?: string;
@@ -301,9 +320,7 @@ export interface components {
       id?: number;
       studySetName?: string;
       feImageName?: string;
-      /** Format: uuid */
-      userId?: string;
-      userFullName?: string;
+      creator?: components["schemas"]["CreatorResponse"];
       /** @enum {string} */
       visibility?: "PUBLIC" | "PRIVATE";
       /** Format: date-time */
@@ -426,6 +443,38 @@ export interface operations {
       };
     };
   };
+  /** Make request to upgrade subscription for a specific user (ONLY ADMIN) */
+  upgradeSubscription: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpgradeSubscriptionRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["UserResponse"];
+        };
+      };
+    };
+  };
+  /** Cron Job server automatically calls this API to downgrade subscription after expiredDateTime */
+  downgradeSubscription: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["DowngradeSubscriptionRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": boolean;
+        };
+      };
+    };
+  };
   /** Get study set by ID */
   getStudySetById: {
     parameters: {
@@ -517,7 +566,7 @@ export interface operations {
       content: {
         "application/json": {
           /** @description Send image as form data with key "image" */
-          image: File;
+          image: string;
           create_study_set_request: components["schemas"]["CreateStudySetRequest"];
         };
       };
@@ -574,7 +623,7 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["BasicUserResponse"][];
+          "*/*": components["schemas"]["UserResponse"][];
         };
       };
     };

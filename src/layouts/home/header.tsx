@@ -1,6 +1,5 @@
 import {
   Burger,
-  Button,
   Container,
   createStyles,
   Group,
@@ -10,8 +9,9 @@ import {
   Transition,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useGoogleOneTapLogin } from "@react-oauth/google";
 
-import FloatNotification from "@/features/notification/components/float-notification";
+import useGoogleLogin from "@/features/auth/hooks/use-google-login";
 import useRedirect from "@/hooks/use-redirect";
 
 const HEADER_HEIGHT = rem(60);
@@ -83,15 +83,25 @@ const useStyles = createStyles((theme) => ({
 export function HomeHeader() {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
-  const { onRedirect } = useRedirect();
+  const { redirect } = useRedirect();
+
+  const { handleSuccess } = useGoogleLogin();
+
+  useGoogleOneTapLogin({
+    onSuccess: (response) => {
+      redirect("/my-collection");
+      handleSuccess(response);
+    },
+  });
 
   return (
-    <Header height={HEADER_HEIGHT}>
+    <Header
+      height={HEADER_HEIGHT}
+      bg="transparent"
+      className="border-none bg-oc-gray-8 bg-opacity-70 backdrop-blur-lg"
+    >
       <Container className={classes.header} fluid>
-        <Group className={classes.links}>
-          <Button onClick={onRedirect("/create")}>Upload new set</Button>
-          <FloatNotification />
-        </Group>
+        <Group className={classes.links}></Group>
 
         <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
 

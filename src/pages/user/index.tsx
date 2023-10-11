@@ -1,25 +1,23 @@
 import {
-  ActionIcon,
   Avatar,
   Box,
-  Button,
   Container,
   Flex,
   Group,
   Input,
-  Select,
   Stack,
   Table,
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { IconBan, IconDeviceFloppy, IconPlus, IconSearch } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
 import { sentenceCase } from "change-case";
 import { DataTable, DataTableColumn } from "mantine-datatable";
 
+import ManageSubscription from "@/features/subscription/components/manage-subscription";
+import UserActions from "@/features/user-management/components/user-actions";
 import { User } from "@/features/user-management/domains/user";
 import useGetAllUser from "@/features/user-management/hooks/use-get-all-user";
-import useRedirect from "@/hooks/use-redirect";
 
 const columns: DataTableColumn<User>[] = [
   {
@@ -56,16 +54,7 @@ const columns: DataTableColumn<User>[] = [
     width: "30%",
     textAlignment: "center",
     render(record) {
-      return (
-        <Select
-          data={[
-            { value: "BASIC", label: "Basic" },
-            { value: "PRO", label: "Pro" },
-          ]}
-          defaultValue={record.subscription?.currentSubscriptionId}
-          onClick={(e) => e.stopPropagation()}
-        />
-      );
+      return <ManageSubscription domain={record} />;
     },
   },
   {
@@ -73,36 +62,14 @@ const columns: DataTableColumn<User>[] = [
     title: "Action",
     width: "10%",
     textAlignment: "center",
-    render() {
-      return (
-        <Group position="center">
-          <ActionIcon
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            variant="filled"
-            color="blue"
-          >
-            <IconDeviceFloppy size="1rem" />
-          </ActionIcon>
-          <ActionIcon
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            variant="filled"
-            color="red"
-          >
-            <IconBan size="1rem" />
-          </ActionIcon>
-        </Group>
-      );
+    render(record) {
+      return <UserActions domain={record} />;
     },
   },
 ];
 
 export default function UserPage() {
   const theme = useMantineTheme();
-  const { onRedirect } = useRedirect();
 
   const { data, isFetching } = useGetAllUser();
 
@@ -114,10 +81,8 @@ export default function UserPage() {
             variant="filled"
             icon={<IconSearch size={theme.fontSizes.md} />}
             placeholder="Tìm kiếm"
+            w="100%"
           />
-          <Button onClick={onRedirect("create")} leftIcon={<IconPlus size={theme.fontSizes.md} />}>
-            Thêm trường
-          </Button>
         </Flex>
         <DataTable
           withBorder

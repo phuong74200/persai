@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { resolvePath, useLocation } from "react-router-dom";
 
-import logger from "@/utils/dev-log";
-
 type BreadCrumbs = {
   path: string;
   name: string;
@@ -18,8 +16,6 @@ export default function useBreadcrumbs() {
       return acc.concat({ path: currentPath, name: decodeURI(cur) });
     }, []);
   }, [location]);
-
-  logger.log("useBreadcrumbs", paths);
 
   return paths;
 }

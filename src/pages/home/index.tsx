@@ -1,32 +1,25 @@
 import Marquee from "react-fast-marquee";
-import { faker } from "@faker-js/faker";
 import {
   Box,
   Button,
+  Container,
   createStyles,
   Group,
   Image,
+  Paper,
   Stack,
   Text,
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { useGoogleOneTapLogin } from "@react-oauth/google";
 import { IconBrandGooglePlay } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
 import { ASSET_HOME_HERO } from "@/assets";
-import useGoogleLogin from "@/features/auth/hooks/use-google-login";
+import generateFilledArray from "@/utils/generate-filled-array";
 
 const Review = () => {
-  return (
-    <Image
-      src={faker.image.urlPicsumPhotos({ width: 1, height: 1 })}
-      height={300}
-      miw={400}
-      radius="sm"
-    />
-  );
+  return <Paper bg="green" h={300} w={400} radius="sm" />;
 };
 
 const useStyles = createStyles(() => ({
@@ -35,21 +28,39 @@ const useStyles = createStyles(() => ({
       marginRight: "1rem",
     },
   },
+
+  marqueeContainer: {
+    position: "relative",
+    "::before": {
+      content: '""',
+      position: "absolute",
+      left: 0,
+      width: "10%",
+      height: "100%",
+      zIndex: 2,
+      background: "linear-gradient(90deg, rgba(255,255,255,0.884) 0%, rgba(255,255,255,0) 100%)",
+    },
+    "::after": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      right: -1,
+      width: "10%",
+      height: "100%",
+      zIndex: 2,
+      transform: "scaleX(-1)",
+      background: "linear-gradient(90deg, rgba(255, 255, 255, 0.884) 0%, rgba(255,255,255,0) 100%)",
+    },
+  },
 }));
 
 export default function HomePage() {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const theme = useMantineTheme();
-
-  const { handleSuccess } = useGoogleLogin();
-
-  useGoogleOneTapLogin({
-    onSuccess: handleSuccess,
-  });
 
   return (
     <Stack spacing={0}>
-      <section className="relative h-[100vh] w-[100vw] bg-oc-gray-6">
+      <section className="relative h-[100vh] bg-oc-gray-6">
         <motion.div
           initial={{ marginTop: -100, opacity: 0 }}
           animate={{ marginTop: 0, opacity: 0.3 }}
@@ -63,10 +74,10 @@ export default function HomePage() {
           />
         </motion.div>
         <div
+          className="absolute left-0 top-0 z-40 h-full w-full"
           style={{
             background: `radial-gradient(104.9% 104.9% at 14.34% -11.49%, rgba(22, 28, 36, 0.48) 0%, rgba(22, 28, 36, 0.80) 49.86%, #161C24 100%, #161C24 100%, #161C24 100%)`,
           }}
-          className="absolute left-0 top-0 z-40 h-full w-full"
         />
         <Stack
           spacing="2rem"
@@ -106,7 +117,7 @@ export default function HomePage() {
           </Group>
         </Stack>
       </section>
-      <section className="relative h-[100vh] max-w-[100vw]">
+      <section className="relative h-[100vh]">
         <Stack align="center" justify="center" className="h-full" spacing="1rem">
           <Stack spacing="1rem">
             <Title align="center" color="dimmed" size="sm">
@@ -115,14 +126,22 @@ export default function HomePage() {
             <Title size="4rem" align="center" mb="4rem">
               What Persai helps you?
             </Title>
-
-            <Marquee className={classes.container} autoFill={true}>
-              <Review />
-            </Marquee>
-            <Marquee className={classes.container} autoFill={true} direction="right">
-              <Review />
-            </Marquee>
           </Stack>
+          <Container
+            p={0}
+            className={cx("flex flex-col gap-4 overflow-hidden", classes.marqueeContainer)}
+          >
+            <Marquee className={classes.container}>
+              {generateFilledArray(40).map((_, i) => (
+                <Review key={i} />
+              ))}
+            </Marquee>
+            <Marquee className={classes.container} direction="right">
+              {generateFilledArray(40).map((_, i) => (
+                <Review key={i} />
+              ))}
+            </Marquee>
+          </Container>
         </Stack>
       </section>
     </Stack>

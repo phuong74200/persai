@@ -164,7 +164,7 @@ export const usePomodoro = (config: Partial<PomodoroConfig> = defaultConfig) => 
     [dispatch],
   );
   const changeConfig = useCallback(
-    (config: PomodoroConfig) => dispatch(changeConfigAction(config)),
+    (config: Partial<PomodoroConfig>) => dispatch(changeConfigAction(config)),
     [dispatch],
   );
   const goPomodoro = useCallback(() => changeType("pomodoro"), [changeType]);

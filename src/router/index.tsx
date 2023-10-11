@@ -16,6 +16,7 @@ import MyCollectionPage from "@/pages/my-collection";
 import ViewSetPage from "@/pages/set/[set-id]";
 import FlashCardPage from "@/pages/set/[set-id]/flashcard";
 import TestPage from "@/pages/set/[set-id]/test";
+import PomodoroSettingPage from "@/pages/setting/pomodoro";
 import StudySetPage from "@/pages/study-set";
 import UserPage from "@/pages/user";
 
@@ -58,6 +59,18 @@ export const BrowserRouter = new AuthRouter(
           path: "login",
           permissons: ["STUDENT"],
           element: <Navigate to="/my-collection" replace />,
+        },
+
+        {
+          path: "setting",
+          permissons: ["STUDENT"],
+          children: [
+            {
+              path: "pomodoro",
+              Component: PomodoroSettingPage,
+              asModal: true,
+            },
+          ],
         },
 
         {
@@ -128,20 +141,6 @@ export const BrowserRouter = new AuthRouter(
                 {
                   path: ":setId",
                   Component: ViewSetPage,
-                },
-                {
-                  path: ":setId",
-                  Component: FlashCardContextProvider,
-                  children: [
-                    {
-                      path: "flashcard",
-                      Component: FlashCardPage,
-                    },
-                    {
-                      path: "test",
-                      Component: TestPage,
-                    },
-                  ],
                 },
               ],
             },

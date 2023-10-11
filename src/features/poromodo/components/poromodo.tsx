@@ -10,10 +10,15 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
-import { IconPinFilled, IconPlayerSkipForwardFilled, IconReload } from "@tabler/icons-react";
+import {
+  IconPinFilled,
+  IconPlayerSkipForwardFilled,
+  IconReload,
+  IconSettings,
+} from "@tabler/icons-react";
 
-import { Pomodoro } from "@/features/poromodo/domains/pomodoro";
-import { usePomodoro } from "@/modules/pomodoro";
+import usePomodoroService from "@/features/poromodo/hooks/use-pomodoro-service";
+import useRedirect from "@/hooks/use-redirect";
 
 const ringProgressStyle = {
   root: {
@@ -26,21 +31,9 @@ const ringProgressStyle = {
 export default function Porodomo() {
   const theme = useMantineTheme();
   const [pinned, togglePinned] = useToggle([() => undefined, () => true]);
+  const { onRedirectWithState } = useRedirect();
 
-  const pomodoro = usePomodoro({
-    pomodoro: 5,
-    shortBreak: 4,
-    longBreak: 6,
-    autoStartBreaks: true,
-    autoStartPomodoros: true,
-    longBreakInterval: 4,
-    notificationConfig: {
-      time: 3,
-      type: "every",
-    },
-  });
-
-  const pomodoroDomain = new Pomodoro(pomodoro);
+  const pomodoro = usePomodoroService();
 
   return (
     <Popover
@@ -55,11 +48,11 @@ export default function Porodomo() {
           styles={ringProgressStyle}
           roundCaps
           size={51}
-          thickness={pomodoroDomain.state.paused ? 0 : 3}
+          thickness={pomodoro.state.paused ? 0 : 3}
           sections={[
             {
-              value: pomodoroDomain.progress,
-              color: pomodoroDomain.color,
+              value: pomodoro.progress,
+              color: pomodoro.color,
             },
           ]}
           label={
@@ -68,16 +61,16 @@ export default function Porodomo() {
               align="center"
               className="transition-all"
               style={{
-                transform: pomodoroDomain.state.paused ? "scale(1)" : "scale(0.8)",
+                transform: pomodoro.state.paused ? "scale(1)" : "scale(0.8)",
               }}
             >
               <Indicator
-                label={pomodoroDomain.state.pomodoros}
+                label={pomodoro.state.pomodoros}
                 position="bottom-center"
                 size={20}
                 withBorder
               >
-                {pomodoroDomain.icon}
+                {pomodoro.icon}
               </Indicator>
             </Flex>
           }
@@ -85,35 +78,46 @@ export default function Porodomo() {
       </Popover.Target>
       <Popover.Dropdown p="lg">
         <Stack spacing="lg">
-          <ActionIcon
-            size="lg"
-            variant="light"
-            color={pinned() ? theme.primaryColor : "gray"}
-            radius="50%"
-            onClick={() => togglePinned()}
-          >
-            <IconPinFilled size="1rem" />
-          </ActionIcon>
+          <Group position="apart">
+            <ActionIcon
+              size="lg"
+              variant="light"
+              color={pinned() ? theme.primaryColor : "gray"}
+              radius="50%"
+              onClick={() => togglePinned()}
+            >
+              <IconPinFilled size="1rem" />
+            </ActionIcon>
+            <ActionIcon
+              size="lg"
+              variant="light"
+              color={pinned() ? theme.primaryColor : "gray"}
+              radius="50%"
+              onClick={onRedirectWithState("/setting/pomodoro")}
+            >
+              <IconSettings size="1rem" />
+            </ActionIcon>
+          </Group>
           <RingProgress
             className="pointer-events-none"
             m={-20}
-            onClick={pomodoroDomain.toggle}
+            onClick={pomodoro.toggle}
             styles={ringProgressStyle}
             sections={[
               {
-                value: pomodoroDomain.progress,
-                color: pomodoroDomain.color,
-                tooltip: pomodoroDomain.progress.toFixed(2) + "%",
+                value: pomodoro.progress,
+                color: pomodoro.color,
+                tooltip: pomodoro.progress.toFixed(2) + "%",
               },
             ]}
             roundCaps
             label={
               <Stack spacing={0}>
                 <Text color="dimmed" align="center">
-                  {pomodoroDomain.type}
+                  {pomodoro.type}
                 </Text>
                 <Text size="2rem" weight="bold" align="center">
-                  {pomodoroDomain.state.formattedTimer}
+                  {pomodoro.state.formattedTimer}
                 </Text>
               </Stack>
             }
@@ -126,7 +130,7 @@ export default function Porodomo() {
               variant="filled"
               color={theme.primaryColor}
               radius="50%"
-              onClick={pomodoroDomain.reset}
+              onClick={pomodoro.reset}
             >
               <IconReload size="1rem" />
             </ActionIcon>
@@ -136,9 +140,9 @@ export default function Porodomo() {
               variant="filled"
               color={theme.primaryColor}
               radius="50%"
-              onClick={pomodoroDomain.toggle}
+              onClick={pomodoro.toggle}
             >
-              {pomodoroDomain.playIcon}
+              {pomodoro.playIcon}
             </ActionIcon>
 
             <ActionIcon
@@ -146,7 +150,7 @@ export default function Porodomo() {
               variant="filled"
               color={theme.primaryColor}
               radius="50%"
-              onClick={pomodoroDomain.next}
+              onClick={pomodoro.next}
             >
               <IconPlayerSkipForwardFilled size="1rem" />
             </ActionIcon>

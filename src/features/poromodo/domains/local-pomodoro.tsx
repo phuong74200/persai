@@ -8,7 +8,7 @@ import {
 
 import { usePomodoro } from "@/modules/pomodoro";
 
-export class Pomodoro {
+export class LocalPomodoro {
   state;
   toggle;
   next;
