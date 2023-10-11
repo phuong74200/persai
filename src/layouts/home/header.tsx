@@ -1,6 +1,4 @@
 import {
-  Anchor,
-  Breadcrumbs,
   Burger,
   Button,
   Container,
@@ -12,10 +10,8 @@ import {
   Transition,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { sentenceCase } from "change-case";
 
 import FloatNotification from "@/features/notification/components/float-notification";
-import useBreadcrumbs from "@/hooks/use-breadcrumbs";
 import useRedirect from "@/hooks/use-redirect";
 
 const HEADER_HEIGHT = rem(60);
@@ -87,19 +83,11 @@ const useStyles = createStyles((theme) => ({
 export function HomeHeader() {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
-  const paths = useBreadcrumbs();
   const { onRedirect } = useRedirect();
 
   return (
     <Header height={HEADER_HEIGHT}>
       <Container className={classes.header} fluid>
-        <Breadcrumbs>
-          {paths.map((item, index) => (
-            <Anchor onClick={onRedirect(item.path)} key={index}>
-              {sentenceCase(item.name)}
-            </Anchor>
-          ))}
-        </Breadcrumbs>
         <Group className={classes.links}>
           <Button onClick={onRedirect("/create")}>Upload new set</Button>
           <FloatNotification />

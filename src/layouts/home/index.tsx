@@ -7,6 +7,7 @@ const styles = (theme: MantineTheme) => ({
   main: {
     minHeight: "100vh",
     background: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0],
+    padding: 0,
   },
 });
 

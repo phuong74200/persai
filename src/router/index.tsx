@@ -6,6 +6,7 @@ import Error404 from "@/features/error/components/Error404";
 import { FlashCardContextProvider } from "@/features/study-sets/contexts/flashcard-context";
 import { PublicLayout, StudentLayout } from "@/layouts";
 import { AdminLayout } from "@/layouts/admin";
+import { HomeLayout } from "@/layouts/home";
 import { NonLoginSetLayout } from "@/layouts/non-login-set";
 import AuthRouter from "@/modules/auth-router";
 import CreateSetPage from "@/pages/create";
@@ -17,7 +18,6 @@ import FlashCardPage from "@/pages/set/[set-id]/flashcard";
 import TestPage from "@/pages/set/[set-id]/test";
 import StudySetPage from "@/pages/study-set";
 import UserPage from "@/pages/user";
-import logger from "@/utils/dev-log";
 
 export const BrowserRouter = new AuthRouter(
   [
@@ -27,7 +27,13 @@ export const BrowserRouter = new AuthRouter(
       children: [
         {
           path: "",
-          Component: HomePage,
+          Component: HomeLayout,
+          children: [
+            {
+              path: "",
+              Component: HomePage,
+            },
+          ],
         },
 
         {
@@ -158,9 +164,11 @@ export const BrowserRouter = new AuthRouter(
     usePermission: () => {
       const { data, isFetching } = useGetCurrentUser();
 
-      ReactGA.send({ hitType: "pageview", page: window.location.pathname });
-
-      logger.log({ hitType: "pageview", page: window.location.pathname });
+      ReactGA.send({
+        hitType: "pageview",
+        page: window.location.pathname,
+        title: window.location.pathname,
+      });
 
       const auth = [data?.data?.role].filter(Boolean);
 

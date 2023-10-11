@@ -71,7 +71,7 @@ const columns: DataTableColumn<User>[] = [
   {
     accessor: "action",
     title: "Action",
-    width: "15%",
+    width: "10%",
     textAlignment: "center",
     render() {
       return (
