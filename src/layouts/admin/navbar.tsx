@@ -50,6 +50,7 @@ const useStyles = createStyles((theme) => ({
 
 export const NavbarNested = () => {
   const { classes } = useStyles();
+
   return (
     <Navbar height={800} width={{ sm: 300 }} px="md" className={classes.navbar}>
       <Navbar.Section className={classes.links}>

@@ -9,11 +9,11 @@ export default function MyCollectionPage() {
 
   return (
     <Container>
-      <Group align="center">
+      <Group align="center" mb="3rem" mt="2rem">
         <ThemeIcon size="3rem" variant="gradient">
           <IconLayersIntersect size="2rem" />
         </ThemeIcon>
-        <Title my="3rem">My collection</Title>
+        <Title>My collection</Title>
       </Group>
 
       <SimpleGrid cols={3} spacing="lg">

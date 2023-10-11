@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { faker } from "@faker-js/faker";
 import { Carousel } from "@mantine/carousel";
 import {
-  Affix,
   Avatar,
   BackgroundImage,
   Box,
@@ -16,10 +15,8 @@ import {
   Stack,
   Text,
   Title,
-  Transition,
   useMantineTheme,
 } from "@mantine/core";
-import { useWindowScroll } from "@mantine/hooks";
 import { IconAB2, IconBooks, IconCardsFilled } from "@tabler/icons-react";
 
 import Item from "@/features/study-sets/components/item";
@@ -46,7 +43,6 @@ const LearningMethods = (props: GroupProps) => {
 export default function ViewSetPage() {
   const theme = useMantineTheme();
 
-  const [scroll] = useWindowScroll();
   const { setId } = useParams<{ setId: string }>();
   const { data } = useGetStudySetById(parseDec(setId));
 
@@ -78,14 +74,14 @@ export default function ViewSetPage() {
                   <HoverCard>
                     <HoverCard.Target>
                       <Text className="cursor-pointer" underline span color={theme.white}>
-                        {data?.userFullName}
+                        {data?.creator?.userFullName}
                       </Text>
                     </HoverCard.Target>
                     <HoverCard.Dropdown>
                       <Group>
                         <Avatar size={37.95}>BH</Avatar>
                         <div>
-                          <Text>{data?.userFullName}</Text>
+                          <Text>{data?.creator?.userFullName}</Text>
                           <Text size="xs" color="dimmed">
                             user@email.com
                           </Text>
@@ -121,11 +117,11 @@ export default function ViewSetPage() {
         </Stack>
       </Stack>
 
-      <Affix position={{ bottom: "1rem", left: 275.5 }}>
+      {/* <Affix position={{ bottom: "1rem", left: 275.5 }}>
         <Transition transition="slide-up" mounted={scroll.y > 400}>
           {(transitionStyles) => <LearningMethods style={transitionStyles} className="flex-col" />}
         </Transition>
-      </Affix>
+      </Affix> */}
     </Container>
   );
 }

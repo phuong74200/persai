@@ -17,6 +17,7 @@ import ViewSetPage from "@/pages/set/[set-id]";
 import FlashCardPage from "@/pages/set/[set-id]/flashcard";
 import TestPage from "@/pages/set/[set-id]/test";
 import PomodoroSettingPage from "@/pages/setting/pomodoro";
+import ProfileSettingPage from "@/pages/setting/profile";
 import StudySetPage from "@/pages/study-set";
 import UserPage from "@/pages/user";
 
@@ -69,6 +70,16 @@ export const BrowserRouter = new AuthRouter(
               path: "pomodoro",
               Component: PomodoroSettingPage,
               asModal: true,
+            },
+            {
+              path: "",
+              Component: StudentLayout,
+              children: [
+                {
+                  path: "profile",
+                  Component: ProfileSettingPage,
+                },
+              ],
             },
           ],
         },

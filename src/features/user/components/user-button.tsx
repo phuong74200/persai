@@ -7,9 +7,10 @@ import {
   UnstyledButton,
   UnstyledButtonProps,
 } from "@mantine/core";
-import { IconChevronRight, IconLogout } from "@tabler/icons-react";
+import { IconChevronRight, IconLogout, IconSettings } from "@tabler/icons-react";
 
 import useLogout from "@/features/auth/hooks/use-logout";
+import useRedirect from "@/hooks/use-redirect";
 
 const useStyles = createStyles((theme) => ({
   user: {
@@ -34,6 +35,7 @@ interface UserButtonProps extends UnstyledButtonProps {
 export function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
   const { classes } = useStyles();
   const { logout } = useLogout();
+  const { onRedirect } = useRedirect();
 
   return (
     <Menu position="right-end">
@@ -57,6 +59,13 @@ export function UserButton({ image, name, email, icon, ...others }: UserButtonPr
       </Menu.Target>
 
       <Menu.Dropdown>
+        <Menu.Item
+          icon={<IconSettings size={14} />}
+          px="2rem"
+          onClick={onRedirect("/setting/profile")}
+        >
+          Setting
+        </Menu.Item>
         <Menu.Item color="red" icon={<IconLogout size={14} />} px="2rem" onClick={logout}>
           Logout
         </Menu.Item>
