@@ -566,7 +566,7 @@ export interface operations {
       content: {
         "application/json": {
           /** @description Send image as form data with key "image" */
-          image: string;
+          image: File;
           create_study_set_request: components["schemas"]["CreateStudySetRequest"];
         };
       };
