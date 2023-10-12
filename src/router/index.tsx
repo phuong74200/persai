@@ -1,6 +1,7 @@
 import ReactGA from "react-ga4";
 import { Navigate, Outlet } from "react-router-dom";
 
+import { Theme } from "@/app";
 import useGetCurrentUser from "@/features/auth/hooks/use-get-current-user";
 import Error404 from "@/features/error/components/Error404";
 import { FlashCardContextProvider } from "@/features/study-sets/contexts/flashcard-context";
@@ -25,7 +26,7 @@ export const BrowserRouter = new AuthRouter(
   [
     {
       path: "/",
-      Component: Outlet,
+      Component: Theme,
       children: [
         {
           path: "",

@@ -65,4 +65,14 @@ export class User {
   get test() {
     return this.fullName;
   }
+
+  get isPremium() {
+    return this.subscription?.currentSubscriptionId !== "BASIC";
+  }
+
+  get userTheme() {
+    const theme = this.theme?.split(".")?.[1]?.toLowerCase();
+
+    return this.theme?.toLowerCase();
+  }
 }

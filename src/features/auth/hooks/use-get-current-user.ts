@@ -3,9 +3,9 @@ import { useLocalStorage } from "@mantine/hooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
-import { components } from "@/api/v1";
 import { FLAGS, useFeatureFlag } from "@/configs/feature-flag";
 import { queryCache } from "@/configs/react-query";
+import { User } from "@/features/user-management/domains/user";
 
 export default function useGetCurrentUser() {
   const [token, , removeToken] = useLocalStorage({ key: "token" });
@@ -35,7 +35,7 @@ export default function useGetCurrentUser() {
 }
 
 export function useGetCurrentUserFromCache() {
-  return queryCache.find<{ data: components["schemas"]["UserResponse"] }>(
-    queryKeys.user.current().queryKey,
-  );
+  const cache = queryCache.find<{ data: User }>(queryKeys.user.current().queryKey)?.state.data
+    ?.data;
+  if (cache) return new User(cache);
 }
