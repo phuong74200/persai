@@ -144,6 +144,16 @@ export default function HomePage() {
           </Container>
         </Stack>
       </section>
+      <section className="min-h-[100vh]">
+        <Stack spacing="1rem">
+          <Title align="center" color="dimmed" size="sm">
+            Personal learning assistant
+          </Title>
+          <Title size="4rem" align="center" mb="4rem">
+            What Persai helps you?
+          </Title>
+        </Stack>
+      </section>
     </Stack>
   );
 }
