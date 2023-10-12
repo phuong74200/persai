@@ -1,11 +1,15 @@
 import Marquee from "react-fast-marquee";
 import {
+  BackgroundImage,
   Box,
   Button,
+  Card,
+  Center,
   Container,
   createStyles,
   Group,
   Image,
+  Overlay,
   Paper,
   Stack,
   Text,
@@ -15,11 +19,51 @@ import {
 import { IconBrandGooglePlay } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
-import { ASSET_HOME_HERO } from "@/assets";
-import generateFilledArray from "@/utils/generate-filled-array";
+import { ASSET_ANALYSTICS, ASSET_HOME_HERO } from "@/assets";
+import FavoriteCard from "@/features/study-sets/components/favorite-card";
+import useLoremPicsum from "@/hooks/use-lorem-picsum";
 
-const Review = () => {
-  return <Paper bg="green" h={300} w={400} radius="sm" />;
+const helps = [
+  {
+    title: "Personlized",
+    description:
+      "Persai helps you to learn with your own way. You can create your own study set with your own style.",
+  },
+  {
+    title: "Interactive",
+    description: "Engaging tools to enhance learning.",
+  },
+  {
+    title: "Flashcard",
+    description: "Flashcard is the most effective way to learn.",
+  },
+  {
+    title: "AI Supported",
+    description: "Persai uses AI to help you learn more effectively.",
+  },
+];
+
+const Review = ({ title, desciption }: { title: string; desciption: string }) => {
+  const image = useLoremPicsum({ height: 350, width: 350 });
+  const theme = useMantineTheme();
+
+  return (
+    <Paper h={300} w={400} radius="sm" className="relative">
+      <BackgroundImage className="h-full w-full" src={image} />
+      <Overlay color="rgba(0,0,0,0.5)" p="lg">
+        <Center className="h-full w-full">
+          <Box>
+            <Title align="center" color={theme.white}>
+              {title}
+            </Title>
+            <Text align="center" color={theme.white}>
+              {desciption}
+            </Text>
+          </Box>
+        </Center>
+      </Overlay>
+    </Paper>
+  );
 };
 
 const useStyles = createStyles(() => ({
@@ -53,6 +97,28 @@ const useStyles = createStyles(() => ({
     },
   },
 }));
+
+const SampleCard = () => {
+  const image = useLoremPicsum({ height: 300, width: 300 });
+
+  return (
+    <FavoriteCard
+      className="h-full"
+      domain={{
+        createdAt: new Date().toISOString(),
+        createdDay: new Date().toISOString(),
+        id: 1,
+        updatedAt: new Date().toISOString(),
+        creator: {},
+        feImageName: image,
+        questionResponses: [],
+        status: true,
+        studySetName: "SWD",
+        visibility: "PUBLIC",
+      }}
+    />
+  );
+};
 
 export default function HomePage() {
   const { classes, cx } = useStyles();
@@ -132,27 +198,96 @@ export default function HomePage() {
             className={cx("flex flex-col gap-4 overflow-hidden", classes.marqueeContainer)}
           >
             <Marquee className={classes.container}>
-              {generateFilledArray(40).map((_, i) => (
-                <Review key={i} />
+              {helps.map((help, i) => (
+                <Review key={i} title={help.title} desciption={help.description} />
               ))}
             </Marquee>
             <Marquee className={classes.container} direction="right">
-              {generateFilledArray(40).map((_, i) => (
-                <Review key={i} />
+              {helps.map((help, i) => (
+                <Review key={i} title={help.title} desciption={help.description} />
               ))}
             </Marquee>
           </Container>
         </Stack>
       </section>
-      <section className="min-h-[100vh]">
-        <Stack spacing="1rem">
-          <Title align="center" color="dimmed" size="sm">
-            Personal learning assistant
-          </Title>
-          <Title size="4rem" align="center" mb="4rem">
-            What Persai helps you?
-          </Title>
-        </Stack>
+      <Container size="xl">
+        <section className="relative h-[100vh]">
+          <Stack
+            spacing="1rem"
+            align="left"
+            className="absolute left-16 top-1/2 w-[500px] translate-y-[-50%]"
+          >
+            <Title color="dimmed" size="sm" transform="uppercase">
+              Personal learning assistant
+            </Title>
+            <Title mb="md" size="4rem" ml="-0.25rem">
+              Diverse subjects
+            </Title>
+            <Title mb="md" color="dimmed" size="sm">
+              Research shows that testing yourself with flashcards is more effective than rereading
+              your notes. From math to medicine to modern languages,{" "}
+              <Text span color="green">
+                Persai
+              </Text>{" "}
+              is used by students in over 100 different subjects.
+            </Title>
+            <Button size="lg" variant="outline" className="w-fit">
+              Explore now
+            </Button>
+          </Stack>
+          <Box className="absolute right-16 top-1/2 h-[550px] w-[520px] translate-y-[-50%]">
+            <Card
+              shadow="md"
+              className="pointer-events-none absolute left-0 top-0 z-20 h-full skew-y-[20deg]"
+            >
+              <Stack className="h-full w-[290px]">
+                <SampleCard />
+                <SampleCard />
+              </Stack>
+            </Card>
+            <Card
+              shadow="md"
+              className="pointer-events-none absolute left-[100px] top-[-50px] z-10 skew-y-[20deg]"
+            >
+              <Stack className="h-full w-[290px]">
+                <SampleCard />
+                <SampleCard />
+              </Stack>
+            </Card>
+            <Card
+              shadow="md"
+              className="pointer-events-none absolute left-[200px] top-[-100px] z-0 skew-y-[20deg]"
+              style={{
+                fontSmooth: "subpixel-antialiased",
+                backfaceVisibility: "hidden",
+                transform: "skew(0deg, 20deg)",
+              }}
+            >
+              <Stack className="h-full w-[290px]">
+                <SampleCard />
+                <SampleCard />
+              </Stack>
+            </Card>
+          </Box>
+        </section>
+      </Container>
+      <section className="relative h-[100vh]">
+        <Title mt="14rem" align="center" color="dimmed" size="sm" transform="uppercase">
+          Personal learning assistant
+        </Title>
+        <Title align="center" mb="md" size="4rem" ml="-0.25rem">
+          Earn money
+        </Title>
+        <Title align="center" color="dimmed" size="sm" transform="uppercase">
+          There more users the more money you makes
+        </Title>
+        <Image
+          mt="7rem"
+          width="50vw"
+          src={ASSET_ANALYSTICS}
+          mx="auto"
+          className="translate-x-[50px]"
+        />
       </section>
     </Stack>
   );

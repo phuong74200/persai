@@ -1,13 +1,13 @@
-import { Card, Image, Stack, Text } from "@mantine/core";
+import { Card, CardProps, clsx, Image, Stack, Text } from "@mantine/core";
 
 import { StudySet } from "@/features/study-sets/domains/study-set";
 import useRedirect from "@/hooks/use-redirect";
 
-interface Props {
+interface Props extends Omit<CardProps, "children"> {
   domain: StudySet;
 }
 
-export default function FavoriteCard({ domain }: Props) {
+export default function FavoriteCard({ domain, className, ...rest }: Props) {
   const { onRedirect } = useRedirect();
 
   return (
@@ -15,7 +15,8 @@ export default function FavoriteCard({ domain }: Props) {
       onClick={onRedirect(`/set/${domain.id}`)}
       shadow="md"
       padding="lg"
-      className="relative cursor-pointer"
+      className={clsx("relative cursor-pointer", className)}
+      {...rest}
     >
       <Card.Section>
         <Image src={domain.feImageName} alt="Norway" height={300} />
