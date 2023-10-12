@@ -23,8 +23,10 @@ export const studySet = new StudySet({
   status: true,
   studySetName: faker.commerce.product(),
   updatedAt: faker.date.past().toISOString(),
-  userFullName: faker.person.fullName(),
-  userId: faker.string.uuid(),
+  creator: {
+    userFullName: faker.person.fullName(),
+    userId: faker.string.uuid(),
+  },
   visibility: "PUBLIC",
 });
 
