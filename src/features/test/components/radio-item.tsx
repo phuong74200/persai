@@ -9,20 +9,18 @@ type StyleParams = {
 
 const useStyles = createStyles((theme, { isAnswer, isSelected, reveal }: StyleParams) => {
   const falseColor = theme.fn.variant({
-    variant: "light",
+    variant: "filled",
     color: "red",
   });
 
   const trueColor = theme.fn.variant({
-    variant: "light",
+    variant: "filled",
     color: "green",
   });
-
   const disabledColor = theme.fn.variant({
-    variant: "light",
+    variant: "filled",
     color: "gray",
   });
-
   const mainColor = theme.fn.variant({
     variant: "filled",
     color: theme.primaryColor,
@@ -30,17 +28,19 @@ const useStyles = createStyles((theme, { isAnswer, isSelected, reveal }: StylePa
 
   const colors = useMemo(() => {
     if (isSelected && reveal && !isAnswer) return falseColor;
-    if (isAnswer && reveal && isSelected) {
+    if (isAnswer && reveal) {
       return trueColor;
     }
     if (isSelected) return mainColor;
     if (reveal) return disabledColor;
-  }, []);
+  }, [disabledColor, falseColor, isAnswer, isSelected, mainColor, reveal, trueColor]);
 
   return {
     radio: {
       borderColor: isSelected ? colors?.border : undefined,
       pointerEvents: reveal ? "none" : undefined,
+      background: colors?.background,
+      color: colors?.color,
     },
   };
 });
@@ -63,7 +63,6 @@ export default function RadioItem({ index, label, isSelected, isAnswer, reveal, 
 
   return (
     <Paper
-      bg={isSelected ? colors.background : undefined}
       p="md"
       withBorder
       component="label"

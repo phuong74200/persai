@@ -1,4 +1,5 @@
 import { components } from "@/api/v1";
+import emptyFn from "@/utils/empty-fn";
 
 export class Question {
   public answers;
@@ -27,7 +28,7 @@ export class Question {
     this.question = question;
   }
 
-  speak(voice: SpeechSynthesisVoice = window.speechSynthesis.getVoices()[0]) {
+  speak(cb?: () => void, voice: SpeechSynthesisVoice = window.speechSynthesis.getVoices()[0]) {
     if (!this.question) return;
 
     // Create a new SpeechSynthesisUtterance object
@@ -40,5 +41,7 @@ export class Question {
 
     // Speak the utterance
     window.speechSynthesis.speak(utterance);
+
+    utterance.onend = cb || emptyFn;
   }
 }

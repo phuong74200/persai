@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "@mantine/form";
 
 import useGetStudySetById from "@/features/study-sets/hooks/use-get-study-set-by-id";
 
 export default function useTest(setId: number) {
   const { data } = useGetStudySetById(setId);
+  const [score, setScore] = useState<number | null>(null);
 
   const form = useForm<{
     [key: string]: string;
@@ -26,5 +27,9 @@ export default function useTest(setId: number) {
 
   const questionResponses = useMemo(() => data?.questionResponses || [], [data?.id]);
 
-  return { form, questionResponses, studySet: data };
+  const getScore = useCallback(() => {
+    setScore(data?.score(form.values).score || 0);
+  }, [data, form.values]);
+
+  return { form, questionResponses, studySet: data, getScore, score };
 }

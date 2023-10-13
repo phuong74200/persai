@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Avatar,
@@ -18,12 +18,23 @@ import parseDec from "@/utils/parse-dec";
 
 export default function TestPage() {
   const [reveal, setReveal] = useState(false);
+  const refs = useRef<(HTMLDivElement | null)[]>([]);
 
   const { setId } = useParams<{ setId: string }>();
-  const { form, questionResponses, studySet } = useTest(parseDec(setId, "-1"));
+  const { form, questionResponses, studySet, score, getScore } = useTest(parseDec(setId, "-1"));
 
   const handleSubmit = () => {
     setReveal(true);
+    getScore();
+  };
+
+  const handleFocus = (index: number) => () => {
+    const element = refs.current[index];
+
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.scrollY - (56 + 28);
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   };
 
   return (
@@ -39,9 +50,14 @@ export default function TestPage() {
                 form={form}
                 index={index + 1}
                 reveal={reveal}
+                ref={(el) => {
+                  refs.current[index] = el;
+                }}
               />
             ))}
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={handleSubmit} disabled={reveal}>
+              Submit
+            </Button>
           </Stack>
           <Paper shadow="md" p="md" w={500} className="sticky top-20">
             <Stack spacing="md">
@@ -51,11 +67,22 @@ export default function TestPage() {
               </Text>
               <SimpleGrid cols={6}>
                 {Object.entries(form.values).map(([key, value], index) => (
-                  <Avatar color={value ? "green" : "red"} className="w-full" key={key}>
+                  <Avatar
+                    color={value ? "green" : "red"}
+                    className="w-full cursor-pointer"
+                    key={key}
+                    onClick={handleFocus(index)}
+                  >
                     {index + 1}
                   </Avatar>
                 ))}
               </SimpleGrid>
+              <Text size="sm" weight={500}>
+                Your scrore
+              </Text>
+              <Text>
+                {typeof score === "number" ? score.toFixed(2) : "Submit to get your score"}
+              </Text>
             </Stack>
           </Paper>
         </Group>
