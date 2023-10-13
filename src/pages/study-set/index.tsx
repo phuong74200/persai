@@ -13,10 +13,17 @@ export default function StudySetPage() {
         <ThemeIcon size="3rem" variant="gradient">
           <IconLayersIntersect size="2rem" />
         </ThemeIcon>
-        <Title>New study set</Title>
+        <Title className="sm:text-oc-green-6 md:text-oc-red-6">New study set</Title>
       </Group>
 
-      <SimpleGrid cols={3} spacing="lg">
+      <SimpleGrid
+        cols={3}
+        breakpoints={[
+          { maxWidth: "md", cols: 2, spacing: "md" },
+          { maxWidth: "sm", cols: 1, spacing: "sm" },
+        ]}
+        spacing="lg"
+      >
         {data?.map((set) => <FavoriteCard key={set.id} domain={set} />)}
       </SimpleGrid>
     </Container>

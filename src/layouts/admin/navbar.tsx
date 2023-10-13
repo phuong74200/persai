@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { createStyles, Navbar, rem, Text } from "@mantine/core";
 import { IconUsersGroup } from "@tabler/icons-react";
 
+import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import { UserButton } from "@/features/user/components/user-button";
 import { LinksGroup, LinksGroupProps } from "@/layouts/components/link-group";
 
@@ -50,6 +51,7 @@ const useStyles = createStyles((theme) => ({
 
 export const NavbarNested = () => {
   const { classes } = useStyles();
+  const cache = useGetCurrentUserFromCache();
 
   return (
     <Navbar height={800} width={{ sm: 300 }} px="md" className={classes.navbar}>
@@ -72,9 +74,9 @@ export const NavbarNested = () => {
 
       <Navbar.Section className={classes.footer}>
         <UserButton
-          image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-          name="Ann Nullpointer"
-          email="anullpointer@yahoo.com"
+          image={cache?.feImageName || ""}
+          name={cache?.fullName || ""}
+          email={cache?.email || ""}
         />
       </Navbar.Section>
     </Navbar>

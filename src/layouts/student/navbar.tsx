@@ -1,45 +1,10 @@
 import { Fragment } from "react";
-import { createStyles, Navbar, rem, ScrollArea, Text } from "@mantine/core";
-import {
-  IconBellFilled,
-  IconCalendar,
-  IconCardsFilled,
-  IconChartHistogram,
-  IconHome,
-} from "@tabler/icons-react";
+import { clsx, createStyles, Navbar, rem, ScrollArea, Text } from "@mantine/core";
 
+import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import { UserButton } from "@/features/user/components/user-button";
-import { LinksGroup, LinksGroupProps } from "@/layouts/components/link-group";
-
-const mockdata: {
-  [key: string]: LinksGroupProps[];
-} = {
-  General: [
-    { label: "Home", icon: IconHome, link: "/study-set" },
-    {
-      label: "My collection",
-      icon: IconCardsFilled,
-      link: "/my-collection",
-    },
-    {
-      label: "Analytics",
-      icon: IconChartHistogram,
-      link: "",
-    },
-  ],
-  App: [
-    {
-      label: "Notification",
-      icon: IconBellFilled,
-      link: "",
-    },
-    {
-      label: "Calendar",
-      icon: IconCalendar,
-      link: "",
-    },
-  ],
-};
+import { LinksGroup } from "@/layouts/components/link-group";
+import { tree } from "@/layouts/student/tree";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -78,15 +43,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const NavbarNested = () => {
+export const NavbarNested = ({ opened }: { opened: boolean }) => {
   const { classes } = useStyles();
+  const cache = useGetCurrentUserFromCache();
 
   return (
-    <Navbar height={800} width={{ sm: 300 }} px="md" className={classes.navbar}>
+    <Navbar
+      hiddenBreakpoint="md"
+      hidden={opened}
+      height={800}
+      width={{ md: 300, sm: 14 * 1.875 + 14 * 2.875 - 3, xs: 0 }}
+      px="md"
+      className={classes.navbar}
+    >
       <Navbar.Section grow className={classes.links} component={ScrollArea}>
-        {Object.entries(mockdata).map(([key, value]) => (
+        {Object.entries(tree).map(([key, value]) => (
           <Fragment key={key}>
-            <Text className={classes.groupLabel} h="51.5px" py="1rem">
+            <Text className={clsx(classes.groupLabel, "md:hidden")} h="51.5px" py="1rem">
               {key}
             </Text>
             {value.map((item) => (
@@ -102,9 +75,9 @@ export const NavbarNested = () => {
 
       <Navbar.Section className={classes.footer}>
         <UserButton
-          image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-          name="Ann Nullpointer"
-          email="anullpointer@yahoo.com"
+          image={cache?.feImageName || ""}
+          name={cache?.fullName || ""}
+          email={cache?.email || ""}
         />
       </Navbar.Section>
     </Navbar>

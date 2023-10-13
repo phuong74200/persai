@@ -57,6 +57,15 @@ const useStyles = createStyles((theme) => ({
         ? theme.colors[theme.primaryColor][7]
         : theme.colors[theme.primaryColor][0],
   },
+
+  title: {
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+    [theme.fn.smallerThan("sm")]: {
+      display: "block",
+    },
+  },
 }));
 
 export interface LinkItem {
@@ -105,12 +114,14 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, link }: 
         onClick={hasLinks ? () => toggleOpen() : onRedirect(link)}
         className={cx(classes.control, { [classes.controlActive]: matchLocation })}
       >
-        <Group position="apart" spacing={0}>
+        <Group position="apart" spacing={0} className="md:h-[34px]">
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <ThemeIcon variant="light" size={30}>
               <Icon size="1.1rem" />
             </ThemeIcon>
-            <Box ml="md">{label}</Box>
+            <Box ml="md" className="md:hidden">
+              {label}
+            </Box>
           </Box>
           {hasLinks && (
             <ChevronIcon

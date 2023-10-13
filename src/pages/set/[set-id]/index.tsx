@@ -7,11 +7,12 @@ import {
   Box,
   Container,
   Group,
-  GroupProps,
   HoverCard,
   Overlay,
   Paper,
   Rating,
+  SimpleGrid,
+  SimpleGridProps,
   Stack,
   Text,
   Title,
@@ -28,15 +29,23 @@ import parseDec from "@/utils/parse-dec";
 
 const books = generateFilledArray(10, () => faker.airline.aircraftType());
 
-const LearningMethods = (props: GroupProps) => {
+const LearningMethods = (props: SimpleGridProps) => {
   const { onRedirect } = useRedirect();
 
   return (
-    <Group {...props}>
+    <SimpleGrid
+      cols={4}
+      breakpoints={[
+        { maxWidth: "md", cols: 2, spacing: "md" },
+        { maxWidth: "sm", cols: 1, spacing: "sm" },
+      ]}
+      {...props}
+    >
       <LearnOption Icon={IconCardsFilled} label="Flashcards" onClick={onRedirect("flashcard")} />
       <LearnOption Icon={IconBooks} label="Learn" />
       <LearnOption Icon={IconAB2} label="Test" onClick={onRedirect("test")} />
-    </Group>
+      <LearnOption Icon={IconAB2} label="Match" />
+    </SimpleGrid>
   );
 };
 
@@ -51,7 +60,17 @@ export default function ViewSetPage() {
       <Stack spacing="2rem">
         <Stack>
           <Title order={3}>The books that you may likes</Title>
-          <Carousel slideSize={100 / 3 + "%"} height={200} slideGap="md" loop withControls={false}>
+          <Carousel
+            slideSize={100 / 3 + "%"}
+            breakpoints={[
+              { maxWidth: "md", slideSize: "50%" },
+              { maxWidth: "sm", slideSize: "100%" },
+            ]}
+            height={200}
+            slideGap="md"
+            loop
+            withControls={false}
+          >
             {books.map((book, index) => (
               <Carousel.Slide key={index} className="flex items-center justify-center">
                 <Paper className="flex h-full w-full items-center justify-center">{book}</Paper>
@@ -60,8 +79,8 @@ export default function ViewSetPage() {
           </Carousel>
         </Stack>
 
-        <BackgroundImage src={data?.feImageName || ""} w="100%">
-          <Overlay blur={10} radius="md" p="lg" className="h-fit" pos="relative">
+        <BackgroundImage src={data?.feImageName || ""} w="100%" radius="md">
+          <Overlay blur={10} radius="md" p="lg" className="h-fit" pos="relative" zIndex={1}>
             <Group position="apart" align="center">
               <Stack>
                 <Title color={theme.white} className="uppercase">
@@ -101,18 +120,19 @@ export default function ViewSetPage() {
         </BackgroundImage>
 
         <Group position="apart">
-          <LearningMethods />
+          <LearningMethods className="w-full" />
         </Group>
-        <Stack spacing="0px">
-          <Title order={3}>
-            There are {data?.questionResponses.length} definitions in this study set
+        <Stack>
+          <Title
+            order={3}
+            style={{
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            There {data?.questionResponses.length} definitions in this study set
           </Title>
           <Stack>
-            <table style={{ borderCollapse: "separate", borderSpacing: "0 1rem" }}>
-              <tbody>
-                {data?.questionResponses.map((item) => <Item key={item.id} domain={item} />)}
-              </tbody>
-            </table>
+            {data?.questionResponses.map((item) => <Item key={item.id} domain={item} />)}
           </Stack>
         </Stack>
       </Stack>

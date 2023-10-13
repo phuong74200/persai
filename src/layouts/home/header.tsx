@@ -89,7 +89,7 @@ export function HomeHeader() {
 
   useGoogleOneTapLogin({
     onSuccess: (response) => {
-      redirect("/my-collection");
+      redirect("/study-set");
       handleSuccess(response);
     },
   });

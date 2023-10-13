@@ -33,8 +33,8 @@ const RadioSection = forwardRef<HTMLDivElement, RadioSectionProps>(
     return (
       <Paper p="md" shadow="sm" className="relative" ref={ref}>
         <Stack spacing="2rem">
-          <Stack className="absolute left-[-1rem] top-0 translate-x-[-100%]">
-            <Avatar color={theme.primaryColor} variant="filled" size="3rem">
+          <Stack className="absolute left-[-1rem] top-0 translate-x-[-100%] md:relative md:left-0 md:translate-x-[unset] md:flex-row">
+            <Avatar color={theme.primaryColor} variant="filled" size="3rem" className="md:ml-auto">
               {index}
             </Avatar>
             <ActionIcon
@@ -51,7 +51,7 @@ const RadioSection = forwardRef<HTMLDivElement, RadioSectionProps>(
             {questionResponse.question}
           </Text>
           <Radio.Group {...form.getInputProps(questionResponse.id.toString())}>
-            <SimpleGrid cols={2}>
+            <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1, spacing: "sm" }]}>
               {questionResponse.answers.map((option, index) => (
                 <RadioItem
                   isSelected={form.values[questionResponse.id || -1] === option}

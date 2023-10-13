@@ -6,7 +6,7 @@ export const toMantineBreakpoint = (breakpoint: Breakpoint) => {
   }>((acc, [key, value]) => {
     return {
       ...acc,
-      [key]: `${value / 16}em`,
+      [key]: `${value}px`,
     };
   }, {});
 };
@@ -17,10 +17,10 @@ export const toTailwindBreakpoint = (breakpoint: Breakpoint) => {
     [key: string]: { max: string };
   }>((acc, [key, value]) => {
     return {
-      ...acc,
       [key]: {
         max: `${value}px`,
       },
+      ...acc,
     };
   }, {});
 };

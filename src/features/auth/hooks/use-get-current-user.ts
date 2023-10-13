@@ -8,7 +8,10 @@ import { queryCache } from "@/configs/react-query";
 import { User } from "@/features/user-management/domains/user";
 
 export default function useGetCurrentUser() {
-  const [token, , removeToken] = useLocalStorage({ key: "token" });
+  const [token, , removeToken] = useLocalStorage<{
+    accessToken: string;
+    refreshToken: string;
+  }>({ key: "token" });
   const queryClient = useQueryClient();
   const [_, SET_FLAG_NOTE] = useFeatureFlag(FLAGS.NOTE);
 

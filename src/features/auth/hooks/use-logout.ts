@@ -5,7 +5,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import useRedirect from "@/hooks/use-redirect";
 
 export default function useLogout() {
-  const [, , removeToken] = useLocalStorage({ key: "token" });
+  const [, , removeToken] = useLocalStorage<{
+    accessToken: string;
+    refreshToken: string;
+  }>({ key: "token" });
   const queryClient = useQueryClient();
   const { redirect } = useRedirect();
 

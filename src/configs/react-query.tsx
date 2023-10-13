@@ -11,6 +11,7 @@ export const queryCache = new QueryCache({
   onError: (error) => {
     // 🎉 only show error toasts if we already have data in the cache
     // which indicates a failed background update
+
     if (isInstanceOfResponseError(error)) {
       notifications.show({
         radius: "sm",

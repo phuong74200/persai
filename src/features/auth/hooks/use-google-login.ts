@@ -11,7 +11,10 @@ type RequestParams = components["schemas"]["LoginRequest"];
 
 export default function useGoogleLogin() {
   const queryClient = useQueryClient();
-  const [_, setToken] = useLocalStorage({ key: "token" });
+  const [_, setToken] = useLocalStorage<{
+    accessToken: string;
+    refreshToken: string;
+  }>({ key: "token" });
 
   const mutation = useMutation({
     mutationFn: async (body: RequestParams) => {
@@ -26,7 +29,10 @@ export default function useGoogleLogin() {
 
       await queryClient.cancelQueries({ queryKey });
 
-      setToken(data.data?.accessToken || "");
+      setToken({
+        accessToken: data.data?.accessToken || "",
+        refreshToken: data.data?.refreshToken || "",
+      });
 
       queryClient.setQueryData(queryKey, { data: data.data?.userResponse });
     },

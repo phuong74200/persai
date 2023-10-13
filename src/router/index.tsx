@@ -60,7 +60,7 @@ export const BrowserRouter = new AuthRouter(
         {
           path: "login",
           permissons: ["STUDENT"],
-          element: <Navigate to="/my-collection" replace />,
+          element: <Navigate to="/study-set" replace />,
         },
 
         {

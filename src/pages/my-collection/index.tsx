@@ -16,7 +16,13 @@ export default function MyCollectionPage() {
         <Title>My collection</Title>
       </Group>
 
-      <SimpleGrid cols={3} spacing="lg">
+      <SimpleGrid
+        cols={3}
+        breakpoints={[
+          { maxWidth: "md", cols: 2, spacing: "md" },
+          { maxWidth: "sm", cols: 1, spacing: "sm" },
+        ]}
+      >
         {data?.map((set) => <FavoriteCard key={set.id} domain={set} />)}
       </SimpleGrid>
     </Container>

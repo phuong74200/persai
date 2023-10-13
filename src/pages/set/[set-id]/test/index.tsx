@@ -41,8 +41,8 @@ export default function TestPage() {
     <Container>
       <Stack spacing="xl">
         <Title transform="uppercase">{studySet?.studySetName}</Title>
-        <Group noWrap align="flex-start">
-          <Stack spacing="3rem" w="100%">
+        <Group noWrap align="flex-start" className="md:flex-wrap">
+          <Stack spacing="3rem" w="100%" className="md:order-2">
             {questionResponses.map((quest, index) => (
               <RadioSection
                 key={quest.id}
@@ -59,7 +59,12 @@ export default function TestPage() {
               Submit
             </Button>
           </Stack>
-          <Paper shadow="md" p="md" w={500} className="sticky top-20">
+          <Paper
+            shadow="md"
+            p="md"
+            w={500}
+            className="sticky top-20 md:relative md:top-0 md:order-1 md:w-full"
+          >
             <Stack spacing="md">
               <Title order={3}>TEST INFO</Title>
               <Text size="sm" weight={500}>
