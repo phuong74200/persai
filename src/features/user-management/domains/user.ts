@@ -1,4 +1,5 @@
 import { components } from "@/api/v1";
+import dayjs from "@/configs/dayjs";
 
 export class User {
   public createdAt;
@@ -71,8 +72,10 @@ export class User {
   }
 
   get userTheme() {
-    const theme = this.theme?.split(".")?.[1]?.toLowerCase();
+    return this.theme?.toLowerCase() === "default" ? "green" : this.theme?.toLowerCase();
+  }
 
-    return this.theme?.toLowerCase();
+  get subscriptionExpireDate() {
+    return dayjs(this.subscription?.expiredDatetime).format("DD MMM YYYY");
   }
 }

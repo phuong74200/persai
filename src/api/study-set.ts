@@ -35,4 +35,19 @@ export const studySetKeys = createQueryKeys("studySet", {
       return response;
     },
   }),
+
+  all: () => ({
+    queryKey: ["all"],
+    queryFn: async () => {
+      const response = await client.GET(`/api/v1/study-set`, {
+        params: {
+          query: { search: "" },
+        },
+      });
+
+      if (!response.response.ok) throw response.error;
+
+      return response;
+    },
+  }),
 });

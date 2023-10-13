@@ -13,6 +13,7 @@ export class StudySet {
   public updatedAt;
   public creator;
   public visibility;
+  public map: Map<string, Question> = new Map();
 
   constructor({
     createdAt,
@@ -34,9 +35,28 @@ export class StudySet {
     this.updatedAt = updatedAt;
     this.creator = creator;
     this.visibility = visibility;
+
+    questionResponses?.forEach((question) => {
+      if (question.id) this.map.set(question.id.toString(), new Question(question));
+    });
   }
 
   get createdDay() {
     return dayjs(this.createdAt).format("MMMM D, YYYY");
+  }
+
+  shuffle() {
+    return [...this.questionResponses].sort(() => Math.random() - 0.5);
+  }
+
+  score(answer: Record<string, string>) {
+    const correctAnswers = this.questionResponses.filter((question) => {
+      return question.correctAnswer === answer[question.id?.toString() || ""];
+    });
+
+    return {
+      correctAnswers,
+      score: (correctAnswers.length / this.questionResponses.length) * 100,
+    };
   }
 }

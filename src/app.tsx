@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { MantineProvider } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -31,8 +32,10 @@ export function Theme() {
         primaryColor: cache?.userTheme,
       }}
     >
-      <Outlet />
-      <Notifications />
+      <ModalsProvider>
+        <Outlet />
+        <Notifications />
+      </ModalsProvider>
     </MantineProvider>
   );
 }

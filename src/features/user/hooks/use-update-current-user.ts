@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/api";
 import { client } from "@/api/openapi-fetch";
 import { operations } from "@/api/v1";
+import logger from "@/utils/dev-log";
 
 export type UpdateCurrentUserRequest =
   operations["updateCurrentUser"]["requestBody"]["content"]["application/json"];
@@ -17,7 +18,7 @@ export default function useUpdateCurrentUser() {
       const response = await client.PUT(`/api/v1/user/current`, {
         body: {
           fullName: body.fullName,
-          theme: (body.theme?.split(".")?.[1]?.toUpperCase() || "DEFAULT") as any,
+          theme: body.theme,
         },
       });
 
@@ -33,6 +34,7 @@ export default function useUpdateCurrentUser() {
 
   const submit = useCallback(
     (body: UseFormReturnType<UpdateCurrentUserRequest>) => () => {
+      logger.log("body", body);
       mutation.mutate(body.values);
     },
     [mutation],

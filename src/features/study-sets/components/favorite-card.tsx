@@ -1,7 +1,7 @@
 import { Card, CardProps, clsx, Image, Stack, Text } from "@mantine/core";
 
-import { StudySet } from "@/features/study-sets/domains/study-set";
 import useRedirect from "@/hooks/use-redirect";
+import { StudySet } from "@/shared/domains/study-set";
 
 interface Props extends Omit<CardProps, "children"> {
   domain: StudySet;

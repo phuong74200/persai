@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
-import { StudySet } from "@/features/study-sets/domains/study-set";
 import usePagination from "@/features/study-sets/hooks/use-pagination";
+import { StudySet } from "@/shared/domains/study-set";
 
 export default function useFlashCards(initialCards: StudySet[]) {
   const { currentView, next, prev, startIndex, itemsPerPage, setItems, reset, items } =

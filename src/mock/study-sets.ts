@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-import { StudySet } from "@/features/study-sets/domains/study-set";
+import { StudySet } from "@/shared/domains/study-set";
 import generateFilledArray from "@/utils/generate-filled-array";
 
 export const answers = generateFilledArray([3, 5], () => faker.lorem.sentence());

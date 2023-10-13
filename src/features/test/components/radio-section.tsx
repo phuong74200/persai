@@ -1,59 +1,64 @@
-import { useId } from "react";
-import { Avatar, Group, Paper, Radio, RadioProps, SimpleGrid, Stack, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Avatar,
+  Paper,
+  Radio,
+  SimpleGrid,
+  Stack,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
+import { IconVolume } from "@tabler/icons-react";
 
-interface Props extends RadioProps {
-  index: number;
-  isSelected: boolean;
-}
-
-function Item({ index, label, isSelected, ...rest }: Props) {
-  const id = useId();
-
-  return (
-    <Paper p="md" withBorder component="label" htmlFor={id} className="cursor-pointer">
-      <Radio className="hidden" id={id} {...rest} />
-      <Group noWrap className="h-full">
-        <Avatar radius="50%" color={isSelected ? "blue" : undefined}>
-          {index}
-        </Avatar>
-        <Text>{label}</Text>
-      </Group>
-    </Paper>
-  );
-}
+import RadioItem from "@/features/test/components/radio-item";
+import { StudySet } from "@/shared/domains/study-set";
 
 interface RadioSectionProps {
-  id: string;
-  choices: {
-    id: string;
-    index: number;
-    content: string;
-  }[];
-  question: string;
+  questionResponse: StudySet["questionResponses"][number];
+  form: UseFormReturnType<{
+    [key: string]: string;
+  }>;
   index: number;
-  form: UseFormReturnType<{ [key: string]: string }>;
+  reveal: boolean;
 }
 
-export default function RadioSection({ id, form, choices, question, index }: RadioSectionProps) {
+export default function RadioSection({ questionResponse, form, index, reveal }: RadioSectionProps) {
+  const theme = useMantineTheme();
+
+  if (!questionResponse.id) return null;
+
   return (
-    <Paper p="md" shadow="sm">
+    <Paper p="md" shadow="sm" className="relative">
       <Stack spacing="2rem">
-        <Group>
-          <Avatar variant="filled">{index}</Avatar>
-        </Group>
+        <Stack className="absolute left-[-1rem] top-0 translate-x-[-100%]">
+          <Avatar color={theme.primaryColor} variant="filled" size="3rem">
+            {index}
+          </Avatar>
+          <ActionIcon
+            color={theme.primaryColor}
+            variant="filled"
+            size="3rem"
+            onClick={() => questionResponse.speak()}
+          >
+            <IconVolume size="1.125rem" />
+          </ActionIcon>
+        </Stack>
+
         <Text weight="bold" size="lg">
-          {question}
+          {questionResponse.question}
         </Text>
-        <Radio.Group {...form.getInputProps(id)}>
+        <Radio.Group {...form.getInputProps(questionResponse.id.toString())}>
           <SimpleGrid cols={2}>
-            {choices.map((option) => (
-              <Item
-                isSelected={form.values[id] === option.id}
-                key={option.id}
-                index={option.index}
-                value={option.id}
-                label={option.content}
+            {questionResponse.answers.map((option, index) => (
+              <RadioItem
+                isSelected={form.values[questionResponse.id || -1] === option}
+                key={option}
+                index={index + 1}
+                value={option}
+                label={option}
+                isAnswer={questionResponse.correctAnswer === option}
+                reveal={reveal}
               />
             ))}
           </SimpleGrid>

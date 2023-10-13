@@ -26,12 +26,20 @@ import { COLOR_LIST } from "@/utils/get-mantine-color-from-string";
 type Form = operations["updateCurrentUser"]["requestBody"]["content"]["application/json"];
 
 const colors = COLOR_LIST.map((color) => ({
-  value: `THEME.${sentenceCase(color)}`,
+  value: color.toUpperCase(),
   label: sentenceCase(color),
-})).concat({
-  value: "DEFAULT",
-  label: "Default",
-});
+}))
+  .filter((color) => color.value !== "DARK" && color.value !== "GREEN")
+  .concat(
+    {
+      value: "DEFAULT",
+      label: "Default",
+    },
+    {
+      value: "GREEN",
+      label: "Green (default)",
+    },
+  );
 
 export default function ProfileSettingPage() {
   const theme = useMantineTheme();
@@ -95,7 +103,7 @@ export default function ProfileSettingPage() {
                             Your referral code
                           </Text>
                           <Text color={theme.primaryColor}>
-                            {cache?.referralCode?.referralCode || ""}
+                            {cache?.referralCode?.referralCode?.toUpperCase() || ""}
                           </Text>
                           <Text size="sm" color="dimmed" italic>
                             Share your referral code to your friends and get 15 days free premium
@@ -111,10 +119,13 @@ export default function ProfileSettingPage() {
                       Your plans
                     </Text>
                     <Text>{cache?.subscription?.currentSubscriptionId}</Text>
+                    <Text>Expired date: {cache?.subscriptionExpireDate}</Text>
                     <Button variant="gradient">Upgrade now</Button>
-                    <Text size="sm" color="dimmed" italic>
-                      Upgrade your plan to premium to get more features
-                    </Text>
+                    {!cache?.isPremium && (
+                      <Text size="sm" color="dimmed" italic>
+                        Upgrade your plan to premium to get more features
+                      </Text>
+                    )}
                   </Stack>
                 </Paper>
               </Stack>

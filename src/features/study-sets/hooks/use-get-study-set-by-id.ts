@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
 import { operations } from "@/api/v1";
-import { StudySet } from "@/features/study-sets/domains/study-set";
+import { StudySet } from "@/shared/domains/study-set";
 
 export default function useGetStudySetById(
   study_set_id: operations["getStudySetById"]["parameters"]["path"]["study_set_id"],

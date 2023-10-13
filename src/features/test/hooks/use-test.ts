@@ -1,19 +1,30 @@
+import { useEffect, useMemo } from "react";
 import { useForm } from "@mantine/form";
 
-import { Test } from "@/mock/study-sets";
+import useGetStudySetById from "@/features/study-sets/hooks/use-get-study-set-by-id";
 
-export default function useTest(set: Test[]) {
+export default function useTest(setId: number) {
+  const { data } = useGetStudySetById(setId);
+
   const form = useForm<{
     [key: string]: string;
   }>({
-    initialValues: set.reduce(
-      (acc, item) => ({
-        ...acc,
-        [item.id]: null,
-      }),
-      {},
-    ),
+    initialValues: {},
   });
 
-  return { form, set };
+  useEffect(() => {
+    form.setValues(
+      data?.questionResponses.reduce(
+        (acc, item) => ({
+          ...acc,
+          [item.id?.toString() || ""]: null,
+        }),
+        {},
+      ) || {},
+    );
+  }, [data?.id]);
+
+  const questionResponses = useMemo(() => data?.questionResponses || [], [data?.id]);
+
+  return { form, questionResponses, studySet: data };
 }
