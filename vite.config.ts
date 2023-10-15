@@ -19,13 +19,13 @@ export default defineConfig({
     }),
     ViteImageOptimizer({
       png: {
-        quality: 1,
+        quality: 80,
       },
       jpeg: {
-        quality: 1,
+        quality: 80,
       },
       jpg: {
-        quality: 1,
+        quality: 80,
       },
     }),
   ],
