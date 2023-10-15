@@ -13,7 +13,24 @@ import { IconMessageChatbot, IconSend } from "@tabler/icons-react";
 
 import GPTMessage from "@/features/gpt/components/gpt-message";
 import SelfMessage from "@/features/gpt/components/self-message";
-import { messages } from "@/mock/mesage";
+import { MessageDomain } from "@/features/gpt/domains/message";
+import generateFilledArray from "@/utils/generate-filled-array";
+
+export const messages = generateFilledArray(
+  100,
+  (index) =>
+    new MessageDomain({
+      id: index.toString(),
+      content: new Date().toLocaleTimeString(),
+      createdAt: new Date(),
+      sender: {
+        id: index % 2 === 0 ? "me" : "gpt",
+        name: index % 2 === 0 ? "me" : "gpt",
+        avatar:
+          "https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w=",
+      },
+    }),
+);
 
 export default function ChatBox() {
   const theme = useMantineTheme();

@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { faker } from "@faker-js/faker";
 import { Carousel } from "@mantine/carousel";
 import {
   Avatar,
@@ -24,10 +23,9 @@ import Item from "@/features/study-sets/components/item";
 import LearnOption from "@/features/study-sets/components/learn-option";
 import useGetStudySetById from "@/features/study-sets/hooks/use-get-study-set-by-id";
 import useRedirect from "@/hooks/use-redirect";
-import generateFilledArray from "@/utils/generate-filled-array";
 import parseDec from "@/utils/parse-dec";
 
-const books = generateFilledArray(10, () => faker.airline.aircraftType());
+const books = ["book 1", "book 2", "book 3"];
 
 const LearningMethods = (props: SimpleGridProps) => {
   const { onRedirect } = useRedirect();
