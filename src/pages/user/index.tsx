@@ -14,12 +14,11 @@ import { IconSearch } from "@tabler/icons-react";
 import { sentenceCase } from "change-case";
 import { DataTable, DataTableColumn } from "mantine-datatable";
 
-import ManageSubscription from "@/features/subscription/components/manage-subscription";
 import UserActions from "@/features/user-management/components/user-actions";
 import { User } from "@/features/user-management/domains/user";
 import useGetAllUser from "@/features/user-management/hooks/use-get-all-user";
 
-const columns: DataTableColumn<User>[] = [
+const userGroup: DataTableColumn<User>[] = [
   {
     accessor: "#",
     title: "#",
@@ -37,7 +36,12 @@ const columns: DataTableColumn<User>[] = [
       return (
         <Group>
           <Avatar src={record.feImageName} />
-          <Text>{record.fullName}</Text>
+          <Stack spacing={0}>
+            <Text>{record.fullName}</Text>
+            <Text color="dimmed" size="xs">
+              {record.email}
+            </Text>
+          </Stack>
         </Group>
       );
     },
@@ -48,18 +52,36 @@ const columns: DataTableColumn<User>[] = [
     textAlignment: "center",
     width: "10%",
   },
+];
+
+const subscriptionGroup: DataTableColumn<User>[] = [
   {
     accessor: "subscription.currentSubscriptionId",
-    title: "Subscription",
-    width: "30%",
+    title: "Plan",
     textAlignment: "center",
-    render(record) {
-      return <ManageSubscription domain={record} />;
-    },
+    width: "10%",
   },
   {
+    accessor: "subscription.paidType",
+    title: "Duration",
+    textAlignment: "center",
+    width: "10%",
+  },
+  {
+    accessor: "subscription",
+    title: "Expired date",
+    textAlignment: "center",
+    width: "10%",
+    render(record) {
+      return <Text>{record.subscriptionExpireDate}</Text>;
+    },
+  },
+];
+
+const actionGroup: DataTableColumn<User>[] = [
+  {
     accessor: "action",
-    title: "Action",
+    title: "Ban/Unban",
     width: "10%",
     textAlignment: "center",
     render(record) {
@@ -95,7 +117,29 @@ export default function UserPage() {
           fetching={isFetching}
           verticalSpacing="sm"
           noRecordsText="Không có dữ liệu"
-          columns={columns}
+          groups={[
+            {
+              id: "userInfor",
+              columns: userGroup,
+              style: {
+                textAlign: "center",
+              },
+            },
+            {
+              id: "subscription",
+              columns: subscriptionGroup,
+              style: {
+                textAlign: "center",
+              },
+            },
+            {
+              id: "action",
+              columns: actionGroup,
+              style: {
+                textAlign: "center",
+              },
+            },
+          ]}
           rowExpansion={{
             allowMultiple: true,
             content: ({ record }) => (

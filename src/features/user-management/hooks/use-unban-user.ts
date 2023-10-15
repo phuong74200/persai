@@ -14,7 +14,7 @@ export default function useUnbanUser() {
 
   const mutation = useMutation({
     mutationFn: async ({ user_id }: UnbanUserRequest) => {
-      const response = await client.PUT(`/api/v1/user/ban/{user_id}`, {
+      const response = await client.PUT(`/api/v1/user/unban/{user_id}`, {
         params: {
           path: {
             user_id,

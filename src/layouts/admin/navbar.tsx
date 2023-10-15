@@ -9,7 +9,10 @@ import { LinksGroup, LinksGroupProps } from "@/layouts/components/link-group";
 const mockdata: {
   [key: string]: LinksGroupProps[];
 } = {
-  Management: [{ label: "User", icon: IconUsersGroup, link: "/user" }],
+  Management: [
+    { label: "User", icon: IconUsersGroup, link: "/user" },
+    { label: "Subscription", icon: IconUsersGroup, link: "/subscription-request" },
+  ],
 };
 
 const useStyles = createStyles((theme) => ({

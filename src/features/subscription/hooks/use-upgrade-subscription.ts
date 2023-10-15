@@ -23,11 +23,7 @@ export default function useUpgradeSubscription() {
     },
 
     onSuccess() {
-      queryClient.invalidateQueries(queryKeys.user._def);
-    },
-
-    onError() {
-      queryClient.invalidateQueries(queryKeys.user._def);
+      queryClient.invalidateQueries(queryKeys.subscription.upgradeRequest._def);
     },
   });
 

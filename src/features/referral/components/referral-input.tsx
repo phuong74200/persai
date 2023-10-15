@@ -39,7 +39,7 @@ export default function ReferralInput() {
         onClick={handleSubmit}
         variant="gradient"
       >
-        Submit
+        {user?.referralCode?.usingReferralCode ? "Used" : "Submit"}
       </Button>
     </Group>
   );

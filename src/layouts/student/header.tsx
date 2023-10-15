@@ -1,13 +1,4 @@
-import {
-  Anchor,
-  Breadcrumbs,
-  Button,
-  Container,
-  createStyles,
-  Group,
-  Header,
-  rem,
-} from "@mantine/core";
+import { Anchor, Breadcrumbs, Container, createStyles, Group, Header, rem } from "@mantine/core";
 import { sentenceCase } from "change-case";
 
 import FloatNotification from "@/features/notification/components/float-notification";
@@ -90,9 +81,6 @@ export function StudentHeader() {
           ))}
         </Breadcrumbs>
         <Group>
-          <Button onClick={onRedirect("/create")} className="sm:hidden">
-            Upload new set
-          </Button>
           <FloatNotification />
         </Group>
       </Container>

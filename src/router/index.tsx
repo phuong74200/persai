@@ -21,6 +21,7 @@ import PomodoroSettingPage from "@/pages/setting/pomodoro";
 import ProfileSettingPage from "@/pages/setting/profile";
 import StudySetPage from "@/pages/study-set";
 import SubscriptionPage from "@/pages/subscription";
+import SubscriptionRequestPage from "@/pages/subscription-request";
 import UserPage from "@/pages/user";
 
 export const BrowserRouter = new AuthRouter(
@@ -139,6 +140,10 @@ export const BrowserRouter = new AuthRouter(
             {
               path: "user",
               Component: UserPage,
+            },
+            {
+              path: "subscription-request",
+              Component: SubscriptionRequestPage,
             },
           ],
         },

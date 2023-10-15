@@ -50,8 +50,8 @@ export class User {
   }
 
   get body() {
-    const subList = ["test"];
-    const excludeList = ["createdAt", "updatedAt", "id", "fullName"];
+    const subList = ["referral_code"];
+    const excludeList = ["createdAt", "updatedAt", "id", "fullName", "referralCode"];
 
     return Object.keys(this)
       .concat(subList)
@@ -63,8 +63,8 @@ export class User {
     return this[key];
   }
 
-  get test() {
-    return this.fullName;
+  get referral_code() {
+    return this.referralCode?.referralCode;
   }
 
   get isPremium() {
