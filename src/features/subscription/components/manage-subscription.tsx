@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { Group, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
-import { components } from "@/api/v1";
 import useGetAllSubscription from "@/features/subscription/hooks/use-get-all-subscription";
-import useUpgradeSubscription from "@/features/subscription/hooks/use-upgrade-subscription";
 import { User } from "@/features/user-management/domains/user";
 
 const subscriptionSelection = [
@@ -23,7 +21,7 @@ const subscriptionSelection = [
 ];
 
 type Form = {
-  paidType: components["schemas"]["UpgradeSubscriptionRequest"]["paidType"];
+  paidType: any; // fix this
   subscriptionId: string;
 };
 
@@ -35,7 +33,7 @@ export default function ManageSubscription({ domain }: { domain: User }) {
     },
   });
 
-  const { upgrade } = useUpgradeSubscription();
+  // const { upgrade } = useUpgradeSubscription();
   const { selection } = useGetAllSubscription();
 
   useEffect(() => {
@@ -44,13 +42,13 @@ export default function ManageSubscription({ domain }: { domain: User }) {
       form.values.paidType &&
       form.values.subscriptionId &&
       form.values.paidType !== "NO"
-    )
-      upgrade({
-        studentEmail: domain.email,
-        amount: 799000,
-        paidType: form.values.paidType,
-        subscriptionId: form.values.subscriptionId,
-      });
+    ) {
+      // upgrade({
+      //   amount: 799000,
+      //   paidType: form.values.paidType,
+      //   subscriptionId: form.values.subscriptionId,
+      // });
+    }
   }, [domain.email, form.values.paidType, form.values.subscriptionId]);
 
   useEffect(() => {

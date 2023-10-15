@@ -1,15 +1,11 @@
-import { Button, Container, Stack, Title } from "@mantine/core";
-
-import RadioSection from "@/features/test/components/radio-section";
-import useTest from "@/features/test/hooks/use-test";
-import { testOptions } from "@/mock/study-sets";
+import { Container } from "@mantine/core";
 
 export default function LearnPage() {
-  const { form, set } = useTest(testOptions);
+  // const { form, set } = useTest(testOptions);
 
   return (
     <Container size="sm">
-      <Stack spacing="xl">
+      {/* <Stack spacing="xl">
         <Title>EXE 101 TEST</Title>
         <Stack spacing="3rem">
           {set.map((quest, index) => (
@@ -25,7 +21,7 @@ export default function LearnPage() {
 
           <Button>Submit</Button>
         </Stack>
-      </Stack>
+      </Stack> */}
     </Container>
   );
 }
