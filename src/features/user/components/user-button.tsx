@@ -44,7 +44,7 @@ export function UserButton({ image, name, email, icon, ...others }: UserButtonPr
           <Group>
             <Avatar src={image} radius="xl" />
 
-            <div style={{ flex: 1 }} className="sm:block md:hidden">
+            <div style={{ flex: 1 }} className="md:hidden">
               <Text size="sm" weight={500}>
                 {name}
               </Text>

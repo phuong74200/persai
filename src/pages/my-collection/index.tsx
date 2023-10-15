@@ -8,7 +8,7 @@ export default function MyCollectionPage() {
   const { data } = useGetCurrentUserStudySet();
 
   return (
-    <Container>
+    <Container mb="4rem">
       <Group align="center" mb="3rem" mt="2rem">
         <ThemeIcon size="3rem" variant="gradient">
           <IconLayersIntersect size="2rem" />

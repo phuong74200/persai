@@ -5,8 +5,8 @@ export const toMantineBreakpoint = (breakpoint: Breakpoint) => {
     [key: string]: string;
   }>((acc, [key, value]) => {
     return {
+      [key]: `${value / 16}em`,
       ...acc,
-      [key]: `${value}px`,
     };
   }, {});
 };

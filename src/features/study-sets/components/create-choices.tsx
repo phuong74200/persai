@@ -25,7 +25,7 @@ export default function CreateChoice({ nestIndex, form }: Props) {
     form.setValue(`studySets.${nestIndex}.answer`, index);
 
   return (
-    <SimpleGrid cols={2}>
+    <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1, spacing: "md" }]}>
       {fields.map((_, k) => (
         <HoverCard
           transitionProps={{

@@ -9,7 +9,6 @@ import {
   Progress,
   Stack,
   Text,
-  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import {
@@ -62,7 +61,7 @@ export default function FlashCardPage() {
       <Progress value={progress} styles={progressStyles} />
       <Center className="h-full overflow-hidden">
         <Stack spacing="2.5rem">
-          <Box className="relative h-[35rem] w-[35rem] [perspective:3000px]">
+          <Box className="relative h-[35rem] w-[35rem] [perspective:3000px] sm:h-[25rem] sm:w-[25rem] xs:h-[20rem] xs:w-[20rem]">
             <Box className="absolute left-[-5rem] top-[50%] translate-y-[-50%]">
               <ActionIcon variant="subtle" radius="50%" size="3rem" onClick={deplayPrev}>
                 <IconChevronLeft stroke={1.5} />
@@ -103,32 +102,28 @@ export default function FlashCardPage() {
           </Box>
 
           <Group position="center">
-            <Tooltip.Floating label="Shuffle flashcards">
-              <ActionIcon
-                variant="filled"
-                aria-label="Settings"
-                size="3rem"
-                color={theme.primaryColor}
-                radius="50%"
-                onClick={delayShuffle}
-                loading={!isShuffleDelay}
-              >
-                <IconArrowsShuffle stroke={1.5} />
-              </ActionIcon>
-            </Tooltip.Floating>
-            <Tooltip.Floating label="Reset flashcards">
-              <ActionIcon
-                variant="filled"
-                aria-label="Settings"
-                size="3rem"
-                color={theme.primaryColor}
-                radius="50%"
-                onClick={delayReset}
-                loading={!isResetDelay}
-              >
-                <IconRotateClockwise stroke={1.5} />
-              </ActionIcon>
-            </Tooltip.Floating>
+            <ActionIcon
+              variant="filled"
+              aria-label="Settings"
+              size="3rem"
+              color={theme.primaryColor}
+              radius="50%"
+              onClick={delayShuffle}
+              loading={!isShuffleDelay}
+            >
+              <IconArrowsShuffle stroke={1.5} />
+            </ActionIcon>
+            <ActionIcon
+              variant="filled"
+              aria-label="Settings"
+              size="3rem"
+              color={theme.primaryColor}
+              radius="50%"
+              onClick={delayReset}
+              loading={!isResetDelay}
+            >
+              <IconRotateClockwise stroke={1.5} />
+            </ActionIcon>
           </Group>
         </Stack>
       </Center>

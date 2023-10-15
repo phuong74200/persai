@@ -7,9 +7,10 @@ import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-t
 
 type Props = {
   form: UseFormReturn<CreateSetFormType, unknown, undefined>;
+  isLoading: boolean;
 };
 
-export default function CreateQuestion({ form }: Props) {
+export default function CreateQuestion({ form, isLoading }: Props) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "studySets",
@@ -53,7 +54,7 @@ export default function CreateQuestion({ form }: Props) {
           </Stack>
         </Paper>
       ))}
-      <Group noWrap mt="1rem">
+      <Group noWrap mt="1rem" className="md:flex-col">
         <Button
           variant="outline"
           fullWidth
@@ -66,7 +67,8 @@ export default function CreateQuestion({ form }: Props) {
           leftIcon={<IconFolderPlus size="1rem" />}
           type="submit"
           variant="filled"
-          miw="199.94px"
+          className="min-w-[199.94px] md:w-full"
+          loading={isLoading}
         >
           Create study set
         </Button>

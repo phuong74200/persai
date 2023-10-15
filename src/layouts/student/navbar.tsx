@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { clsx, createStyles, Navbar, rem, ScrollArea, Text } from "@mantine/core";
+import { clsx, createStyles, Navbar, rem, Text } from "@mantine/core";
 
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import { UserButton } from "@/features/user/components/user-button";
@@ -43,20 +43,19 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export const NavbarNested = ({ opened }: { opened: boolean }) => {
+export const NavbarNested = () => {
   const { classes } = useStyles();
   const cache = useGetCurrentUserFromCache();
 
   return (
     <Navbar
-      hiddenBreakpoint="md"
-      hidden={opened}
-      height={800}
-      width={{ md: 300, sm: 14 * 1.875 + 14 * 2.875 - 3, xs: 0 }}
+      hiddenBreakpoint="xs"
+      hidden={true}
+      width={{ xs: 14 * 1.875 + 14 * 2.875 - 3, sm: 14 * 1.875 + 14 * 2.875 - 3, md: 300 }}
       px="md"
       className={classes.navbar}
     >
-      <Navbar.Section grow className={classes.links} component={ScrollArea}>
+      <Navbar.Section grow className={classes.links}>
         {Object.entries(tree).map(([key, value]) => (
           <Fragment key={key}>
             <Text className={clsx(classes.groupLabel, "md:hidden")} h="51.5px" py="1rem">

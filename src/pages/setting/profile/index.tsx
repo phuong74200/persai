@@ -21,6 +21,7 @@ import { sentenceCase } from "change-case";
 import { operations } from "@/api/v1";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import useUpdateCurrentUser from "@/features/user/hooks/use-update-current-user";
+import useRedirect from "@/hooks/use-redirect";
 import { COLOR_LIST } from "@/utils/get-mantine-color-from-string";
 
 type Form = operations["updateCurrentUser"]["requestBody"]["content"]["application/json"];
@@ -44,6 +45,7 @@ const colors = COLOR_LIST.map((color) => ({
 export default function ProfileSettingPage() {
   const theme = useMantineTheme();
   const cache = useGetCurrentUserFromCache();
+  const { onRedirect } = useRedirect();
 
   const form = useForm<Form>({
     initialValues: {
@@ -63,15 +65,17 @@ export default function ProfileSettingPage() {
   }, [cache?.email, cache?.fullName, cache?.referralCode?.referralCode, cache?.theme]);
 
   return (
-    <Container size="md">
+    <Container size="md" mb="4rem">
       <Stack>
         <Stack align="center">
           <Avatar radius="50%" size={14 * 10} src={cache?.feImageName} />
-          <Title my="2rem">Welcome back {cache?.fullName}</Title>
+          <Title align="center" my="2rem">
+            Welcome back {cache?.fullName}
+          </Title>
         </Stack>
         <Stack>
           <Grid>
-            <Grid.Col span={8}>
+            <Grid.Col md={8} sm={12}>
               <Paper p="md">
                 <Stack>
                   <TextInput label="Full name" {...form.getInputProps("fullName")} />
@@ -92,7 +96,7 @@ export default function ProfileSettingPage() {
                 </Stack>
               </Paper>
             </Grid.Col>
-            <Grid.Col span={4}>
+            <Grid.Col md={4} sm={12}>
               <Stack>
                 <Paper p="md">
                   <CopyButton value={cache?.referralCode?.referralCode || ""} timeout={2000}>
@@ -120,7 +124,9 @@ export default function ProfileSettingPage() {
                     </Text>
                     <Text>{cache?.subscription?.currentSubscriptionId}</Text>
                     <Text>Expired date: {cache?.subscriptionExpireDate}</Text>
-                    <Button variant="gradient">Upgrade now</Button>
+                    <Button variant="gradient" onClick={onRedirect("/subscription")}>
+                      Upgrade now
+                    </Button>
                     {!cache?.isPremium && (
                       <Text size="sm" color="dimmed" italic>
                         Upgrade your plan to premium to get more features

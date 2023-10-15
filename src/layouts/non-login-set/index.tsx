@@ -6,6 +6,8 @@ import { NonLoginSetHeader } from "@/layouts/non-login-set/header";
 const styles = (theme: MantineTheme) => ({
   main: {
     minHeight: "100vh",
+  },
+  root: {
     background: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0],
   },
 });

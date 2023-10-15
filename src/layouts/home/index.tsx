@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { AppShell, MantineTheme } from "@mantine/core";
 
-import { HomeHeader } from "@/layouts/home/header";
-
 const styles = (theme: MantineTheme) => ({
   main: {
     minHeight: "100vh",
@@ -13,7 +11,7 @@ const styles = (theme: MantineTheme) => ({
 
 export function HomeLayout() {
   return (
-    <AppShell styles={styles} padding="md" layout="alt" header={<HomeHeader />}>
+    <AppShell styles={styles} padding="md" layout="alt">
       <Outlet />
     </AppShell>
   );

@@ -1,11 +1,15 @@
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
 import { client } from "@/api/openapi-fetch";
 import { components } from "@/api/v1";
+import { notification } from "@/configs/notifications";
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
 import localStudySetToBeStudySet from "@/features/study-sets/utils/local-study-set-to-server-study-set";
+import logger from "@/utils/dev-log";
+import generateQueryId from "@/utils/generate-query-id";
 
 export type CreateStudySetRequest = {
   body: components["schemas"]["CreateStudySetRequest"];
@@ -14,6 +18,7 @@ export type CreateStudySetRequest = {
 
 export default function useCreateStudySet() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: async ({ body, image }: CreateStudySetRequest) => {
@@ -41,13 +46,35 @@ export default function useCreateStudySet() {
         },
       });
 
+      logger.log("from res", response.response.ok);
       if (!response.response.ok) throw response.error;
 
       return response;
     },
 
-    onSuccess() {
+    onMutate: (vars) => {
+      notification.loader({
+        id: generateQueryId(vars),
+        message: (
+          <>
+            Creating study set <b>{vars.body.studySetName}</b>
+          </>
+        ),
+      });
+    },
+
+    onSuccess: (_r, vars) => {
+      notification.success({
+        id: generateQueryId(vars),
+        message: (
+          <>
+            Created study set <b>{vars.body.studySetName}</b> success
+          </>
+        ),
+      });
+
       queryClient.invalidateQueries(queryKeys.studySet._def);
+      navigate("/my-collection");
     },
   });
 
@@ -65,5 +92,5 @@ export default function useCreateStudySet() {
     [mutation],
   );
 
-  return { mutation, submit };
+  return { ...mutation, submit };
 }

@@ -1,8 +1,7 @@
 export type ResponseError = {
   status: number;
   detail: string;
-  timestamp: string;
-  error: string;
+  title: string;
 };
 
-export const keys: (keyof ResponseError)[] = ["detail", "error", "status", "timestamp"];
+export const keys: (keyof ResponseError)[] = ["detail", "status", "title"];

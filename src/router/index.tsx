@@ -5,7 +5,7 @@ import { Theme } from "@/app";
 import useGetCurrentUser from "@/features/auth/hooks/use-get-current-user";
 import Error404 from "@/features/error/components/Error404";
 import { FlashCardContextProvider } from "@/features/study-sets/contexts/flashcard-context";
-import { PublicLayout, StudentLayout } from "@/layouts";
+import { StudentLayout } from "@/layouts";
 import { AdminLayout } from "@/layouts/admin";
 import { HomeLayout } from "@/layouts/home";
 import { NonLoginSetLayout } from "@/layouts/non-login-set";
@@ -20,6 +20,7 @@ import TestPage from "@/pages/set/[set-id]/test";
 import PomodoroSettingPage from "@/pages/setting/pomodoro";
 import ProfileSettingPage from "@/pages/setting/profile";
 import StudySetPage from "@/pages/study-set";
+import SubscriptionPage from "@/pages/subscription";
 import UserPage from "@/pages/user";
 
 export const BrowserRouter = new AuthRouter(
@@ -41,7 +42,7 @@ export const BrowserRouter = new AuthRouter(
 
         {
           path: "login",
-          Component: PublicLayout,
+          Component: Outlet,
           permissons: (p) => p === undefined || p.length === 0,
           children: [
             {
@@ -160,9 +161,21 @@ export const BrowserRouter = new AuthRouter(
         },
 
         {
+          path: "",
+          Component: NonLoginSetLayout,
+          children: [
+            {
+              path: "subscription",
+              Component: SubscriptionPage,
+            },
+          ],
+        },
+
+        {
           path: "*",
           Component: Error404,
         },
+
         {
           path: "*",
           asModal: true,

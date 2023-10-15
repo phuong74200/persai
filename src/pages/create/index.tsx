@@ -34,7 +34,7 @@ export default function CreateSetPage() {
     defaultValues,
   });
 
-  const { submit } = useCreateStudySet();
+  const { submit, isLoading } = useCreateStudySet();
 
   return (
     <Container>
@@ -62,7 +62,7 @@ export default function CreateSetPage() {
             </Group>
             <UploadButton />
           </Group>
-          <CreateQuestion form={form} />
+          <CreateQuestion form={form} isLoading={isLoading} />
         </Stack>
       </form>
     </Container>

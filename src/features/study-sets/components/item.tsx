@@ -30,17 +30,17 @@ export default function Item({ domain }: Props) {
   const { classes } = useStyles();
 
   return (
-    <Paper className="group relative" p="xl">
+    <Stack className="group relative">
       <Paper
         radius="md"
         shadow="md"
         className={clsx(
-          "pointer-events-none absolute right-[-1rem] top-0 translate-x-[100%] !p-0 opacity-0 [transition:opacity_200ms_ease-in-out] group-hover:pointer-events-auto group-hover:opacity-100 md:hidden",
+          "pointer-events-none absolute right-[-1rem] top-0 w-fit translate-x-[100%] !p-0 opacity-0 [transition:opacity_200ms_ease-in-out] group-hover:pointer-events-auto group-hover:opacity-100 xl:relative xl:right-0 xl:translate-x-0 xl:opacity-100 xl:before:hidden",
           classes.toolbar,
         )}
         data-toolbar
       >
-        <Stack spacing={0}>
+        <Stack spacing={0} className="xl:flex-row">
           {FLAG_NOTE && (
             <ActionIcon size="3rem">
               <IconNote size="1.125rem" />
@@ -54,21 +54,23 @@ export default function Item({ domain }: Props) {
           </ActionIcon>
         </Stack>
       </Paper>
-      <Group className="items-start justify-start md:flex-col" noWrap>
-        <Stack className="w-4/6 md:w-full">
-          <Text className="whitespace-pre-line font-bold">{domain.question}</Text>
-          <List type="ordered">
-            {domain.answers.map((answer, index) => (
-              <List.Item key={index}>
-                <Text className="whitespace-pre-line">{answer}</Text>
-              </List.Item>
-            ))}
-          </List>
-        </Stack>
-        <Text className="w-2/6 whitespace-pre-line font-bold md:w-full">
-          {domain.correctAnswer}
-        </Text>
+      <Group className="w-full items-start justify-start md:flex-col md:gap-0" noWrap spacing="md">
+        <Paper p="xl" className="h-full w-4/6 md:w-full">
+          <Stack>
+            <Text className="whitespace-pre-line font-bold">{domain.question}</Text>
+            <List type="ordered">
+              {domain.answers.map((answer, index) => (
+                <List.Item key={index}>
+                  <Text className="whitespace-pre-line">{answer}</Text>
+                </List.Item>
+              ))}
+            </List>
+          </Stack>
+        </Paper>
+        <Paper p="xl" className="w-2/6 self-stretch md:w-full">
+          <Text className="whitespace-pre-line font-bold">{domain.correctAnswer}</Text>
+        </Paper>
       </Group>
-    </Paper>
+    </Stack>
   );
 }

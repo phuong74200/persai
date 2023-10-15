@@ -8,12 +8,12 @@ export default function StudySetPage() {
   const { data } = useGetAllStudySet();
 
   return (
-    <Container>
+    <Container mb="4rem">
       <Group align="center" mb="3rem" mt="2rem">
         <ThemeIcon size="3rem" variant="gradient">
           <IconLayersIntersect size="2rem" />
         </ThemeIcon>
-        <Title className="sm:text-oc-green-6 md:text-oc-red-6">New study set</Title>
+        <Title>New study set</Title>
       </Group>
 
       <SimpleGrid

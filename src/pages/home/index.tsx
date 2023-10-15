@@ -22,6 +22,7 @@ import { motion } from "framer-motion";
 import { ASSET_ANALYSTICS, ASSET_HOME_HERO } from "@/assets";
 import FavoriteCard from "@/features/study-sets/components/favorite-card";
 import useLoremPicsum from "@/hooks/use-lorem-picsum";
+import useRedirect from "@/hooks/use-redirect";
 
 const helps = [
   {
@@ -54,6 +55,7 @@ const Review = ({ title, desciption }: { title: string; desciption: string }) =>
         <Center className="h-full w-full">
           <Box>
             <Title align="center" color={theme.white}>
+              {title}
               {title}
             </Title>
             <Text align="center" color={theme.white}>
@@ -115,6 +117,9 @@ const SampleCard = () => {
         status: true,
         studySetName: "SWD",
         visibility: "PUBLIC",
+        map: new Map(),
+        score: () => ({ correctAnswers: [], score: 0 }),
+        shuffle: () => [],
       }}
     />
   );
@@ -123,9 +128,10 @@ const SampleCard = () => {
 export default function HomePage() {
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
+  const { onRedirect } = useRedirect();
 
   return (
-    <Stack spacing={0}>
+    <Stack spacing={0} mb="4rem">
       <section className="relative h-[100vh] bg-oc-gray-6">
         <motion.div
           initial={{ marginTop: -100, opacity: 0 }}
@@ -150,12 +156,12 @@ export default function HomePage() {
           className="absolute left-12 top-1/2 z-40 max-w-4xl translate-y-[-50%]"
         >
           <Box>
-            <Title color={theme.white} size="6rem">
+            <Title color={theme.white} size="6rem" className="sm:text-[4rem]">
               Start learning
             </Title>
-            <Title color={theme.white} size="6rem">
+            <Title color={theme.white} size="6rem" className="sm:text-[4rem]">
               with{" "}
-              <Text span color={theme.primaryColor}>
+              <Text span color="green">
                 Persai
               </Text>
             </Title>
@@ -168,7 +174,13 @@ export default function HomePage() {
           </Text>
 
           <Group>
-            <Button mt="1rem" w="fit-content" size="lg">
+            <Button
+              onClick={onRedirect("/login")}
+              color="green"
+              mt="1rem"
+              w="fit-content"
+              size="lg"
+            >
               Web
             </Button>
             <Button
@@ -189,13 +201,16 @@ export default function HomePage() {
             <Title align="center" color="dimmed" size="sm">
               PERSAI
             </Title>
-            <Title size="4rem" align="center" mb="4rem">
+            <Title size="4rem" className="sm:text-[3rem]" align="center" mb="4rem">
               What Persai helps you?
             </Title>
           </Stack>
           <Container
             p={0}
-            className={cx("flex flex-col gap-4 overflow-hidden", classes.marqueeContainer)}
+            className={cx(
+              "flex flex-col gap-4 overflow-hidden lg:w-full",
+              classes.marqueeContainer,
+            )}
           >
             <Marquee className={classes.container}>
               {helps.map((help, i) => (
@@ -211,16 +226,16 @@ export default function HomePage() {
         </Stack>
       </section>
       <Container size="xl">
-        <section className="relative h-[100vh]">
+        <section className="relative h-[100vh] md:my-[8rem] md:h-[auto]">
           <Stack
             spacing="1rem"
             align="left"
-            className="absolute left-16 top-1/2 w-[500px] translate-y-[-50%]"
+            className="absolute left-16 top-1/2 w-[500px] translate-y-[-50%] lg:left-0 md:relative md:top-0 md:order-2 md:translate-y-0 sm:w-[auto]"
           >
             <Title color="dimmed" size="sm" transform="uppercase">
               Personal learning assistant
             </Title>
-            <Title mb="md" size="4rem" ml="-0.25rem">
+            <Title mb="md" size="4rem" ml="-0.25rem" className="sm:text-[3rem]">
               Diverse subjects
             </Title>
             <Title mb="md" color="dimmed" size="sm">
@@ -231,14 +246,20 @@ export default function HomePage() {
               </Text>{" "}
               is used by students in over 100 different subjects.
             </Title>
-            <Button size="lg" variant="outline" className="w-fit">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-fit"
+              color="green"
+              onClick={onRedirect("/login")}
+            >
               Explore now
             </Button>
           </Stack>
-          <Box className="absolute right-16 top-1/2 h-[550px] w-[520px] translate-y-[-50%]">
+          <Box className="absolute right-16 top-1/2 h-[550px] w-[520px] translate-y-[-50%] lg:right-[-2rem] md:relative md:top-0 md:order-1 md:hidden md:translate-y-0">
             <Card
               shadow="md"
-              className="pointer-events-none absolute left-0 top-0 z-20 h-full skew-y-[20deg]"
+              className="pointer-events-none absolute left-0 top-0 z-20 h-full skew-y-[20deg] lg:skew-y-0"
             >
               <Stack className="h-full w-[290px]">
                 <SampleCard />
@@ -247,7 +268,7 @@ export default function HomePage() {
             </Card>
             <Card
               shadow="md"
-              className="pointer-events-none absolute left-[100px] top-[-50px] z-10 skew-y-[20deg]"
+              className="pointer-events-none absolute left-[100px] top-[-50px] z-10 skew-y-[20deg] lg:skew-y-0"
             >
               <Stack className="h-full w-[290px]">
                 <SampleCard />
@@ -256,7 +277,7 @@ export default function HomePage() {
             </Card>
             <Card
               shadow="md"
-              className="pointer-events-none absolute left-[200px] top-[-100px] z-0 skew-y-[20deg]"
+              className="pointer-events-none absolute left-[200px] top-[-100px] z-0 skew-y-[20deg] lg:hidden"
               style={{
                 fontSmooth: "subpixel-antialiased",
                 backfaceVisibility: "hidden",
@@ -271,23 +292,35 @@ export default function HomePage() {
           </Box>
         </section>
       </Container>
-      <section className="relative h-[100vh]">
-        <Title mt="14rem" align="center" color="dimmed" size="sm" transform="uppercase">
-          Personal learning assistant
+      <section className="relative h-[100vh] md:p-4">
+        <Title
+          className="mt-[14rem] md:mt-0 md:text-left"
+          align="center"
+          color="dimmed"
+          size="sm"
+          transform="uppercase"
+        >
+          Share your study set
         </Title>
-        <Title align="center" mb="md" size="4rem" ml="-0.25rem">
+        <Title
+          align="center"
+          mb="md"
+          size="4rem"
+          ml="-0.25rem"
+          className="md:text-left sm:text-[3rem]"
+        >
           Earn money
         </Title>
-        <Title align="center" color="dimmed" size="sm" transform="uppercase">
+        <Title
+          align="center"
+          color="dimmed"
+          size="sm"
+          transform="uppercase"
+          className="md:text-left"
+        >
           There more users the more money you makes
         </Title>
-        <Image
-          mt="7rem"
-          width="50vw"
-          src={ASSET_ANALYSTICS}
-          mx="auto"
-          className="translate-x-[50px]"
-        />
+        <BackgroundImage src={ASSET_ANALYSTICS} className="mt-[7rem] h-[50vh] lg:translate-x-0" />
       </section>
     </Stack>
   );

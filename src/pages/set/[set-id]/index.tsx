@@ -81,7 +81,7 @@ export default function ViewSetPage() {
 
         <BackgroundImage src={data?.feImageName || ""} w="100%" radius="md">
           <Overlay blur={10} radius="md" p="lg" className="h-fit" pos="relative" zIndex={1}>
-            <Group position="apart" align="center">
+            <Group position="apart" align="center" className="xs:flex-col">
               <Stack>
                 <Title color={theme.white} className="uppercase">
                   {data?.studySetName}
@@ -114,7 +114,7 @@ export default function ViewSetPage() {
                 </Text>
               </Stack>
 
-              <Rating value={3.5} fractions={2} className="flex-col" readOnly />
+              <Rating value={3.5} fractions={2} className="flex-col xs:flex-row" readOnly />
             </Group>
           </Overlay>
         </BackgroundImage>
@@ -123,13 +123,10 @@ export default function ViewSetPage() {
           <LearningMethods className="w-full" />
         </Group>
         <Stack>
-          <Title
-            order={3}
-            style={{
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            There {data?.questionResponses.length} definitions in this study set
+          <Title order={3} className="whitespace-pre-wrap">
+            There {data?.questionResponses.length == 1 ? "is only" : "are"}{" "}
+            {data?.questionResponses.length} definition
+            {data?.questionResponses.length == 1 ? "" : "s"} in this study set
           </Title>
           <Stack>
             {data?.questionResponses.map((item) => <Item key={item.id} domain={item} />)}

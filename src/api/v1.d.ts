@@ -48,11 +48,19 @@ export interface paths {
     /** Create or update note for a question of a study set (for current logged in user) */
     put: operations["createNoteOfCurrentQuestionForCurrentUser"];
   };
+  "/api/v1/referral": {
+    /** Enter other user's referral code to get free dates using PRO Subscription */
+    put: operations["enterReferralCode"];
+  };
   "/api/v1/study-set": {
     /** Get all study sets */
     get: operations["getAllStudySets"];
     /** Create new study set */
     post: operations["createStudySet"];
+  };
+  "/api/v1/study-set/excel": {
+    /** Create new study set from excel format */
+    post: operations["createStudySetFromExcel"];
   };
   "/api/v1/login/google": {
     /** API for logging in via Google */
@@ -61,6 +69,9 @@ export interface paths {
   "/api/v1/welcome": {
     /** API for testing welcome users from server */
     get: operations["welcomeUser"];
+  };
+  "/api/v1/welcome/redirect": {
+    get: operations["redirect"];
   };
   "/api/v1/user": {
     /** Get all users - students (only for ADMIN) */
@@ -77,6 +88,18 @@ export interface paths {
   "/api/v1/subscription/{subscription_id}": {
     /** Get subscription by ID */
     get: operations["getSubscriptionById"];
+  };
+  "/api/v1/subscription/upgrade-request/{upgrade_request_id}": {
+    /** Get upgrade request by ID (ONLY ADMIN) */
+    get: operations["getUpgradeRequestById"];
+  };
+  "/api/v1/subscription/upgrade-request/list": {
+    /** Get all upgrade requests from students (ONLY ADMIN) */
+    get: operations["getAllUpgradeRequests"];
+  };
+  "/api/v1/subscription/upgrade-request/current": {
+    /** Student requests to upgrade subscription when choosing to fulfill the payment */
+    get: operations["requestToUpgradeWithPayment"];
   };
   "/api/v1/study-set/current": {
     /** Get all study sets of current user */
@@ -99,6 +122,9 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
+    GeneralResponse: {
+      message?: string;
+    };
     UpdatePomodoroRequest: {
       /**
        * Format: int32
@@ -153,6 +179,7 @@ export interface components {
       fullName?: string;
       /**
        * @description DEFAULT, GRAY, RED, PINK, GRAPE, VIOLET, INDIGO, BLUE, CYAN, TEAL, GREEN, LIME, YELLOW, ORANGE
+       * @example DEFAULT
        * @enum {string}
        */
       theme?:
@@ -223,15 +250,11 @@ export interface components {
       expiredDatetime?: string;
     };
     UpgradeSubscriptionRequest: {
-      studentEmail: string;
-      subscriptionId: string;
       /**
-       * @description MONTHLY or YEARLY
-       * @example MONTHLY
-       * @enum {string}
+       * Format: int32
+       * @description Upgrade request ID of student upgrade request
        */
-      paidType: "NO" | "MONTHLY" | "YEARLY";
-      amount: number;
+      upgradeRequestId: number;
     };
     DowngradeSubscriptionRequest: {
       secretKey: string;
@@ -280,6 +303,9 @@ export interface components {
       questionId?: number;
       note?: string;
     };
+    ReferralCodeRequest: {
+      referralCode: string;
+    };
     CreateQuestionRequest: {
       question: string;
       answers: string[];
@@ -295,6 +321,14 @@ export interface components {
        */
       visibility: "PUBLIC" | "PRIVATE";
       questionsList: components["schemas"]["CreateQuestionRequest"][];
+    };
+    CreateStudySetExcel: {
+      studySetName: string;
+      /**
+       * @description BASIC only support PUBLIC, PRO can create PUBLIC or PRIVATE set
+       * @enum {string}
+       */
+      visibility: "PUBLIC" | "PRIVATE";
     };
     LoginRequest: {
       idToken: string;
@@ -314,6 +348,25 @@ export interface components {
       gptModel?: string;
       /** Format: int32 */
       gptLimit?: number;
+    };
+    BasicUserResponse: {
+      /** Format: uuid */
+      id?: string;
+      email?: string;
+      fullName?: string;
+      feImageName?: string;
+      /** @enum {string} */
+      status?: "DELETED" | "SUCCEED";
+      subscription?: components["schemas"]["UserSubscriptionResponse"];
+    };
+    UpgradeRequestResponse: {
+      /** Format: int32 */
+      id?: number;
+      userResponse?: components["schemas"]["BasicUserResponse"];
+      /** @enum {string} */
+      paidType?: "NO" | "MONTHLY" | "YEARLY";
+      /** @enum {string} */
+      status?: "PENDING" | "SUCCEED";
     };
     BasicStudySetResponse: {
       /** Format: int32 */
@@ -352,7 +405,7 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "*/*": string;
+          "*/*": components["schemas"]["GeneralResponse"];
         };
       };
     };
@@ -422,7 +475,7 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "*/*": string;
+          "*/*": components["schemas"]["GeneralResponse"];
         };
       };
     };
@@ -438,7 +491,7 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "*/*": string;
+          "*/*": components["schemas"]["GeneralResponse"];
         };
       };
     };
@@ -518,7 +571,7 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "*/*": string;
+          "*/*": components["schemas"]["GeneralResponse"];
         };
       };
     };
@@ -540,6 +593,22 @@ export interface operations {
       200: {
         content: {
           "*/*": components["schemas"]["UserQuestionNoteResponse"];
+        };
+      };
+    };
+  };
+  /** Enter other user's referral code to get free dates using PRO Subscription */
+  enterReferralCode: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ReferralCodeRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["UserResponse"];
         };
       };
     };
@@ -568,6 +637,28 @@ export interface operations {
           /** @description Send image as form data with key "image" */
           image: File;
           create_study_set_request: components["schemas"]["CreateStudySetRequest"];
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["StudySetResponse"];
+        };
+      };
+    };
+  };
+  /** Create new study set from excel format */
+  createStudySetFromExcel: {
+    requestBody?: {
+      content: {
+        "application/json": {
+          /** @description Send image as form data with key "image" */
+          image: string;
+          create_study_set_request: components["schemas"]["CreateStudySetExcel"];
+          /** Format: binary */
+          excel: string;
         };
       };
     };
@@ -609,6 +700,19 @@ export interface operations {
         content: {
           "*/*": string;
         };
+      };
+    };
+  };
+  redirect: {
+    parameters: {
+      query: {
+        name: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
       };
     };
   };
@@ -667,6 +771,54 @@ export interface operations {
       200: {
         content: {
           "*/*": components["schemas"]["SubscriptionResponse"];
+        };
+      };
+    };
+  };
+  /** Get upgrade request by ID (ONLY ADMIN) */
+  getUpgradeRequestById: {
+    parameters: {
+      path: {
+        upgrade_request_id: number;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["UpgradeRequestResponse"];
+        };
+      };
+    };
+  };
+  /** Get all upgrade requests from students (ONLY ADMIN) */
+  getAllUpgradeRequests: {
+    parameters: {
+      query?: {
+        status?: "PENDING" | "SUCCEED";
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["UpgradeRequestResponse"][];
+        };
+      };
+    };
+  };
+  /** Student requests to upgrade subscription when choosing to fulfill the payment */
+  requestToUpgradeWithPayment: {
+    parameters: {
+      query: {
+        paidType: "NO" | "MONTHLY" | "YEARLY";
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["GeneralResponse"];
         };
       };
     };

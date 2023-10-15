@@ -4,10 +4,14 @@ import FeatureFlagManager, { FeatureFlagManagerType } from "@/modules/feature-fl
 
 export enum FLAGS {
   NOTE = "note",
+  EXCEL = "excel",
+  LOGIN_PARTICLES = "login-particles",
 }
 
 const featureFlagManager = new FeatureFlagManager({
   [FLAGS.NOTE]: false,
+  [FLAGS.EXCEL]: false,
+  [FLAGS.LOGIN_PARTICLES]: false,
 });
 
 export const FeatureFlagProvider = featureFlagManager.FeatureFlagProvider;
