@@ -18,36 +18,48 @@ import {
 import { IconBrandGooglePlay } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
-import { ASSET_ANALYSTICS, ASSET_HOME_HERO } from "@/assets";
+import {
+  ASSET_AI,
+  ASSET_ANALYSTICS,
+  ASSET_FLASHCARD,
+  ASSET_HOME_HERO,
+  ASSET_INTERACT,
+  ASSET_PERSONALIZE,
+} from "@/assets";
 import FavoriteCard from "@/features/study-sets/components/favorite-card";
 import useRedirect from "@/hooks/use-redirect";
+import { getRandomItemFromArray } from "@/utils/get-random-item-from-array";
 
 const helps = [
   {
     title: "Personalized",
     description:
       "Persai helps you to learn with your own way. You can create your own study set with your own style.",
+    img: ASSET_PERSONALIZE,
   },
   {
     title: "Interactive",
     description: "Engaging tools to enhance learning.",
+    img: ASSET_INTERACT,
   },
   {
     title: "Flashcard",
     description: "Flashcard is the most effective way to learn.",
+    img: ASSET_FLASHCARD,
   },
   {
     title: "AI Supported",
     description: "Persai uses AI to help you learn more effectively.",
+    img: ASSET_AI,
   },
 ];
 
-const Review = ({ title, desciption }: { title: string; desciption: string }) => {
+const Review = ({ title, description, img }: (typeof helps)[number]) => {
   const theme = useMantineTheme();
 
   return (
     <Paper h={300} w={400} radius="sm" className="relative">
-      <BackgroundImage className="h-full w-full" src="red" />
+      <BackgroundImage className="h-full w-full" src={img} />
       <Overlay color="rgba(0,0,0,0.5)" p="lg">
         <Center className="h-full w-full">
           <Box>
@@ -55,7 +67,7 @@ const Review = ({ title, desciption }: { title: string; desciption: string }) =>
               {title}
             </Title>
             <Text align="center" color={theme.white}>
-              {desciption}
+              {description}
             </Text>
           </Box>
         </Center>
@@ -97,6 +109,14 @@ const useStyles = createStyles(() => ({
 }));
 
 const SampleCard = () => {
+  const img = getRandomItemFromArray([
+    ASSET_HOME_HERO,
+    ASSET_ANALYSTICS,
+    ASSET_PERSONALIZE,
+    ASSET_FLASHCARD,
+    ASSET_INTERACT,
+  ]);
+
   return (
     <FavoriteCard
       className="h-full"
@@ -106,7 +126,7 @@ const SampleCard = () => {
         id: 1,
         updatedAt: new Date().toISOString(),
         creator: {},
-        feImageName: "red",
+        feImageName: img,
         questionResponses: [],
         status: true,
         studySetName: "SWD",
@@ -212,12 +232,12 @@ export default function HomePage() {
           >
             <Marquee className={classes.container}>
               {helps.map((help, i) => (
-                <Review key={i} title={help.title} desciption={help.description} />
+                <Review key={i} title={help.title} description={help.description} img={help.img} />
               ))}
             </Marquee>
             <Marquee className={classes.container} direction="right">
               {helps.map((help, i) => (
-                <Review key={i} title={help.title} desciption={help.description} />
+                <Review key={i} title={help.title} description={help.description} img={help.img} />
               ))}
             </Marquee>
           </Container>
