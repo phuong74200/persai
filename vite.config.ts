@@ -25,6 +25,6 @@ export default defineConfig({
     port: 5173,
   },
   build: {
-    minify: false,
+    minify: true,
   },
 });
