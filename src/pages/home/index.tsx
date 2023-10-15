@@ -21,12 +21,11 @@ import { motion } from "framer-motion";
 
 import { ASSET_ANALYSTICS, ASSET_HOME_HERO } from "@/assets";
 import FavoriteCard from "@/features/study-sets/components/favorite-card";
-import useLoremPicsum from "@/hooks/use-lorem-picsum";
 import useRedirect from "@/hooks/use-redirect";
 
 const helps = [
   {
-    title: "Personlized",
+    title: "Personalized",
     description:
       "Persai helps you to learn with your own way. You can create your own study set with your own style.",
   },
@@ -45,17 +44,15 @@ const helps = [
 ];
 
 const Review = ({ title, desciption }: { title: string; desciption: string }) => {
-  const image = useLoremPicsum({ height: 350, width: 350 });
   const theme = useMantineTheme();
 
   return (
     <Paper h={300} w={400} radius="sm" className="relative">
-      <BackgroundImage className="h-full w-full" src={image} />
+      <BackgroundImage className="h-full w-full" src="red" />
       <Overlay color="rgba(0,0,0,0.5)" p="lg">
         <Center className="h-full w-full">
           <Box>
             <Title align="center" color={theme.white}>
-              {title}
               {title}
             </Title>
             <Text align="center" color={theme.white}>
@@ -101,8 +98,6 @@ const useStyles = createStyles(() => ({
 }));
 
 const SampleCard = () => {
-  const image = useLoremPicsum({ height: 300, width: 300 });
-
   return (
     <FavoriteCard
       className="h-full"
@@ -112,7 +107,7 @@ const SampleCard = () => {
         id: 1,
         updatedAt: new Date().toISOString(),
         creator: {},
-        feImageName: image,
+        feImageName: "red",
         questionResponses: [],
         status: true,
         studySetName: "SWD",
@@ -140,7 +135,7 @@ export default function HomePage() {
           className="absolute z-10 h-full w-full"
         >
           <Image
-            className="absolute right-12 top-1/2 translate-y-[-50%]"
+            className="absolute right-12 top-1/2 translate-y-[-50%] md:hidden"
             width={1200}
             src={ASSET_HOME_HERO}
           />
@@ -153,7 +148,7 @@ export default function HomePage() {
         />
         <Stack
           spacing="2rem"
-          className="absolute left-12 top-1/2 z-40 max-w-4xl translate-y-[-50%]"
+          className="absolute left-12 top-1/2 z-40 max-w-4xl translate-y-[-50%] md:left-0 md:p-4"
         >
           <Box>
             <Title color={theme.white} size="6rem" className="sm:text-[4rem]">
