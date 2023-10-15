@@ -23,8 +23,10 @@ export default function useTest(setId: number) {
         {},
       ) || {},
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.id]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const questionResponses = useMemo(() => data?.questionResponses || [], [data?.id]);
 
   const getScore = useCallback(() => {

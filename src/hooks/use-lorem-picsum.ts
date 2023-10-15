@@ -19,6 +19,7 @@ export default function useLoremPicsum({
       .catch((err) => {
         logger.error(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return url;

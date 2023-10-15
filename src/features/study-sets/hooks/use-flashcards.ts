@@ -14,6 +14,7 @@ export default function useFlashCards(initialCards: StudySet[]) {
         return shuffled;
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
