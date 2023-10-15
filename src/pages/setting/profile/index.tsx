@@ -20,6 +20,7 @@ import { sentenceCase } from "change-case";
 
 import { operations } from "@/api/v1";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
+import ReferralInput from "@/features/referral/components/referral-input";
 import useUpdateCurrentUser from "@/features/user/hooks/use-update-current-user";
 import useRedirect from "@/hooks/use-redirect";
 import { COLOR_LIST } from "@/utils/get-mantine-color-from-string";
@@ -99,23 +100,31 @@ export default function ProfileSettingPage() {
             <Grid.Col md={4} sm={12}>
               <Stack>
                 <Paper p="md">
-                  <CopyButton value={cache?.referralCode?.referralCode || ""} timeout={2000}>
-                    {({ copied, copy }) => (
-                      <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                        <Stack onClick={copy} className="cursor-pointer">
+                  <Stack>
+                    <CopyButton value={cache?.referralCode?.referralCode || ""} timeout={2000}>
+                      {({ copied, copy }) => (
+                        <>
                           <Text size="lg" weight="bold">
-                            Your referral code
+                            Invitation code
                           </Text>
-                          <Text color={theme.primaryColor}>
-                            {cache?.referralCode?.referralCode?.toUpperCase() || ""}
-                          </Text>
-                          <Text size="sm" color="dimmed" italic>
-                            Share your referral code to your friends and get 15 days free premium
-                          </Text>
-                        </Stack>
-                      </Tooltip>
-                    )}
-                  </CopyButton>
+                          <ReferralInput />
+                          <Stack onClick={copy}>
+                            <Text size="lg" weight="bold">
+                              Your referral code
+                            </Text>
+                            <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
+                              <Text color={theme.primaryColor}>
+                                {cache?.referralCode?.referralCode?.toUpperCase() || ""}
+                              </Text>
+                            </Tooltip>
+                            <Text size="sm" color="dimmed" italic>
+                              Share your referral code to your friends and get 15 days free premium
+                            </Text>
+                          </Stack>
+                        </>
+                      )}
+                    </CopyButton>
+                  </Stack>
                 </Paper>
                 <Paper p="md">
                   <Stack>
