@@ -1,3 +1,4 @@
+import ReactGA from "react-ga4";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
@@ -20,6 +21,14 @@ export default function useReferral() {
       if (!response.response.ok) throw response.error;
 
       return response;
+    },
+
+    onSettled(_, error, variables) {
+      ReactGA.event({
+        category: "use_referral",
+        action: error ? "error" : "success",
+        label: variables,
+      });
     },
 
     onSuccess() {

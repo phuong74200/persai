@@ -1,9 +1,11 @@
+import ReactGA from "react-ga4";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
 import { operations } from "@/api/v1";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
+import logger from "@/utils/dev-log";
 
 export default function useSubscriptionPayment(
   paidType: operations["requestToUpgradeWithPayment"]["parameters"]["query"]["paidType"],
@@ -15,9 +17,27 @@ export default function useSubscriptionPayment(
     ...queryKeys.subscription.payment(paidType),
 
     onSuccess: (data) => {
-      const pType = new URL(data.response.url).searchParams.get("paidType");
+      try {
+        const pType = new URL(data.response.url).searchParams.get("paidType");
 
-      if (pType === paidType) window.open(data.data?.message, "_blank")?.focus();
+        if (pType === paidType) window.open(data.data?.message, "_blank")?.focus();
+      } catch (e) {
+        logger.log(e);
+      }
+    },
+
+    onSettled: (data, error) => {
+      try {
+        const pType = new URL(data?.response.url || "").searchParams.get("paidType");
+
+        ReactGA.event({
+          category: "use_referral",
+          action: error ? "error" : "success",
+          label: pType || undefined,
+        });
+      } catch (e) {
+        logger.log(e);
+      }
     },
 
     enabled: false,
