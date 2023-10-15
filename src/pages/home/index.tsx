@@ -8,7 +8,6 @@ import {
   Container,
   createStyles,
   Group,
-  Image,
   Overlay,
   Paper,
   Stack,
@@ -134,11 +133,15 @@ export default function HomePage() {
           transition={{ ease: "easeOut", duration: 2 }}
           className="absolute z-10 h-full w-full"
         >
-          <Image
-            className="absolute right-12 top-1/2 translate-y-[-50%] md:hidden"
-            width={1200}
-            src={ASSET_HOME_HERO}
-          />
+          <picture>
+            <source media="(min-width:1184px)" srcSet={ASSET_HOME_HERO} />
+            <img
+              className="absolute right-12 top-1/2 translate-y-[-50%]"
+              width={1200}
+              src="/"
+              alt="hero"
+            />
+          </picture>
         </motion.div>
         <div
           className="absolute left-0 top-0 z-40 h-full w-full"
