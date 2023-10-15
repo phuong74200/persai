@@ -1,3 +1,4 @@
+import { lazy } from "react";
 import ReactGA from "react-ga4";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -5,24 +6,28 @@ import { Theme } from "@/app";
 import useGetCurrentUser from "@/features/auth/hooks/use-get-current-user";
 import Error404 from "@/features/error/components/Error404";
 import { FlashCardContextProvider } from "@/features/study-sets/contexts/flashcard-context";
-import { StudentLayout } from "@/layouts";
-import { AdminLayout } from "@/layouts/admin";
-import { HomeLayout } from "@/layouts/home";
-import { NonLoginSetLayout } from "@/layouts/non-login-set";
+
+const StudentLayout = lazy(() => import("@/layouts/student"));
+const AdminLayout = lazy(() => import("@/layouts/admin"));
+const HomeLayout = lazy(() => import("@/layouts/home"));
+
+const NonLoginSetLayout = lazy(() => import("@/layouts/non-login-set"));
+const HomePage = lazy(() => import("@/pages/home"));
+const LoginPage = lazy(() => import("@/pages/login"));
+const CreateSetPage = lazy(() => import("@/pages/create"));
+
+const MyCollectionPage = lazy(() => import("@/pages/my-collection"));
+const ViewSetPage = lazy(() => import("@/pages/set/[set-id]"));
+const FlashCardPage = lazy(() => import("@/pages/set/[set-id]/flashcard"));
+const TestPage = lazy(() => import("@/pages/set/[set-id]/test"));
+const PomodoroSettingPage = lazy(() => import("@/pages/setting/pomodoro"));
+const ProfileSettingPage = lazy(() => import("@/pages/setting/profile"));
+const StudySetPage = lazy(() => import("@/pages/study-set"));
+const SubscriptionPage = lazy(() => import("@/pages/subscription"));
+const SubscriptionRequestPage = lazy(() => import("@/pages/subscription-request"));
+const UserPage = lazy(() => import("@/pages/user"));
+
 import AuthRouter from "@/modules/auth-router";
-import CreateSetPage from "@/pages/create";
-import HomePage from "@/pages/home";
-import { LoginPage } from "@/pages/login";
-import MyCollectionPage from "@/pages/my-collection";
-import ViewSetPage from "@/pages/set/[set-id]";
-import FlashCardPage from "@/pages/set/[set-id]/flashcard";
-import TestPage from "@/pages/set/[set-id]/test";
-import PomodoroSettingPage from "@/pages/setting/pomodoro";
-import ProfileSettingPage from "@/pages/setting/profile";
-import StudySetPage from "@/pages/study-set";
-import SubscriptionPage from "@/pages/subscription";
-import SubscriptionRequestPage from "@/pages/subscription-request";
-import UserPage from "@/pages/user";
 
 export const BrowserRouter = new AuthRouter(
   [

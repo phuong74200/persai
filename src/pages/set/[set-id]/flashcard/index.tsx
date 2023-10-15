@@ -57,9 +57,9 @@ export default function FlashCardPage() {
   }, [setId, data?.id]);
 
   return (
-    <>
+    <Stack className="h-full [&_*]:select-none">
       <Progress value={progress} styles={progressStyles} />
-      <Center className="h-full overflow-hidden">
+      <Center className="h-full flex-1 overflow-hidden">
         <Stack spacing="2.5rem">
           <Box className="relative h-[35rem] w-[35rem] [perspective:3000px] sm:h-[25rem] sm:w-[25rem] xs:h-[20rem] xs:w-[20rem]">
             <Box className="absolute left-[-5rem] top-[50%] translate-y-[-50%]">
@@ -127,6 +127,6 @@ export default function FlashCardPage() {
           </Group>
         </Stack>
       </Center>
-    </>
+    </Stack>
   );
 }

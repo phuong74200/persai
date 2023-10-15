@@ -1,5 +1,6 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { MantineProvider } from "@mantine/core";
+import { LoadingOverlay, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -42,13 +43,15 @@ export function Theme() {
 
 function App() {
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <FeatureFlagProvider>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter.RouterProvider />
-        </QueryClientProvider>
-      </FeatureFlagProvider>
-    </GoogleOAuthProvider>
+    <Suspense fallback={<LoadingOverlay visible />}>
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <FeatureFlagProvider>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter.RouterProvider />
+          </QueryClientProvider>
+        </FeatureFlagProvider>
+      </GoogleOAuthProvider>
+    </Suspense>
   );
 }
 

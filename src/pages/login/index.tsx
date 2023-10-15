@@ -16,7 +16,7 @@ import { FeatureFlag, FLAGS } from "@/configs/feature-flag";
 import useGoogleLogin from "@/features/auth/hooks/use-google-login";
 import { Particles } from "@/features/study-sets/components/particles";
 
-export function LoginPage() {
+export default function LoginPage() {
   const { handleSuccess } = useGoogleLogin();
   const theme = useMantineTheme();
 

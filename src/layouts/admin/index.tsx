@@ -11,7 +11,7 @@ const styles = (theme: MantineTheme) => ({
   },
 });
 
-export function AdminLayout() {
+export default function AdminLayout() {
   return (
     <AppShell
       styles={styles}

@@ -12,7 +12,7 @@ const styles = (theme: MantineTheme) => ({
   },
 });
 
-export function NonLoginSetLayout() {
+export default function NonLoginSetLayout() {
   return (
     <AppShell styles={styles} padding="md" layout="alt" header={<NonLoginSetHeader />}>
       <Outlet />

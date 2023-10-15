@@ -16,7 +16,7 @@ const styles = (theme: MantineTheme) => ({
   },
 });
 
-export function StudentLayout() {
+export default function StudentLayout() {
   const [isFlashCardRoute] = useMatchPaths("/set/:setId/flashcard");
 
   return (

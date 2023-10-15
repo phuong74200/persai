@@ -9,7 +9,7 @@ const styles = (theme: MantineTheme) => ({
   },
 });
 
-export function HomeLayout() {
+export default function HomeLayout() {
   return (
     <AppShell styles={styles} padding="md" layout="alt">
       <Outlet />
