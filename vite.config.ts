@@ -18,7 +18,15 @@ export default defineConfig({
       },
     }),
     ViteImageOptimizer({
-      /* pass your config */
+      png: {
+        quality: 1,
+      },
+      jpeg: {
+        quality: 1,
+      },
+      jpg: {
+        quality: 1,
+      },
     }),
   ],
   resolve: {
