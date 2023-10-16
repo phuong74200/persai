@@ -1,5 +1,5 @@
 import { useFieldArray, UseFormReturn } from "react-hook-form";
-import { Button, Group, HoverCard, SimpleGrid, Textarea } from "@mantine/core";
+import { Button, Group, HoverCard, SimpleGrid, Textarea, useMantineTheme } from "@mantine/core";
 import { IconCheck, IconDotsCircleHorizontal, IconTrashXFilled } from "@tabler/icons-react";
 
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
@@ -17,12 +17,18 @@ export default function CreateChoice({ nestIndex, form }: Props) {
     control: form.control,
     name: `studySets.${nestIndex}.choices` as `studySets`,
   });
+  const theme = useMantineTheme();
 
   const answer = form.watch(`studySets.${nestIndex}.answer`);
 
   const handleAppend = () => append({} as StudySet);
   const handleMarkAsAnswer = (index: number) => () =>
     form.setValue(`studySets.${nestIndex}.answer`, index);
+
+  const colors = theme.fn.variant({
+    color: "green",
+    variant: "light",
+  });
 
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: "md", cols: 1, spacing: "md" }]}>
@@ -41,7 +47,14 @@ export default function CreateChoice({ nestIndex, form }: Props) {
               className="w-full [word-break:break-word]"
               minRows={1}
               autosize
-              variant={answer === k ? "filled" : "default"}
+              styles={{
+                input: {
+                  background: answer === k ? colors.background : undefined,
+                  border: answer === k ? colors.border : undefined,
+                  color: answer === k ? colors.color : undefined,
+                },
+              }}
+              color="red"
               {...form.register(`studySets.${nestIndex}.choices.${k}.value`)}
             />
           </HoverCard.Target>
