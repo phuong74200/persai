@@ -21,5 +21,15 @@ export default function useRedirect() {
       },
     });
 
-  return { back, onRedirect, redirect, onRedirectWithState };
+  const redirectWithState = (path?: string, options?: NavigateOptions) =>
+    path &&
+    navigate(path, {
+      ...options,
+      state: {
+        ...options?.state,
+        background: location,
+      },
+    });
+
+  return { back, onRedirect, redirect, onRedirectWithState, redirectWithState };
 }

@@ -1,3 +1,4 @@
+import { Dna } from "react-loader-spinner";
 import {
   ActionIcon,
   Box,
@@ -7,10 +8,12 @@ import {
   ScrollArea,
   Stack,
   Textarea,
+  Title,
   useMantineTheme,
 } from "@mantine/core";
 import { IconMessageChatbot, IconSend } from "@tabler/icons-react";
 
+import { FeatureFlag, FLAGS, useFeatureFlag } from "@/configs/feature-flag";
 import GPTMessage from "@/features/gpt/components/gpt-message";
 import SelfMessage from "@/features/gpt/components/self-message";
 import { MessageDomain } from "@/features/gpt/domains/message";
@@ -34,6 +37,7 @@ export const messages = generateFilledArray(
 
 export default function ChatBox() {
   const theme = useMantineTheme();
+  const [chatGPT] = useFeatureFlag(FLAGS.CHAT_GPT);
 
   return (
     <Popover
@@ -60,21 +64,40 @@ export default function ChatBox() {
       <Popover.Dropdown p={0}>
         <Stack spacing={0}>
           <Box pl="md" pt="md">
-            <ScrollArea h={400} type="always" offsetScrollbars>
-              <Stack px="xs" spacing="xl">
-                {messages.map((message) =>
-                  message.isSentByMe ? (
-                    <SelfMessage key={message.id} domain={message} />
-                  ) : (
-                    <GPTMessage key={message.id} domain={message} />
-                  ),
-                )}
-              </Stack>
-            </ScrollArea>
+            <FeatureFlag
+              feature={FLAGS.CHAT_GPT}
+              fallbackElement={
+                <Center className="h-[400px] w-full">
+                  <Stack justify="center" align="center">
+                    <Title size="1rem" align="center" className="leading-none" order={3} mt="1rem">
+                      COMING SOON
+                    </Title>
+                    <Dna visible={true} height="80" width="80" ariaLabel="dna-loading" />
+                  </Stack>
+                </Center>
+              }
+            >
+              <ScrollArea h={400} type="always" offsetScrollbars>
+                <Stack px="xs" spacing="xl">
+                  {messages.map((message) =>
+                    message.isSentByMe ? (
+                      <SelfMessage key={message.id} domain={message} />
+                    ) : (
+                      <GPTMessage key={message.id} domain={message} />
+                    ),
+                  )}
+                </Stack>
+              </ScrollArea>
+            </FeatureFlag>
           </Box>
           <Flex p="md" align="center" gap="xs">
-            <Textarea maxRows={4} minRows={1} autosize className="w-full" />
-            <ActionIcon variant="transparent" size={24} color={theme.primaryColor}>
+            <Textarea disabled={!chatGPT} maxRows={4} minRows={1} autosize className="w-full" />
+            <ActionIcon
+              disabled={!chatGPT}
+              variant="transparent"
+              size={24}
+              color={theme.primaryColor}
+            >
               <IconSend size={24} />
             </ActionIcon>
           </Flex>

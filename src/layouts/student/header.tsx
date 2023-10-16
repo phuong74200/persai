@@ -90,8 +90,8 @@ export function StudentHeader() {
           ))}
         </Breadcrumbs>
         <Group>
-          <Button className="md:hidden" onClick={onRedirect("/create")}>
-            Upload new set
+          <Button variant="gradient" className="md:hidden" onClick={onRedirect("/subscription")}>
+            Upgrade to pro
           </Button>
           <FloatNotification />
         </Group>

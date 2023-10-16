@@ -78,6 +78,7 @@ export type LinksGroupProps = {
   label: string;
   initiallyOpened?: boolean;
   enabled?: boolean;
+  onClick?: (redirect: ReturnType<typeof useRedirect>) => void;
 } & ({ links: LinkItem[]; link?: never } | { link: string; links?: never });
 
 const SubItem = ({ link, label }: { label: string; link: string }) => {
@@ -97,8 +98,15 @@ const SubItem = ({ link, label }: { label: string; link: string }) => {
   );
 };
 
-export function LinksGroup({ icon: Icon, label, initiallyOpened, links, link }: LinksGroupProps) {
-  const { onRedirect, onRedirectWithState } = useRedirect();
+export function LinksGroup({
+  icon: Icon,
+  label,
+  initiallyOpened,
+  links,
+  link,
+  onClick,
+}: LinksGroupProps) {
+  const redirect = useRedirect();
   const { classes, theme, cx } = useStyles();
   const [opened, toggleOpen] = useToggle<boolean>([Boolean(initiallyOpened), !initiallyOpened]);
 
@@ -112,11 +120,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, link }: 
     <>
       <UnstyledButton
         onClick={
-          hasLinks
-            ? () => toggleOpen()
-            : link === "/coming-soon"
-            ? onRedirectWithState(link)
-            : onRedirect(link)
+          hasLinks ? () => toggleOpen() : () => onClick?.(redirect) || redirect.onRedirect(link)
         }
         className={cx(classes.control, { [classes.controlActive]: matchLocation })}
       >

@@ -8,6 +8,7 @@ export enum FLAGS {
   LOGIN_PARTICLES = "login-particles",
   NOTIFICATION = "notification",
   BOOKS = "books",
+  CHAT_GPT = "chat-gpt",
 }
 
 const featureFlagManager = new FeatureFlagManager({
@@ -16,6 +17,7 @@ const featureFlagManager = new FeatureFlagManager({
   [FLAGS.LOGIN_PARTICLES]: false,
   [FLAGS.NOTIFICATION]: false,
   [FLAGS.BOOKS]: false,
+  [FLAGS.CHAT_GPT]: false,
 });
 
 export const FeatureFlagProvider = featureFlagManager.FeatureFlagProvider;

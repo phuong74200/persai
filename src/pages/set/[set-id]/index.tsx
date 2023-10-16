@@ -29,7 +29,7 @@ import parseDec from "@/utils/parse-dec";
 const books = ["book 1", "book 2", "book 3"];
 
 const LearningMethods = (props: SimpleGridProps) => {
-  const { onRedirect } = useRedirect();
+  const { onRedirect, onRedirectWithState } = useRedirect();
 
   return (
     <SimpleGrid
@@ -41,9 +41,9 @@ const LearningMethods = (props: SimpleGridProps) => {
       {...props}
     >
       <LearnOption Icon={IconCardsFilled} label="Flashcards" onClick={onRedirect("flashcard")} />
-      <LearnOption Icon={IconBooks} label="Learn" />
+      <LearnOption Icon={IconBooks} label="Learn" onClick={onRedirectWithState("/coming-soon")} />
       <LearnOption Icon={IconAB2} label="Test" onClick={onRedirect("test")} />
-      <LearnOption Icon={IconAB2} label="Match" />
+      <LearnOption Icon={IconAB2} label="Match" onClick={onRedirectWithState("/coming-soon")} />
     </SimpleGrid>
   );
 };

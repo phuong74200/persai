@@ -6,7 +6,6 @@ import Porodomo from "@/features/poromodo/components/poromodo";
 import StudentFooter from "@/layouts/student/footer";
 import { StudentHeader } from "@/layouts/student/header";
 import { NavbarNested } from "@/layouts/student/navbar";
-import logger from "@/utils/dev-log";
 
 const styles = (theme: MantineTheme) => ({
   main: {
@@ -19,8 +18,6 @@ const styles = (theme: MantineTheme) => ({
 
 export default function StudentLayout() {
   const isFlashCardRoute = useMatch("/set/:setId/flashcard");
-
-  logger.log(isFlashCardRoute);
 
   return (
     <>
