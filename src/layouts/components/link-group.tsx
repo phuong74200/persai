@@ -119,9 +119,11 @@ export function LinksGroup({
   return (
     <>
       <UnstyledButton
-        onClick={
-          hasLinks ? () => toggleOpen() : () => onClick?.(redirect) || redirect.onRedirect(link)
-        }
+        onClick={() => {
+          if (hasLinks) return toggleOpen();
+          if (onClick) return onClick(redirect);
+          return redirect.redirect(link);
+        }}
         className={cx(classes.control, { [classes.controlActive]: matchLocation })}
       >
         <Group position="apart" spacing={0} className="md:h-[34px]">
