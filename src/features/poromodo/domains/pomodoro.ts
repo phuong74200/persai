@@ -34,14 +34,14 @@ export class Pomodoro {
   }
 
   get longBreakInSecond() {
-    return (this.longBreak || 0) / 1000;
+    return this.longBreak || 0;
   }
 
   get shortBreakInSecond() {
-    return (this.shortBreak || 0) / 1000;
+    return this.shortBreak || 0;
   }
 
   get studyTimeInSecond() {
-    return (this.studyTime || 0) / 1000;
+    return this.studyTime || 0;
   }
 }
