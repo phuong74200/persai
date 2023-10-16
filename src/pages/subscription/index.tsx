@@ -178,7 +178,7 @@ const tiers: SubscriptionCardProps[] = [
 
 export default function SubscriptionPage() {
   return (
-    <Container size="xl" className="h-full">
+    <Container size="xl" className="h-full" my="2rem">
       <SimpleGrid
         cols={3}
         breakpoints={[

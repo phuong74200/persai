@@ -55,7 +55,7 @@ export default function ProfileSettingPage() {
     },
   });
 
-  const { submit } = useUpdateCurrentUser();
+  const { submit, isLoading } = useUpdateCurrentUser();
 
   useEffect(() => {
     form.setValues({
@@ -91,7 +91,7 @@ export default function ProfileSettingPage() {
                     </Tooltip>
                     <TextInput w="100%" label="Email" disabled value={cache?.email} />
                   </Group>
-                  <Button mt="md" onClick={submit(form)}>
+                  <Button loading={isLoading} mt="md" onClick={submit(form)}>
                     Save
                   </Button>
                 </Stack>
@@ -108,7 +108,7 @@ export default function ProfileSettingPage() {
                             Invitation code
                           </Text>
                           <ReferralInput />
-                          <Stack onClick={copy}>
+                          <Stack onClick={copy} onTouchEnd={copy}>
                             <Text size="lg" weight="bold">
                               Your referral code
                             </Text>

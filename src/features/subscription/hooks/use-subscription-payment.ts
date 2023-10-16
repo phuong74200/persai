@@ -22,7 +22,7 @@ export default function useSubscriptionPayment(
 
         if (pType === paidType) window.open(data.data?.message, "_blank")?.focus();
       } catch (e) {
-        logger.log(e);
+        logger.error(e);
       }
     },
 
@@ -36,7 +36,7 @@ export default function useSubscriptionPayment(
           label: pType || undefined,
         });
       } catch (e) {
-        logger.log(e);
+        logger.error(e);
       }
     },
 

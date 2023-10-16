@@ -13,6 +13,7 @@ import {
   Stack,
   Text,
   Title,
+  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { IconBrandGooglePlay } from "@tabler/icons-react";
@@ -78,6 +79,8 @@ const Review = ({ title, description, img }: (typeof helps)[number]) => {
 
 const useStyles = createStyles(() => ({
   container: {
+    overflow: "hidden",
+
     ".child": {
       marginRight: "1rem",
     },
@@ -145,7 +148,7 @@ export default function HomePage() {
   const { onRedirect } = useRedirect();
 
   return (
-    <Stack spacing={0} mb="4rem">
+    <Stack spacing={0} mb="4rem" className="z-10">
       <section className="relative h-[100vh] bg-oc-gray-6">
         <motion.div
           initial={{ marginTop: -100, opacity: 0 }}
@@ -201,15 +204,17 @@ export default function HomePage() {
             >
               Web
             </Button>
-            <Button
-              color="blue"
-              mt="1rem"
-              w="fit-content"
-              size="lg"
-              leftIcon={<IconBrandGooglePlay />}
-            >
-              Android
-            </Button>
+            <Tooltip label="Comming soon">
+              <Button
+                color="blue"
+                mt="1rem"
+                w="fit-content"
+                size="lg"
+                leftIcon={<IconBrandGooglePlay />}
+              >
+                Android
+              </Button>
+            </Tooltip>
           </Group>
         </Stack>
       </section>
@@ -244,11 +249,11 @@ export default function HomePage() {
         </Stack>
       </section>
       <Container size="xl">
-        <section className="relative h-[100vh] md:my-[8rem] md:h-[auto]">
+        <section className="relative h-[100vh] items-center md:flex md:h-[70vh]">
           <Stack
             spacing="1rem"
             align="left"
-            className="absolute left-16 top-1/2 w-[500px] translate-y-[-50%] lg:left-0 md:relative md:top-0 md:order-2 md:translate-y-0 sm:w-[auto]"
+            className="absolute left-16 top-1/2 w-[500px] translate-y-[-50%] lg:left-0 md:relative md:top-0 md:order-2 md:h-fit md:translate-y-0 sm:w-[auto]"
           >
             <Title color="dimmed" size="sm" transform="uppercase">
               Personal learning assistant
@@ -311,34 +316,33 @@ export default function HomePage() {
         </section>
       </Container>
       <section className="relative h-[100vh] md:p-4">
-        <Title
-          className="mt-[14rem] md:mt-0 md:text-left"
-          align="center"
-          color="dimmed"
-          size="sm"
-          transform="uppercase"
-        >
-          Share your study set
-        </Title>
-        <Title
-          align="center"
-          mb="md"
-          size="4rem"
-          ml="-0.25rem"
-          className="md:text-left sm:text-[3rem]"
-        >
-          Earn money
-        </Title>
-        <Title
-          align="center"
-          color="dimmed"
-          size="sm"
-          transform="uppercase"
-          className="md:text-left"
-        >
-          There more users the more money you makes
-        </Title>
-        <BackgroundImage src={ASSET_ANALYSTICS} className="mt-[7rem] h-[50vh] lg:translate-x-0" />
+        <Stack>
+          <Title
+            className="mt-[14rem] md:mt-0 md:text-left"
+            align="center"
+            color="dimmed"
+            size="sm"
+            transform="uppercase"
+          >
+            Share your study set
+          </Title>
+          <Title
+            align="center"
+            mb="md"
+            size="4rem"
+            ml="-0.25rem"
+            className="md:text-left sm:text-[3rem]"
+          >
+            Earn money
+          </Title>
+          <Title mb="md" color="dimmed" size="sm">
+            There more users the more money you makes
+          </Title>
+        </Stack>
+        <BackgroundImage
+          src={ASSET_ANALYSTICS}
+          className="mt-[7rem] h-[50vh] bg-contain bg-no-repeat lg:translate-x-0"
+        />
       </section>
     </Stack>
   );

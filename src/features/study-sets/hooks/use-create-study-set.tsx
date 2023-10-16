@@ -8,7 +8,6 @@ import { components } from "@/api/v1";
 import { notification } from "@/configs/notifications";
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
 import localStudySetToBeStudySet from "@/features/study-sets/utils/local-study-set-to-server-study-set";
-import logger from "@/utils/dev-log";
 import generateQueryId from "@/utils/generate-query-id";
 
 export type CreateStudySetRequest = {
@@ -46,7 +45,6 @@ export default function useCreateStudySet() {
         },
       });
 
-      logger.log("from res", response.response.ok);
       if (!response.response.ok) throw response.error;
 
       return response;

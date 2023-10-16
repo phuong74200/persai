@@ -22,7 +22,6 @@ export default function SetImage({ form }: Props) {
       {(props) => (
         <Tooltip.Floating label={image?.name ?? "Upload image"}>
           <Image
-            className="cursor-pointer"
             placeholder={
               <ThemeIcon w="100%" h="100%">
                 <IconPhoto size="2rem" />
@@ -31,7 +30,15 @@ export default function SetImage({ form }: Props) {
             withPlaceholder
             width="4.875rem"
             height="4.875rem"
+            fit="cover"
             src={base64}
+            className="cursor-pointer sm:!h-[8rem] sm:!w-full"
+            classNames={{
+              image: "sm:!h-full sm:!w-full",
+              imageWrapper: "h-full",
+              figure: "h-full",
+              root: "h-full",
+            }}
             {...props}
           />
         </Tooltip.Floating>

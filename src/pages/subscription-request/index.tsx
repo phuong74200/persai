@@ -53,6 +53,13 @@ const columns: DataTableColumn<UpgradeRequest>[] = [
   },
 
   {
+    accessor: "formatPrice",
+    title: "Price",
+    width: "10%",
+    textAlignment: "center",
+  },
+
+  {
     accessor: "status",
     title: "Status",
     width: "10%",

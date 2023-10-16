@@ -2,6 +2,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Checkbox, Container, Group, Stack } from "@mantine/core";
 
 import TextInputWithCustomError from "@/components/textarea-with-custom-error";
+import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import CreateQuestion from "@/features/study-sets/components/create-question";
 import SetImage from "@/features/study-sets/components/set-image";
 import useCreateStudySet from "@/features/study-sets/hooks/use-create-study-set";
@@ -30,6 +31,7 @@ const defaultValues: Partial<CreateSetFormType> = {
 };
 
 export default function CreateSetPage() {
+  const user = useGetCurrentUserFromCache();
   const form = useForm<CreateSetFormType>({
     defaultValues,
   });
@@ -41,9 +43,9 @@ export default function CreateSetPage() {
       <form onSubmit={form.handleSubmit(submit)}>
         <Stack spacing="2rem">
           <Group position="apart" align="start">
-            <Group>
+            <Group className="sm:w-full">
               <SetImage form={form} />
-              <Stack>
+              <Stack className="sm:w-full">
                 <Controller
                   control={form.control}
                   name="studySetName"
@@ -52,12 +54,14 @@ export default function CreateSetPage() {
                       variant="filled"
                       placeholder="Study set title"
                       size="md"
-                      className="[&_input]:font-bold"
+                      className="sm:w-full [&_input]:font-bold"
                       {...field}
                     />
                   )}
                 />
-                <Checkbox label="Private study set" {...form.register("visibility")} />
+                {user?.subscription?.currentSubscriptionId === "PRO" && (
+                  <Checkbox label="Private study set" {...form.register("visibility")} />
+                )}
               </Stack>
             </Group>
             <UploadButton />

@@ -5,17 +5,23 @@ export class UpgradeRequest {
   paidType;
   status;
   userResponse;
+  createdAt;
+  price;
 
   constructor({
     id,
     paidType,
     status,
     userResponse,
+    createdAt,
+    price,
   }: components["schemas"]["UpgradeRequestResponse"]) {
     this.id = id;
     this.paidType = paidType;
     this.status = status;
     this.userResponse = userResponse;
+    this.createdAt = createdAt;
+    this.price = price;
   }
 
   get isPending() {
@@ -28,8 +34,15 @@ export class UpgradeRequest {
         return "orange";
       case "SUCCEED":
         return "green";
+      case "REJECT":
+        return "red";
     }
 
     return "blue";
+  }
+
+  get formatPrice() {
+    if (!this.price) return 0;
+    return new Intl.NumberFormat("en-DE").format(this.price);
   }
 }

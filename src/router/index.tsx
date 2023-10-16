@@ -98,6 +98,10 @@ export const BrowserRouter = new AuthRouter(
           permissons: ["STUDENT"],
           children: [
             {
+              path: "subscription",
+              Component: SubscriptionPage,
+            },
+            {
               path: "create",
               Component: CreateSetPage,
             },
@@ -166,17 +170,6 @@ export const BrowserRouter = new AuthRouter(
                   Component: ViewSetPage,
                 },
               ],
-            },
-          ],
-        },
-
-        {
-          path: "",
-          Component: NonLoginSetLayout,
-          children: [
-            {
-              path: "subscription",
-              Component: SubscriptionPage,
             },
           ],
         },

@@ -21,6 +21,7 @@ export const userKeys = createQueryKeys("user", {
         params: {
           query: {
             status: undefined,
+            sort: ["fullName"],
           },
         },
       });

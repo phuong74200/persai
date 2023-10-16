@@ -32,6 +32,10 @@ export interface paths {
     /** Make request to upgrade subscription for a specific user (ONLY ADMIN) */
     put: operations["upgradeSubscription"];
   };
+  "/api/v1/subscription/reject": {
+    /** Reject request to upgrade subscription for a specific user (ONLY ADMIN) */
+    put: operations["rejectUpgradeRequest"];
+  };
   "/api/v1/subscription/downgrade": {
     /** Cron Job server automatically calls this API to downgrade subscription after expiredDateTime */
     put: operations["downgradeSubscription"];
@@ -365,8 +369,11 @@ export interface components {
       userResponse?: components["schemas"]["BasicUserResponse"];
       /** @enum {string} */
       paidType?: "NO" | "MONTHLY" | "YEARLY";
+      price?: number;
+      /** Format: date-time */
+      createdAt?: string;
       /** @enum {string} */
-      status?: "PENDING" | "SUCCEED";
+      status?: "PENDING" | "SUCCEED" | "REJECT";
     };
     BasicStudySetResponse: {
       /** Format: int32 */
@@ -508,6 +515,22 @@ export interface operations {
       200: {
         content: {
           "*/*": components["schemas"]["UserResponse"];
+        };
+      };
+    };
+  };
+  /** Reject request to upgrade subscription for a specific user (ONLY ADMIN) */
+  rejectUpgradeRequest: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["UpgradeSubscriptionRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["GeneralResponse"];
         };
       };
     };
@@ -721,6 +744,8 @@ export interface operations {
     parameters: {
       query?: {
         status?: "DELETED" | "SUCCEED";
+        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
+        sort?: string[];
       };
     };
     responses: {
@@ -795,7 +820,9 @@ export interface operations {
   getAllUpgradeRequests: {
     parameters: {
       query?: {
-        status?: "PENDING" | "SUCCEED";
+        status?: "PENDING" | "SUCCEED" | "REJECT";
+        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
+        sort?: string[];
       };
     };
     responses: {

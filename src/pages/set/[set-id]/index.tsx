@@ -54,7 +54,7 @@ export default function ViewSetPage() {
   const { data } = useGetStudySetById(parseDec(setId));
 
   return (
-    <Container>
+    <Container mb="2rem">
       <Stack spacing="2rem">
         <Stack>
           <Title order={3}>The books that you may likes</Title>
@@ -121,7 +121,7 @@ export default function ViewSetPage() {
           <LearningMethods className="w-full" />
         </Group>
         <Stack>
-          <Title order={3} className="whitespace-pre-wrap">
+          <Title order={3} className="whitespace-pre-wrap sm:text-center">
             There {data?.questionResponses.length == 1 ? "is only" : "are"}{" "}
             {data?.questionResponses.length} definition
             {data?.questionResponses.length == 1 ? "" : "s"} in this study set

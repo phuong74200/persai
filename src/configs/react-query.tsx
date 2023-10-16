@@ -4,7 +4,6 @@ import { DefaultOptions, MutationCache, QueryCache } from "@tanstack/react-query
 
 import { queryClient } from "@/app";
 import { notification } from "@/configs/notifications";
-import logger from "@/utils/dev-log";
 import generateQueryId from "@/utils/generate-query-id";
 import isInstanceOfResponseError from "@/utils/is-instance-of";
 
@@ -33,14 +32,11 @@ export const queryCache = new QueryCache({
 
 export const mutationCache = new MutationCache({
   onError: (error, vars) => {
-    logger.log("from instance of response error", error);
-
     if (isInstanceOfResponseError(error)) {
       notification.error({
         id: generateQueryId(vars),
         message: error.detail,
       });
-      logger.log("eee");
     }
   },
 });

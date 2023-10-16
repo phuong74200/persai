@@ -25,6 +25,7 @@ export const subscriptionKeys = createQueryKeys("subscription", {
         params: {
           query: {
             status: status,
+            sort: ["createdAt"],
           },
         },
       });

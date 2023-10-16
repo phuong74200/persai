@@ -1,5 +1,6 @@
 import {
   Avatar,
+  clsx,
   createStyles,
   Group,
   Menu,
@@ -40,8 +41,11 @@ export function UserButton({ image, name, email, icon, ...others }: UserButtonPr
   return (
     <Menu position="right-end">
       <Menu.Target>
-        <UnstyledButton className={classes.user} {...others}>
-          <Group>
+        <UnstyledButton
+          className={clsx(classes.user, "justify-center md:flex md:px-0")}
+          {...others}
+        >
+          <Group className="md:w-fit md:gap-0">
             <Avatar src={image} radius="xl" />
 
             <div style={{ flex: 1 }} className="md:hidden">
@@ -53,7 +57,7 @@ export function UserButton({ image, name, email, icon, ...others }: UserButtonPr
               </Text>
             </div>
 
-            {icon || <IconChevronRight size="0.9rem" stroke={1.5} />}
+            {icon || <IconChevronRight size="0.9rem" stroke={1.5} className="md:hidden" />}
           </Group>
         </UnstyledButton>
       </Menu.Target>
