@@ -8,12 +8,12 @@ import {
   Container,
   createStyles,
   Group,
+  Image,
   Overlay,
   Paper,
   Stack,
   Text,
   Title,
-  Tooltip,
   useMantineTheme,
 } from "@mantine/core";
 import { IconBrandGooglePlay } from "@tabler/icons-react";
@@ -25,6 +25,7 @@ import {
   ASSET_FLASHCARD,
   ASSET_HOME_HERO,
   ASSET_INTERACT,
+  ASSET_PERSAI_LOGO_SM,
   ASSET_PERSONALIZE,
 } from "@/assets";
 import FavoriteCard from "@/features/study-sets/components/favorite-card";
@@ -145,11 +146,12 @@ const SampleCard = () => {
 export default function HomePage() {
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
-  const { onRedirect } = useRedirect();
+  const { onRedirect, onRedirectWithState } = useRedirect();
 
   return (
     <Stack spacing={0} mb="4rem" className="z-10">
       <section className="relative h-[100vh] bg-oc-gray-6">
+        <Image src={ASSET_PERSAI_LOGO_SM} className="absolute left-12 top-12 z-50" width="4rem" />
         <motion.div
           initial={{ marginTop: -100, opacity: 0 }}
           animate={{ marginTop: 0, opacity: 0.3 }}
@@ -204,17 +206,16 @@ export default function HomePage() {
             >
               Web
             </Button>
-            <Tooltip label="Comming soon">
-              <Button
-                color="blue"
-                mt="1rem"
-                w="fit-content"
-                size="lg"
-                leftIcon={<IconBrandGooglePlay />}
-              >
-                Android
-              </Button>
-            </Tooltip>
+            <Button
+              color="blue"
+              mt="1rem"
+              w="fit-content"
+              size="lg"
+              leftIcon={<IconBrandGooglePlay />}
+              onClick={onRedirectWithState("/coming-soon")}
+            >
+              Android
+            </Button>
           </Group>
         </Stack>
       </section>
@@ -335,7 +336,7 @@ export default function HomePage() {
           >
             Earn money
           </Title>
-          <Title mb="md" color="dimmed" size="sm">
+          <Title mb="md" color="dimmed" size="sm" className="text-center md:text-left">
             There more users the more money you makes
           </Title>
         </Stack>

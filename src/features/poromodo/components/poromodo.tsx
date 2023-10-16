@@ -70,7 +70,14 @@ export default function Porodomo() {
                 size={20}
                 withBorder
               >
-                {pomodoro.icon}
+                <ActionIcon
+                  size={53}
+                  color={theme.primaryColor}
+                  variant="filled"
+                  className="rounded-[50%]"
+                >
+                  {pomodoro.icon}
+                </ActionIcon>
               </Indicator>
             </Flex>
           }

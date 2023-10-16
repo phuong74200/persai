@@ -475,7 +475,7 @@ export interface operations {
   updateAvatarOfCurrentUser: {
     requestBody?: {
       content: {
-        "application/json": string;
+        "application/json": File;
       };
     };
     responses: {
@@ -678,7 +678,7 @@ export interface operations {
       content: {
         "application/json": {
           /** @description Send image as form data with key "image" */
-          image: string;
+          image: File;
           create_study_set_request: components["schemas"]["CreateStudySetExcel"];
           /** Format: binary */
           excel: string;

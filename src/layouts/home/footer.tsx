@@ -1,6 +1,7 @@
-import { ActionIcon, Container, createStyles, Group, rem } from "@mantine/core";
-import { MantineLogo } from "@mantine/ds";
-import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from "@tabler/icons-react";
+import { ActionIcon, Container, createStyles, Group, Image, rem } from "@mantine/core";
+import { IconBrandFacebook, IconBrandInstagram } from "@tabler/icons-react";
+
+import { ASSET_PERSAI_LOGO_LG } from "@/assets";
 
 const useStyles = createStyles((theme) => ({
   footer: {
@@ -35,19 +36,24 @@ const useStyles = createStyles((theme) => ({
 export function FooterSocial() {
   const { classes } = useStyles();
 
+  const handleFacebookClick = () => {
+    window.open("https://www.facebook.com/PerSAI.Official", "_blank");
+  };
+
+  const handleInstagramClick = () => {
+    window.open("https://instagram.com/persai.learning", "_blank");
+  };
+
   return (
     <div className={classes.footer}>
       <Container className={classes.inner}>
-        <MantineLogo size={28} />
-        <Group spacing={0} className={classes.links} position="right" noWrap>
-          <ActionIcon size="lg">
-            <IconBrandTwitter size="1.05rem" stroke={1.5} />
+        <Image src={ASSET_PERSAI_LOGO_LG} width={140} />
+        <Group className={classes.links} position="right" noWrap>
+          <ActionIcon size="lg" onClick={handleFacebookClick}>
+            <IconBrandFacebook size="1.5rem" stroke={1.5} />
           </ActionIcon>
-          <ActionIcon size="lg">
-            <IconBrandYoutube size="1.05rem" stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg">
-            <IconBrandInstagram size="1.05rem" stroke={1.5} />
+          <ActionIcon size="lg" onClick={handleInstagramClick}>
+            <IconBrandInstagram size="1.5rem" stroke={1.5} />
           </ActionIcon>
         </Group>
       </Container>

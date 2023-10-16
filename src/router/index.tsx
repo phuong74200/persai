@@ -26,6 +26,7 @@ const StudySetPage = lazy(() => import("@/pages/study-set"));
 const SubscriptionPage = lazy(() => import("@/pages/subscription"));
 const SubscriptionRequestPage = lazy(() => import("@/pages/subscription-request"));
 const UserPage = lazy(() => import("@/pages/user"));
+const ComingSoonPage = lazy(() => import("@/pages/coming-soon"));
 
 import AuthRouter from "@/modules/auth-router";
 
@@ -172,6 +173,12 @@ export const BrowserRouter = new AuthRouter(
               ],
             },
           ],
+        },
+
+        {
+          path: "coming-soon",
+          Component: ComingSoonPage,
+          asModal: true,
         },
 
         {

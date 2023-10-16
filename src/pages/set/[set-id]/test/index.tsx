@@ -38,7 +38,7 @@ export default function TestPage() {
   };
 
   return (
-    <Container>
+    <Container mb="2rem">
       <Stack spacing="xl">
         <Title transform="uppercase">{studySet?.studySetName}</Title>
         <Group noWrap align="flex-start" className="md:flex-wrap">

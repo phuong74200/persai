@@ -6,12 +6,16 @@ export enum FLAGS {
   NOTE = "note",
   EXCEL = "excel",
   LOGIN_PARTICLES = "login-particles",
+  NOTIFICATION = "notification",
+  BOOKS = "books",
 }
 
 const featureFlagManager = new FeatureFlagManager({
   [FLAGS.NOTE]: false,
   [FLAGS.EXCEL]: false,
   [FLAGS.LOGIN_PARTICLES]: false,
+  [FLAGS.NOTIFICATION]: false,
+  [FLAGS.BOOKS]: false,
 });
 
 export const FeatureFlagProvider = featureFlagManager.FeatureFlagProvider;

@@ -1,4 +1,4 @@
-import { ActionIcon, MantineColor } from "@mantine/core";
+import { MantineColor } from "@mantine/core";
 import {
   IconPlayerPauseFilled,
   IconPlayerPlayFilled,
@@ -42,26 +42,11 @@ export class LocalPomodoro {
   }
 
   get icon() {
-    if (this.state.type === "pomodoro")
-      return (
-        <ActionIcon size={53} color="green" variant="filled" className="rounded-[50%]">
-          <IconSchool size="1.5rem" />
-        </ActionIcon>
-      );
+    if (this.state.type === "pomodoro") return <IconSchool size="1.5rem" />;
 
-    if (this.state.type === "longBreak")
-      return (
-        <ActionIcon size={53} color="green" variant="filled" className="rounded-[50%]">
-          <IconSchoolOff size="1.5rem" />
-        </ActionIcon>
-      );
+    if (this.state.type === "longBreak") return <IconSchoolOff size="1.5rem" />;
 
-    if (this.state.type === "shortBreak")
-      return (
-        <ActionIcon size={53} color="green" variant="filled" className="rounded-[50%]">
-          <IconSchoolOff size="1.5rem" />
-        </ActionIcon>
-      );
+    if (this.state.type === "shortBreak") return <IconSchoolOff size="1.5rem" />;
 
     return null;
   }

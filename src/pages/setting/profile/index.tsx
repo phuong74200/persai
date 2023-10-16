@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import {
-  Avatar,
   Button,
   Container,
   CopyButton,
@@ -21,6 +20,7 @@ import { sentenceCase } from "change-case";
 import { operations } from "@/api/v1";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import ReferralInput from "@/features/referral/components/referral-input";
+import AvatarSetting from "@/features/user/components/avatar-setting";
 import useUpdateCurrentUser from "@/features/user/hooks/use-update-current-user";
 import useRedirect from "@/hooks/use-redirect";
 import { COLOR_LIST } from "@/utils/get-mantine-color-from-string";
@@ -69,7 +69,7 @@ export default function ProfileSettingPage() {
     <Container size="md" mb="4rem">
       <Stack>
         <Stack align="center">
-          <Avatar radius="50%" size={14 * 10} src={cache?.feImageName} />
+          <AvatarSetting />
           <Title align="center" my="2rem">
             Welcome back {cache?.fullName}
           </Title>

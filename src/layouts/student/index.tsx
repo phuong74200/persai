@@ -1,11 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useMatch } from "react-router-dom";
 import { Affix, AppShell, MantineTheme, Stack } from "@mantine/core";
 
+import ChatBox from "@/features/gpt/components/chat-box";
 import Porodomo from "@/features/poromodo/components/poromodo";
-import useMatchPaths from "@/hooks/use-match-paths";
 import StudentFooter from "@/layouts/student/footer";
 import { StudentHeader } from "@/layouts/student/header";
 import { NavbarNested } from "@/layouts/student/navbar";
+import logger from "@/utils/dev-log";
 
 const styles = (theme: MantineTheme) => ({
   main: {
@@ -17,24 +18,28 @@ const styles = (theme: MantineTheme) => ({
 });
 
 export default function StudentLayout() {
-  const [isFlashCardRoute] = useMatchPaths("/set/:setId/flashcard");
+  const isFlashCardRoute = useMatch("/set/:setId/flashcard");
+
+  logger.log(isFlashCardRoute);
 
   return (
-    <AppShell
-      styles={styles}
-      padding="md"
-      layout="alt"
-      navbar={<NavbarNested />}
-      header={<StudentHeader />}
-      footer={<StudentFooter />}
-    >
+    <>
       <Affix position={{ bottom: "1rem", right: "1rem" }}>
-        <Stack align="center" spacing="0.5rem">
-          {isFlashCardRoute && <Porodomo />}
-          {/* <ChatBox /> */}
+        <Stack align="center" spacing="0.5rem" justify="center">
+          {!!isFlashCardRoute && <Porodomo />}
+          <ChatBox />
         </Stack>
       </Affix>
-      <Outlet />
-    </AppShell>
+      <AppShell
+        styles={styles}
+        padding="md"
+        layout="alt"
+        navbar={<NavbarNested />}
+        header={<StudentHeader />}
+        footer={<StudentFooter />}
+      >
+        <Outlet />
+      </AppShell>
+    </>
   );
 }

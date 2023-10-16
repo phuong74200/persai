@@ -19,6 +19,7 @@ import {
 } from "@mantine/core";
 import { IconAB2, IconBooks, IconCardsFilled } from "@tabler/icons-react";
 
+import { FeatureFlag, FLAGS } from "@/configs/feature-flag";
 import Item from "@/features/study-sets/components/item";
 import LearnOption from "@/features/study-sets/components/learn-option";
 import useGetStudySetById from "@/features/study-sets/hooks/use-get-study-set-by-id";
@@ -56,26 +57,28 @@ export default function ViewSetPage() {
   return (
     <Container mb="2rem">
       <Stack spacing="2rem">
-        <Stack>
-          <Title order={3}>The books that you may likes</Title>
-          <Carousel
-            slideSize={100 / 3 + "%"}
-            breakpoints={[
-              { maxWidth: "md", slideSize: "50%" },
-              { maxWidth: "sm", slideSize: "100%" },
-            ]}
-            height={200}
-            slideGap="md"
-            loop
-            withControls={false}
-          >
-            {books.map((book, index) => (
-              <Carousel.Slide key={index} className="flex items-center justify-center">
-                <Paper className="flex h-full w-full items-center justify-center">{book}</Paper>
-              </Carousel.Slide>
-            ))}
-          </Carousel>
-        </Stack>
+        <FeatureFlag feature={FLAGS.BOOKS}>
+          <Stack>
+            <Title order={3}>The books that you may likes</Title>
+            <Carousel
+              slideSize={100 / 3 + "%"}
+              breakpoints={[
+                { maxWidth: "md", slideSize: "50%" },
+                { maxWidth: "sm", slideSize: "100%" },
+              ]}
+              height={200}
+              slideGap="md"
+              loop
+              withControls={false}
+            >
+              {books.map((book, index) => (
+                <Carousel.Slide key={index} className="flex items-center justify-center">
+                  <Paper className="flex h-full w-full items-center justify-center">{book}</Paper>
+                </Carousel.Slide>
+              ))}
+            </Carousel>
+          </Stack>
+        </FeatureFlag>
 
         <BackgroundImage src={data?.feImageName || ""} w="100%" radius="md">
           <Overlay blur={10} radius="md" p="lg" className="h-fit" pos="relative" zIndex={1}>

@@ -6,7 +6,9 @@ import ASSET_PERSONALIZE from "./png/personalize.jpg";
 import ASSET_AI from "./png/pietro-jeng-n6B49lTx7NM-unsplash.jpg";
 import ASSET_REGISTER_ARTBOARD from "./png/register-artboard.png";
 import ASSET_ANALYSTICS from "./svg/analytics.svg";
+import ASSET_PERSAI_LOGO_LG from "./svg/big_logo.svg";
 import ASSET_404 from "./svg/illustrations.svg";
+import ASSET_PERSAI_LOGO_SM from "./svg/mini_logo.svg";
 import ASSET_REACT_LOGO from "./react.svg";
 
 export {
@@ -20,4 +22,6 @@ export {
   ASSET_PERSONALIZE,
   ASSET_FLASHCARD,
   ASSET_INTERACT,
+  ASSET_PERSAI_LOGO_LG,
+  ASSET_PERSAI_LOGO_SM,
 };

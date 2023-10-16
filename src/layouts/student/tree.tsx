@@ -1,10 +1,4 @@
-import {
-  IconBellFilled,
-  IconCalendar,
-  IconCardsFilled,
-  IconChartHistogram,
-  IconHome,
-} from "@tabler/icons-react";
+import { IconCalendar, IconCardsFilled, IconHome } from "@tabler/icons-react";
 
 import { LinksGroupProps } from "@/layouts/components/link-group";
 
@@ -18,22 +12,22 @@ export const tree: {
       icon: IconCardsFilled,
       link: "/my-collection",
     },
-    {
-      label: "Analytics",
-      icon: IconChartHistogram,
-      link: "",
-    },
+    // {
+    //   label: "Analytics",
+    //   icon: IconChartHistogram,
+    //   link: "",
+    // },
   ],
   App: [
-    {
-      label: "Notification",
-      icon: IconBellFilled,
-      link: "",
-    },
+    // {
+    //   label: "Notification",
+    //   icon: IconBellFilled,
+    //   link: "",
+    // },
     {
       label: "Calendar",
       icon: IconCalendar,
-      link: "",
+      link: "/coming-soon",
     },
   ],
 };
