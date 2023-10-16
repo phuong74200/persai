@@ -58,21 +58,21 @@ export default function PomodoroSettingPage() {
         <SimpleGrid cols={2}>
           <NumberInput
             icon={<IconBooks />}
-            label="Study time"
+            label="Study time (seconds)"
             placeholder="In seconds"
             step={0.1}
             {...form.getInputProps("studyTime")}
           />
           <NumberInput
             icon={<IconCircleChevronUp />}
-            label="Short break"
+            label="Short break (seconds)"
             placeholder="In seconds"
             step={0.1}
             {...form.getInputProps("shortBreak")}
           />
           <NumberInput
             icon={<IconCircleChevronsUp />}
-            label="Long break"
+            label="Long break (seconds)"
             placeholder="In seconds"
             step={0.1}
             {...form.getInputProps("longBreak")}
