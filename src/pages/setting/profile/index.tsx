@@ -110,7 +110,7 @@ export default function ProfileSettingPage() {
                             Invitation code
                           </Text>
                           <ReferralInput />
-                          <Stack onClick={copy} onTouchEnd={copy}>
+                          <Stack onClick={copy} className="cursor-pointer">
                             <Text size="lg" weight="bold">
                               Your referral code
                             </Text>
