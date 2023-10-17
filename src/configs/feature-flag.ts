@@ -13,7 +13,7 @@ export enum FLAGS {
 
 const featureFlagManager = new FeatureFlagManager({
   [FLAGS.NOTE]: false,
-  [FLAGS.EXCEL]: false,
+  [FLAGS.EXCEL]: true,
   [FLAGS.LOGIN_PARTICLES]: false,
   [FLAGS.NOTIFICATION]: false,
   [FLAGS.BOOKS]: false,

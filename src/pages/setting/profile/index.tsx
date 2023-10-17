@@ -113,8 +113,8 @@ export default function ProfileSettingPage() {
                               Your referral code
                             </Text>
                             <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                              <Text color={theme.primaryColor}>
-                                {cache?.referralCode?.referralCode?.toUpperCase() || ""}
+                              <Text color={theme.primaryColor} onCopy={copy}>
+                                {cache?.referralCode?.referralCode || ""}
                               </Text>
                             </Tooltip>
                             <Text size="sm" color="dimmed" italic>
