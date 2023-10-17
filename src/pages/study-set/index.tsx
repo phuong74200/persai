@@ -25,24 +25,14 @@ export default function StudySetPage() {
         ]}
         spacing="lg"
       >
-        {data?.map((set) => <FavoriteCard key={set.id} domain={set} />)}
+        {data?.map((set, index) =>
+          index % 5 === 0 ? (
+            <AdsComponent key={set.id} />
+          ) : (
+            <FavoriteCard key={set.id} domain={set} />
+          ),
+        )}
         <AdsComponent />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1973987809831735"
-          crossOrigin="anonymous"
-        ></script>
-        <ins
-          className="adsbygoogle"
-          style={{
-            display: "block",
-          }}
-          data-ad-format="fluid"
-          data-ad-layout-key="-6t+ed+2i-1n-4w"
-          data-ad-client="ca-pub-1973987809831735"
-          data-ad-slot="1617082468"
-        ></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </SimpleGrid>
     </Container>
   );

@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/react";
 const AdsComponent = () => {
   useEffect(() => {
     try {
-      ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (e) {
       Sentry.captureException(e);
     }
