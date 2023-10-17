@@ -19,6 +19,7 @@ import { sentenceCase } from "change-case";
 
 import { operations } from "@/api/v1";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
+import useLogout from "@/features/auth/hooks/use-logout";
 import ReferralInput from "@/features/referral/components/referral-input";
 import AvatarSetting from "@/features/user/components/avatar-setting";
 import useUpdateCurrentUser from "@/features/user/hooks/use-update-current-user";
@@ -47,6 +48,7 @@ export default function ProfileSettingPage() {
   const theme = useMantineTheme();
   const cache = useGetCurrentUserFromCache();
   const { onRedirect } = useRedirect();
+  const { logout } = useLogout();
 
   const form = useForm<Form>({
     initialValues: {
@@ -142,6 +144,12 @@ export default function ProfileSettingPage() {
                       </Text>
                     )}
                   </Stack>
+                </Paper>
+
+                <Paper p="md">
+                  <Button onClick={logout} fullWidth color="red">
+                    Logout
+                  </Button>
                 </Paper>
               </Stack>
             </Grid.Col>
