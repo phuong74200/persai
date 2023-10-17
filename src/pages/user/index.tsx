@@ -119,7 +119,7 @@ export default function UserPage() {
           noRecordsText="Không có dữ liệu"
           groups={[
             {
-              id: "userInfor",
+              id: "userInformation",
               columns: userGroup,
               style: {
                 textAlign: "center",

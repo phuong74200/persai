@@ -151,7 +151,11 @@ export default function HomePage() {
   return (
     <Stack spacing={0} mb="4rem" className="z-10">
       <section className="relative h-[100vh] bg-oc-gray-6">
-        <Image src={ASSET_PERSAI_LOGO_SM} className="absolute left-12 top-12 z-50" width="4rem" />
+        <Image
+          src={ASSET_PERSAI_LOGO_SM}
+          className="absolute left-12 top-12 z-50 md:left-4 md:top-4"
+          width="4rem"
+        />
         <motion.div
           initial={{ marginTop: -100, opacity: 0 }}
           animate={{ marginTop: 0, opacity: 0.3 }}
