@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { Outlet } from "react-router-dom";
 import { LoadingOverlay, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
@@ -11,6 +12,7 @@ import { FeatureFlagProvider } from "@/configs/feature-flag";
 import { customMantineTheme } from "@/configs/mantine-theme";
 import { defaultOptions, mutationCache, queryCache } from "@/configs/react-query";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
+import Error500 from "@/features/error/components/error-500";
 import { BrowserRouter } from "@/router";
 
 import "./index.scss";
@@ -43,15 +45,17 @@ export function Theme() {
 
 function App() {
   return (
-    <Suspense fallback={<LoadingOverlay visible />}>
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <FeatureFlagProvider>
-          <QueryClientProvider client={queryClient}>
-            <BrowserRouter.RouterProvider />
-          </QueryClientProvider>
-        </FeatureFlagProvider>
-      </GoogleOAuthProvider>
-    </Suspense>
+    <ErrorBoundary fallbackRender={Error500}>
+      <Suspense fallback={<LoadingOverlay visible />}>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <FeatureFlagProvider>
+            <QueryClientProvider client={queryClient}>
+              <BrowserRouter.RouterProvider />
+            </QueryClientProvider>
+          </FeatureFlagProvider>
+        </GoogleOAuthProvider>
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 

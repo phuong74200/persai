@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import * as path from "path";
 import { defineConfig } from "vite";
@@ -28,6 +29,18 @@ export default defineConfig({
         quality: 80,
       },
     }),
+    sentryVitePlugin({
+      org: "phuong-jd",
+      project: "javascript-react",
+    }),
+    sentryVitePlugin({
+      org: "phuong-jd",
+      project: "javascript-react",
+    }),
+    sentryVitePlugin({
+      org: "phuong-jd",
+      project: "javascript-react",
+    }),
   ],
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
@@ -38,5 +51,6 @@ export default defineConfig({
   },
   build: {
     minify: true,
+    sourcemap: true,
   },
 });

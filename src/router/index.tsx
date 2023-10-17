@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import ReactGA from "react-ga4";
 import { Navigate, Outlet } from "react-router-dom";
 
@@ -7,28 +6,29 @@ import useGetCurrentUser from "@/features/auth/hooks/use-get-current-user";
 import Error404 from "@/features/error/components/Error404";
 import { FlashCardContextProvider } from "@/features/study-sets/contexts/flashcard-context";
 
-const StudentLayout = lazy(() => import("@/layouts/student"));
-const AdminLayout = lazy(() => import("@/layouts/admin"));
-const HomeLayout = lazy(() => import("@/layouts/home"));
+const StudentLayout = lazyWithRetries(() => import("@/layouts/student"));
+const AdminLayout = lazyWithRetries(() => import("@/layouts/admin"));
+const HomeLayout = lazyWithRetries(() => import("@/layouts/home"));
 
-const NonLoginSetLayout = lazy(() => import("@/layouts/non-login-set"));
-const HomePage = lazy(() => import("@/pages/home"));
-const LoginPage = lazy(() => import("@/pages/login"));
-const CreateSetPage = lazy(() => import("@/pages/create"));
+const NonLoginSetLayout = lazyWithRetries(() => import("@/layouts/non-login-set"));
+const HomePage = lazyWithRetries(() => import("@/pages/home"));
+const LoginPage = lazyWithRetries(() => import("@/pages/login"));
+const CreateSetPage = lazyWithRetries(() => import("@/pages/create"));
 
-const MyCollectionPage = lazy(() => import("@/pages/my-collection"));
-const ViewSetPage = lazy(() => import("@/pages/set/[set-id]"));
-const FlashCardPage = lazy(() => import("@/pages/set/[set-id]/flashcard"));
-const TestPage = lazy(() => import("@/pages/set/[set-id]/test"));
-const PomodoroSettingPage = lazy(() => import("@/pages/setting/pomodoro"));
-const ProfileSettingPage = lazy(() => import("@/pages/setting/profile"));
-const StudySetPage = lazy(() => import("@/pages/study-set"));
-const SubscriptionPage = lazy(() => import("@/pages/subscription"));
-const SubscriptionRequestPage = lazy(() => import("@/pages/subscription-request"));
-const UserPage = lazy(() => import("@/pages/user"));
-const ComingSoonPage = lazy(() => import("@/pages/coming-soon"));
+const MyCollectionPage = lazyWithRetries(() => import("@/pages/my-collection"));
+const ViewSetPage = lazyWithRetries(() => import("@/pages/set/[set-id]"));
+const FlashCardPage = lazyWithRetries(() => import("@/pages/set/[set-id]/flashcard"));
+const TestPage = lazyWithRetries(() => import("@/pages/set/[set-id]/test"));
+const PomodoroSettingPage = lazyWithRetries(() => import("@/pages/setting/pomodoro"));
+const ProfileSettingPage = lazyWithRetries(() => import("@/pages/setting/profile"));
+const StudySetPage = lazyWithRetries(() => import("@/pages/study-set"));
+const SubscriptionPage = lazyWithRetries(() => import("@/pages/subscription"));
+const SubscriptionRequestPage = lazyWithRetries(() => import("@/pages/subscription-request"));
+const UserPage = lazyWithRetries(() => import("@/pages/user"));
 
 import AuthRouter from "@/modules/auth-router";
+import ComingSoonPage from "@/pages/coming-soon";
+import { lazyWithRetries } from "@/utils/lazy-with-retries";
 
 export const BrowserRouter = new AuthRouter(
   [
@@ -176,7 +176,7 @@ export const BrowserRouter = new AuthRouter(
         },
 
         {
-          path: "coming-soon",
+          path: "/coming-soon",
           Component: ComingSoonPage,
           asModal: true,
         },

@@ -24,11 +24,16 @@ export default function useReferral() {
     },
 
     onSettled(_, error, variables) {
-      ReactGA.event({
-        category: "use_referral",
-        action: error ? "error" : "success",
-        label: variables,
-      });
+      ReactGA.event(
+        {
+          category: "referral",
+          action: "referral",
+        },
+        {
+          label: variables,
+          error: error,
+        },
+      );
     },
 
     onSuccess() {

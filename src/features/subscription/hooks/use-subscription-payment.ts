@@ -30,11 +30,16 @@ export default function useSubscriptionPayment(
       try {
         const pType = new URL(data?.response.url || "").searchParams.get("paidType");
 
-        ReactGA.event({
-          category: "use_referral",
-          action: error ? "error" : "success",
-          label: pType || undefined,
-        });
+        ReactGA.event(
+          {
+            category: "subscription",
+            action: "subscription",
+          },
+          {
+            type: pType || undefined,
+            error: error,
+          },
+        );
       } catch (e) {
         logger.error(e);
       }

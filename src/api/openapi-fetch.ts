@@ -65,6 +65,7 @@ export const client = new Proxy(baseClient, {
         return window.fetch(input, init);
       },
     });
+
     return newClient[key];
   },
 });
