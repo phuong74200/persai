@@ -115,7 +115,7 @@ export default function ProfileSettingPage() {
                               Your referral code
                             </Text>
                             <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                              <Text color={theme.primaryColor} onCopy={copy}>
+                              <Text color={theme.primaryColor} onCopy={copy} className="w-fit">
                                 {cache?.referralCode?.referralCode || ""}
                               </Text>
                             </Tooltip>
