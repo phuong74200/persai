@@ -1,6 +1,7 @@
 import { Container, Group, SimpleGrid, ThemeIcon, Title } from "@mantine/core";
 import { IconLayersIntersect } from "@tabler/icons-react";
 
+import AdsComponent from "@/features/study-sets/components/ad";
 import FavoriteCard from "@/features/study-sets/components/favorite-card";
 import useGetAllStudySet from "@/features/study-sets/hooks/use-get-all-study-set";
 
@@ -25,6 +26,7 @@ export default function StudySetPage() {
         spacing="lg"
       >
         {data?.map((set) => <FavoriteCard key={set.id} domain={set} />)}
+        <AdsComponent />
       </SimpleGrid>
     </Container>
   );

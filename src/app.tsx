@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { ColorRing } from "react-loader-spinner";
 import { Outlet } from "react-router-dom";
 import { LoadingOverlay, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
@@ -46,7 +47,24 @@ export function Theme() {
 function App() {
   return (
     <ErrorBoundary fallbackRender={Error500}>
-      <Suspense fallback={<LoadingOverlay visible />}>
+      <Suspense
+        fallback={
+          <LoadingOverlay
+            visible
+            loader={
+              <ColorRing
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+              />
+            }
+          />
+        }
+      >
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
           <FeatureFlagProvider>
             <QueryClientProvider client={queryClient}>

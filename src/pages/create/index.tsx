@@ -42,7 +42,7 @@ export default function CreateSetPage() {
     <Container>
       <form onSubmit={form.handleSubmit(submit)}>
         <Stack spacing="2rem">
-          <Group position="apart" align="start">
+          <Group position="apart">
             <Group className="sm:w-full">
               <SetImage form={form} />
               <Stack className="sm:w-full">

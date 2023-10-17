@@ -28,8 +28,8 @@ export default function SetImage({ form }: Props) {
               </ThemeIcon>
             }
             withPlaceholder
-            width="4.875rem"
-            height="4.875rem"
+            width="8.875rem"
+            height="8.875rem"
             fit="cover"
             src={base64}
             className="cursor-pointer sm:!h-[8rem] sm:!w-full"
