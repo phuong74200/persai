@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { AppShell, MantineTheme } from "@mantine/core";
 
+import AdminFooter from "@/layouts/admin/footer";
 import { NavbarNested } from "@/layouts/admin/navbar";
 import { StudentHeader } from "@/layouts/student/header";
 
@@ -19,6 +20,7 @@ export default function AdminLayout() {
       layout="alt"
       navbar={<NavbarNested />}
       header={<StudentHeader />}
+      footer={<AdminFooter />}
     >
       <Outlet />
     </AppShell>

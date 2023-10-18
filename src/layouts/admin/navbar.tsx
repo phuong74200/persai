@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import { createStyles, Navbar, rem, Text } from "@mantine/core";
-import { IconUsersGroup } from "@tabler/icons-react";
+import { clsx, createStyles, Navbar, rem, Text } from "@mantine/core";
+import { IconPremiumRights, IconUsersGroup } from "@tabler/icons-react";
 
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import { UserButton } from "@/features/user/components/user-button";
@@ -11,7 +11,7 @@ const mockdata: {
 } = {
   Management: [
     { label: "User", icon: IconUsersGroup, link: "/user" },
-    { label: "Subscription", icon: IconUsersGroup, link: "/subscription-request" },
+    { label: "Subscription", icon: IconPremiumRights, link: "/subscription-request" },
   ],
 };
 
@@ -57,11 +57,18 @@ export const NavbarNested = () => {
   const cache = useGetCurrentUserFromCache();
 
   return (
-    <Navbar height={800} width={{ sm: 300 }} px="md" className={classes.navbar}>
+    <Navbar
+      hiddenBreakpoint="xs"
+      hidden={true}
+      width={{ xs: 14 * 1.875 + 14 * 2.875 - 3, sm: 14 * 1.875 + 14 * 2.875 - 3, md: 300 }}
+      height={800}
+      px="md"
+      className={classes.navbar}
+    >
       <Navbar.Section className={classes.links}>
         {Object.entries(mockdata).map(([key, value]) => (
           <Fragment key={key}>
-            <Text className={classes.groupLabel} h="51.5px" py="1rem">
+            <Text className={clsx(classes.groupLabel, "md:hidden")} h="51.5px" py="1rem">
               {key}
             </Text>
             {value.map((item) => (

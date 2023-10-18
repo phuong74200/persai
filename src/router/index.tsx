@@ -94,6 +94,23 @@ export const BrowserRouter = new AuthRouter(
         },
 
         {
+          path: "setting",
+          permissons: ["ADMIN"],
+          children: [
+            {
+              path: "",
+              Component: AdminLayout,
+              children: [
+                {
+                  path: "profile",
+                  Component: ProfileSettingPage,
+                },
+              ],
+            },
+          ],
+        },
+
+        {
           path: "",
           Component: StudentLayout,
           permissons: ["STUDENT"],
