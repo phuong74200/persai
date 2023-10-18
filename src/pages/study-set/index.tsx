@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Container, Group, SimpleGrid, ThemeIcon, Title } from "@mantine/core";
 import { IconLayersIntersect } from "@tabler/icons-react";
 
@@ -27,7 +28,10 @@ export default function StudySetPage() {
       >
         {data?.map((set, index) =>
           index % 5 === 0 ? (
-            <AdsComponent key={set.id} />
+            <Fragment key={set.id}>
+              <AdsComponent />
+              <FavoriteCard domain={set} />
+            </Fragment>
           ) : (
             <FavoriteCard key={set.id} domain={set} />
           ),
