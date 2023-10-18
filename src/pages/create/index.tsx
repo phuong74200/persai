@@ -39,7 +39,7 @@ export default function CreateSetPage() {
   const { submit, isLoading } = useCreateStudySet();
 
   return (
-    <Container>
+    <Container mb="2rem">
       <form onSubmit={form.handleSubmit(submit)}>
         <Stack spacing="2rem">
           <Group position="apart">

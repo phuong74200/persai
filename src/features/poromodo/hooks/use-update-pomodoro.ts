@@ -29,10 +29,10 @@ export default function useUpdatePomodoro() {
   const submit = (form: UseFormReturnType<UpdatePomodoroRequest>) => {
     mutation.mutate({
       status: form.values.status || "ON",
-      longBreak: (form.values.longBreak || 0) * 1000,
+      longBreak: form.values.longBreak || 0,
       longBreakInterval: form.values.longBreakInterval || 0,
-      shortBreak: (form.values.shortBreak || 0) * 1000,
-      studyTime: (form.values.studyTime || 0) * 1000,
+      shortBreak: form.values.shortBreak || 0,
+      studyTime: form.values.studyTime || 0,
     });
   };
 

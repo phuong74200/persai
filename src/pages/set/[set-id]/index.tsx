@@ -99,11 +99,13 @@ export default function ViewSetPage() {
                     </HoverCard.Target>
                     <HoverCard.Dropdown>
                       <Group>
-                        <Avatar size={37.95}>BH</Avatar>
+                        <Avatar src={data?.creator?.userAvatar} size={37.95}>
+                          BH
+                        </Avatar>
                         <div>
                           <Text>{data?.creator?.userFullName}</Text>
                           <Text size="xs" color="dimmed">
-                            user@email.com
+                            {data?.creator?.userEmail}
                           </Text>
                         </div>
                       </Group>

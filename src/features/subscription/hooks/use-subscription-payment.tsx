@@ -1,5 +1,7 @@
 import ReactGA from "react-ga4";
 import { useNavigate } from "react-router-dom";
+import { Text } from "@mantine/core";
+import { modals } from "@mantine/modals";
 import { useQuery } from "@tanstack/react-query";
 
 import { queryKeys } from "@/api";
@@ -20,7 +22,19 @@ export default function useSubscriptionPayment(
       try {
         const pType = new URL(data.response.url).searchParams.get("paidType");
 
-        if (pType === paidType) window.open(data.data?.message, "_blank")?.focus();
+        if (pType === paidType) {
+          window.open(data.data?.message, "_blank")?.focus();
+
+          modals.open({
+            title: "Payment",
+            children: (
+              <Text>
+                After you have completed the payment, it may take a while for the system to update
+                your subscription
+              </Text>
+            ),
+          });
+        }
       } catch (e) {
         logger.error(e);
       }

@@ -3,6 +3,7 @@ import {
   Flex,
   Group,
   Indicator,
+  Paper,
   Popover,
   RingProgress,
   Stack,
@@ -70,14 +71,16 @@ export default function Porodomo() {
                 size={20}
                 withBorder
               >
-                <ActionIcon
-                  size={53}
-                  color={theme.primaryColor}
-                  variant="filled"
-                  className="rounded-[50%]"
-                >
-                  {pomodoro.icon}
-                </ActionIcon>
+                <Paper radius="50%" shadow="md">
+                  <ActionIcon
+                    size={53}
+                    color={theme.primaryColor}
+                    variant="filled"
+                    className="rounded-[50%]"
+                  >
+                    {pomodoro.icon}
+                  </ActionIcon>
+                </Paper>
               </Indicator>
             </Flex>
           }

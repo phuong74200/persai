@@ -46,34 +46,34 @@ export function Theme() {
 
 function App() {
   return (
-    <ErrorBoundary fallbackRender={Error500}>
-      <Suspense
-        fallback={
-          <LoadingOverlay
-            visible
-            loader={
-              <ColorRing
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="blocks-loading"
-                wrapperStyle={{}}
-                wrapperClass="blocks-wrapper"
-                colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-              />
-            }
-          />
-        }
-      >
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <FeatureFlagProvider>
-            <QueryClientProvider client={queryClient}>
+    <Suspense
+      fallback={
+        <LoadingOverlay
+          visible
+          loader={
+            <ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+            />
+          }
+        />
+      }
+    >
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <FeatureFlagProvider>
+          <QueryClientProvider client={queryClient}>
+            <ErrorBoundary fallbackRender={Error500}>
               <BrowserRouter.RouterProvider />
-            </QueryClientProvider>
-          </FeatureFlagProvider>
-        </GoogleOAuthProvider>
-      </Suspense>
-    </ErrorBoundary>
+            </ErrorBoundary>
+          </QueryClientProvider>
+        </FeatureFlagProvider>
+      </GoogleOAuthProvider>
+    </Suspense>
   );
 }
 

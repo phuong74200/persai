@@ -1,6 +1,7 @@
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { ActionIcon, Avatar, Button, Group, Paper, Stack, Textarea } from "@mantine/core";
 import { IconFolderPlus, IconPlus, IconTrashXFilled } from "@tabler/icons-react";
+import { motion } from "framer-motion";
 
 import CreateChoice from "@/features/study-sets/components/create-choices";
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
@@ -23,6 +24,12 @@ export default function CreateQuestion({ form, isLoading }: Props) {
         {
           value: "",
         },
+        {
+          value: "",
+        },
+        {
+          value: "",
+        },
       ],
       answer: 0,
     });
@@ -30,29 +37,42 @@ export default function CreateQuestion({ form, isLoading }: Props) {
   return (
     <Stack spacing="1rem">
       {fields.map((_, index) => (
-        <Paper withBorder p="md" className="relative" key={index}>
-          <Stack>
-            <Group position="apart">
-              <Avatar size="2rem" variant="light">
-                {index + 1}
-              </Avatar>
-              <Group>
-                <ActionIcon size="2rem" color="red" variant="light" onClick={() => remove(index)}>
-                  <IconTrashXFilled size="1.125rem" />
-                </ActionIcon>
+        <motion.div
+          key={index}
+          initial={{
+            opacity: 0,
+            y: 100,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+        >
+          <Paper p="md" shadow="sm" className="relative">
+            <Stack>
+              <Group position="apart">
+                <Avatar size="2rem" variant="light">
+                  {index + 1}
+                </Avatar>
+                <Group>
+                  <ActionIcon size="2rem" color="red" variant="light" onClick={() => remove(index)}>
+                    <IconTrashXFilled size="1.125rem" />
+                  </ActionIcon>
+                </Group>
               </Group>
-            </Group>
-            <Textarea
-              className="w-full [word-break:break-word] [&_textarea]:font-bold"
-              minRows={1}
-              autosize
-              placeholder="Question"
-              size="lg"
-              {...form.register(`studySets.${index}.question`)}
-            />
-            <CreateChoice nestIndex={index} form={form} />
-          </Stack>
-        </Paper>
+              <Textarea
+                className="w-full [word-break:break-word] [&_textarea]:font-bold"
+                minRows={1}
+                autosize
+                placeholder="Question"
+                size="lg"
+                variant="filled"
+                {...form.register(`studySets.${index}.question`)}
+              />
+              <CreateChoice nestIndex={index} form={form} />
+            </Stack>
+          </Paper>
+        </motion.div>
       ))}
       <Group noWrap mt="1rem" className="md:flex-col">
         <Button
@@ -60,6 +80,7 @@ export default function CreateQuestion({ form, isLoading }: Props) {
           fullWidth
           leftIcon={<IconPlus size="1rem" />}
           onClick={handleAppend}
+          className="h-[38px]"
         >
           Add new question
         </Button>
@@ -67,7 +88,7 @@ export default function CreateQuestion({ form, isLoading }: Props) {
           leftIcon={<IconFolderPlus size="1rem" />}
           type="submit"
           variant="filled"
-          className="min-w-[199.94px] md:w-full"
+          className="h-[38px] min-w-[199.94px] md:w-full"
           loading={isLoading}
         >
           Create study set

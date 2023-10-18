@@ -1,5 +1,6 @@
 import { UseFormReturn } from "react-hook-form";
 import { FileButton, Image, ThemeIcon, Tooltip } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { IconPhoto } from "@tabler/icons-react";
 
 import useBase64 from "@/features/study-sets/hooks/use-base64";
@@ -14,6 +15,15 @@ export default function SetImage({ form }: Props) {
   const base64 = useBase64(image);
 
   const setFile = (file: File) => {
+    if (file.size > 1000000) {
+      notifications.show({
+        title: "Image size is too big",
+        color: "red",
+        autoClose: 5000,
+        message: "Maximum image size is 1mb",
+      });
+      return;
+    }
     form.setValue("image", file);
   };
 

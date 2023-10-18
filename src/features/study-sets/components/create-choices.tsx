@@ -1,6 +1,14 @@
 import { useFieldArray, UseFormReturn } from "react-hook-form";
-import { Button, Group, HoverCard, SimpleGrid, Textarea, useMantineTheme } from "@mantine/core";
-import { IconCheck, IconDotsCircleHorizontal, IconTrashXFilled } from "@tabler/icons-react";
+import {
+  ActionIcon,
+  Button,
+  Group,
+  HoverCard,
+  SimpleGrid,
+  Textarea,
+  useMantineTheme,
+} from "@mantine/core";
+import { IconCheck, IconPlus, IconTrashXFilled } from "@tabler/icons-react";
 
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
 import { StudySet } from "@/types/study-set";
@@ -27,7 +35,7 @@ export default function CreateChoice({ nestIndex, form }: Props) {
 
   const colors = theme.fn.variant({
     color: "green",
-    variant: "light",
+    variant: "filled",
   });
 
   return (
@@ -42,23 +50,47 @@ export default function CreateChoice({ nestIndex, form }: Props) {
           position="top-end"
         >
           <HoverCard.Target>
-            <Textarea
-              placeholder={`Choice ${k + 1}`}
-              className="w-full [word-break:break-word]"
-              minRows={1}
-              autosize
-              styles={{
-                input: {
-                  background: answer === k ? colors.background : undefined,
-                  border: answer === k ? colors.border : undefined,
-                  color: answer === k ? colors.color : undefined,
-                },
-              }}
-              color="red"
-              {...form.register(`studySets.${nestIndex}.choices.${k}.value`)}
-            />
+            <Group noWrap>
+              <ActionIcon
+                onClick={handleMarkAsAnswer(k)}
+                color="green"
+                size="37px"
+                variant="filled"
+                className="hidden md:flex"
+              >
+                <IconCheck size="1.125rem" />
+              </ActionIcon>
+              <Textarea
+                placeholder={`Choice ${k + 1}`}
+                className="w-full [word-break:break-word]"
+                minRows={1}
+                autosize
+                variant="filled"
+                styles={{
+                  input: {
+                    background: answer === k ? colors.background : undefined,
+                    borderColor: answer === k ? colors.border : undefined,
+                    color: answer === k ? colors.color : undefined,
+                    "::placeholder": {
+                      color: answer === k ? colors.color : undefined,
+                    },
+                  },
+                }}
+                color="red"
+                {...form.register(`studySets.${nestIndex}.choices.${k}.value`)}
+              />
+              <ActionIcon
+                onClick={() => remove(k)}
+                color="red"
+                size="37px"
+                variant="filled"
+                className="hidden md:flex"
+              >
+                <IconTrashXFilled size="1.125rem" />
+              </ActionIcon>
+            </Group>
           </HoverCard.Target>
-          <HoverCard.Dropdown p={0} className="border-none shadow-none">
+          <HoverCard.Dropdown p={0} className="border-none shadow-none md:hidden">
             <Group spacing="xs">
               <Button
                 onClick={handleMarkAsAnswer(k)}
@@ -81,9 +113,9 @@ export default function CreateChoice({ nestIndex, form }: Props) {
         </HoverCard>
       ))}
       <Button
-        variant="outline"
+        variant="subtle"
         className="h-[38px] self-end border-dashed"
-        leftIcon={<IconDotsCircleHorizontal size="1rem" />}
+        leftIcon={<IconPlus size="1rem" />}
         onClick={handleAppend}
       >
         Add new choice

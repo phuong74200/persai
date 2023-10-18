@@ -1,4 +1,4 @@
-import { Outlet, useMatch } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Affix, AppShell, MantineTheme, Stack } from "@mantine/core";
 
 import ChatBox from "@/features/gpt/components/chat-box";
@@ -17,13 +17,11 @@ const styles = (theme: MantineTheme) => ({
 });
 
 export default function StudentLayout() {
-  const isFlashCardRoute = useMatch("/set/:setId/flashcard");
-
   return (
     <>
       <Affix position={{ bottom: "1rem", right: "1rem" }}>
         <Stack align="center" spacing="0.5rem" justify="center">
-          {!!isFlashCardRoute && <Porodomo />}
+          <Porodomo />
           <ChatBox />
         </Stack>
       </Affix>

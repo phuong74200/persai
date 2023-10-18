@@ -4,6 +4,10 @@ import * as Sentry from "@sentry/browser";
 
 import { ASSET_404 } from "@/assets";
 
+const reload = () => {
+  window.location.reload();
+};
+
 export default function Error500({ error }: FallbackProps) {
   Sentry.captureException(error);
 
@@ -19,7 +23,7 @@ export default function Error500({ error }: FallbackProps) {
           </Text>
         </Box>
         <Image src={ASSET_404} width={300} />
-        <Button onClick={window.location.reload}>Go to home</Button>
+        <Button onClick={reload}>Reload page</Button>
       </Stack>
     </Container>
   );
