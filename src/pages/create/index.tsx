@@ -25,6 +25,7 @@ const defaultValues: Partial<CreateSetFormType> = {
         },
       ],
       answer: 0,
+      gptGenerated: false,
     },
   ],
   studySetName: "New study set",

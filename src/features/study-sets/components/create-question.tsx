@@ -32,6 +32,7 @@ export default function CreateQuestion({ form, isLoading }: Props) {
         },
       ],
       answer: 0,
+      gptGenerated: false,
     });
 
   return (

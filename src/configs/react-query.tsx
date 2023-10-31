@@ -9,7 +9,7 @@ import generateQueryId from "@/utils/generate-query-id";
 import isInstanceOfResponseError from "@/utils/is-instance-of";
 
 export const queryCache = new QueryCache({
-  onError: (error) => {
+  onError: (error, query) => {
     Sentry.captureException(error);
 
     // 🎉 only show error toasts if we already have data in the cache

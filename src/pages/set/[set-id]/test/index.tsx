@@ -6,6 +6,7 @@ import {
   Container,
   Group,
   Paper,
+  ScrollArea,
   SimpleGrid,
   Stack,
   Text,
@@ -70,18 +71,20 @@ export default function TestPage() {
               <Text size="sm" weight={500}>
                 Total questions:
               </Text>
-              <SimpleGrid cols={6}>
-                {Object.entries(form.values).map(([key, value], index) => (
-                  <Avatar
-                    color={value ? "green" : "red"}
-                    className="w-full cursor-pointer"
-                    key={key}
-                    onClick={handleFocus(index)}
-                  >
-                    {index + 1}
-                  </Avatar>
-                ))}
-              </SimpleGrid>
+              <ScrollArea h={400}>
+                <SimpleGrid cols={6}>
+                  {Object.entries(form.values).map(([key, value], index) => (
+                    <Avatar
+                      color={value ? "green" : "red"}
+                      className="w-full cursor-pointer"
+                      key={key}
+                      onClick={handleFocus(index)}
+                    >
+                      {index + 1}
+                    </Avatar>
+                  ))}
+                </SimpleGrid>
+              </ScrollArea>
               <Text size="sm" weight={500}>
                 Your scrore
               </Text>
