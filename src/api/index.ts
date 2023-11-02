@@ -1,5 +1,6 @@
 import { mergeQueryKeys } from "@lukemorales/query-key-factory";
 
+import { gptKeys } from "@/api/gpt";
 import { loginKeys } from "@/api/login";
 import { pomodoroKeys } from "@/api/pomodoro";
 import { referralKeys } from "@/api/referral";
@@ -14,4 +15,5 @@ export const queryKeys = mergeQueryKeys(
   subscriptionKeys,
   pomodoroKeys,
   referralKeys,
+  gptKeys,
 );

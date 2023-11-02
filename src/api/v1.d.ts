@@ -40,6 +40,10 @@ export interface paths {
     /** Cron Job server automatically calls this API to downgrade subscription after expiredDateTime */
     put: operations["downgradeSubscription"];
   };
+  "/api/v1/subscription/downgrade/reschedule": {
+    /** Reschedule downgrade subscription for PRO users */
+    put: operations["rescheduleDowngradeSubscription"];
+  };
   "/api/v1/study-set/{study_set_id}": {
     /** Get study set by ID */
     get: operations["getStudySetById"];
@@ -66,9 +70,19 @@ export interface paths {
     /** Create new study set from excel format */
     post: operations["createStudySetFromExcel"];
   };
+  "/api/v1/study-set/excel/parse-questions": {
+    /** Parse questions from excel file */
+    post: operations["parseQuestionsSetFromExcel"];
+  };
   "/api/v1/login/google": {
     /** API for logging in via Google */
     post: operations["loginUserViaGoogle"];
+  };
+  "/api/v1/gpt": {
+    /** Get all GPT chat */
+    get: operations["getAllGptChat"];
+    /** Submit question to ask GPT for answer */
+    post: operations["callChatGpt"];
   };
   "/api/v1/welcome": {
     /** API for testing welcome users from server */
@@ -78,12 +92,16 @@ export interface paths {
     get: operations["redirect"];
   };
   "/api/v1/user": {
-    /** Get all users - students (only for ADMIN) */
+    /** Get all users (only for ADMIN) */
     get: operations["getAllUsers"];
   };
   "/api/v1/user/{user_id}": {
     /** Get user by user ID (only for ADMIN) */
     get: operations["getUserById"];
+  };
+  "/api/v1/user/used-referral-code": {
+    /** Get all users who have used referral code (only for ADMIN) */
+    get: operations["getAllUsersUsedReferralCode"];
   };
   "/api/v1/subscription": {
     /** Get all subscriptions */
@@ -265,6 +283,9 @@ export interface components {
       /** Format: uuid */
       userId: string;
     };
+    RescheduleDowngradeRequest: {
+      secretKey: string;
+    };
     CreatorResponse: {
       /** Format: uuid */
       userId?: string;
@@ -341,6 +362,19 @@ export interface components {
       accessToken?: string;
       refreshToken?: string;
       userResponse?: components["schemas"]["UserResponse"];
+    };
+    GptMessageRequest: {
+      content: string;
+    };
+    GptMessageResponse: {
+      /** Format: uuid */
+      id?: string;
+      /** Format: uuid */
+      userId?: string;
+      content?: string;
+      gptAnswer?: string;
+      /** Format: date-time */
+      createdAt?: string;
     };
     SubscriptionResponse: {
       id?: string;
@@ -475,7 +509,7 @@ export interface operations {
   updateAvatarOfCurrentUser: {
     requestBody?: {
       content: {
-        "application/json": File;
+        "application/json": string;
       };
     };
     responses: {
@@ -547,6 +581,22 @@ export interface operations {
       200: {
         content: {
           "*/*": boolean;
+        };
+      };
+    };
+  };
+  /** Reschedule downgrade subscription for PRO users */
+  rescheduleDowngradeSubscription: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RescheduleDowngradeRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": string;
         };
       };
     };
@@ -694,6 +744,25 @@ export interface operations {
       };
     };
   };
+  /** Parse questions from excel file */
+  parseQuestionsSetFromExcel: {
+    requestBody?: {
+      content: {
+        "application/json": {
+          /** Format: binary */
+          excel: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["CreateQuestionRequest"][];
+        };
+      };
+    };
+  };
   /** API for logging in via Google */
   loginUserViaGoogle: {
     requestBody: {
@@ -706,6 +775,33 @@ export interface operations {
       200: {
         content: {
           "*/*": components["schemas"]["LoginResponse"];
+        };
+      };
+    };
+  };
+  /** Get all GPT chat */
+  getAllGptChat: {
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["GptMessageResponse"][];
+        };
+      };
+    };
+  };
+  /** Submit question to ask GPT for answer */
+  callChatGpt: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["GptMessageRequest"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["GptMessageResponse"];
         };
       };
     };
@@ -739,7 +835,7 @@ export interface operations {
       };
     };
   };
-  /** Get all users - students (only for ADMIN) */
+  /** Get all users (only for ADMIN) */
   getAllUsers: {
     parameters: {
       query?: {
@@ -769,6 +865,24 @@ export interface operations {
       200: {
         content: {
           "*/*": components["schemas"]["UserResponse"];
+        };
+      };
+    };
+  };
+  /** Get all users who have used referral code (only for ADMIN) */
+  getAllUsersUsedReferralCode: {
+    parameters: {
+      query?: {
+        status?: "DELETED" | "SUCCEED";
+        /** @description Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported. */
+        sort?: string[];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["UserResponse"][];
         };
       };
     };
@@ -891,7 +1005,7 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "*/*": string[];
+          "*/*": string;
         };
       };
     };

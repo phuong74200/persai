@@ -13,12 +13,12 @@ export enum FLAGS {
 }
 
 const featureFlagManager = new FeatureFlagManager({
-  [FLAGS.NOTE]: false,
+  [FLAGS.NOTE]: true,
   [FLAGS.EXCEL]: true,
   [FLAGS.LOGIN_PARTICLES]: false,
   [FLAGS.NOTIFICATION]: false,
   [FLAGS.BOOKS]: false,
-  [FLAGS.CHAT_GPT]: false,
+  [FLAGS.CHAT_GPT]: true,
   [FLAGS.ADVERTISEMENT]: false,
 });
 

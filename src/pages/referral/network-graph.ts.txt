@@ -1,0 +1,69 @@
+import { useEffect, useState } from "react";
+import { ForceGraph2D } from "react-force-graph";
+
+import { ASSET_404, ASSET_AI } from "@/assets";
+
+const ReferralPage = () => {
+  const [image, setImage] = useState<HTMLImageElement[]>([]);
+
+  useEffect(() => {
+    const nodeImages = [ASSET_AI, ASSET_404];
+    const images = nodeImages.map((image) => {
+      const img = new Image();
+      img.src = image;
+      return img;
+    });
+
+    setImage(images);
+  }, []);
+
+  const imgs = [
+    "cat.jpg",
+    "dog.jpg",
+    "eagle.jpg",
+    "elephant.jpg",
+    "grasshopper.jpg",
+    "octopus.jpg",
+    "owl.jpg",
+    "panda.jpg",
+    "squirrel.jpg",
+    "tiger.jpg",
+    "whale.jpg",
+  ];
+
+  // Random connected graph
+  const gData = {
+    nodes: imgs.map((img, id) => ({ id, img })),
+    links: [...Array(imgs.length).keys()]
+      .filter((id) => id)
+      .map((id) => ({
+        source: id,
+        target: Math.round(Math.random() * (id - 1)),
+      })),
+  };
+
+  return (
+    <ForceGraph2D
+      graphData={gData}
+      nodeCanvasObject={(node, ctx, globalScale) => {
+        if (image[0] && node.x && node.y) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 6, 0, Math.PI * 2, true);
+          ctx.closePath();
+          ctx.clip();
+
+          ctx.drawImage(image[0], node.x - 6, node.y - 6, 12, 12);
+
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, 6, 0, Math.PI * 2, true);
+          ctx.clip();
+          ctx.closePath();
+          ctx.restore();
+        }
+      }}
+    />
+  );
+};
+
+export default ReferralPage;

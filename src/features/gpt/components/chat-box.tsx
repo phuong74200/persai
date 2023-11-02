@@ -1,43 +1,32 @@
+import { Fragment, useEffect, useRef } from "react";
 import { Dna } from "react-loader-spinner";
 import {
   ActionIcon,
   Box,
   Center,
-  Flex,
   Popover,
   ScrollArea,
   Stack,
-  Textarea,
   Title,
   useMantineTheme,
 } from "@mantine/core";
-import { IconMessageChatbot, IconSend } from "@tabler/icons-react";
+import { IconMessageChatbot } from "@tabler/icons-react";
 
-import { FeatureFlag, FLAGS, useFeatureFlag } from "@/configs/feature-flag";
+import { FeatureFlag, FLAGS } from "@/configs/feature-flag";
 import GPTMessage from "@/features/gpt/components/gpt-message";
 import SelfMessage from "@/features/gpt/components/self-message";
-import { MessageDomain } from "@/features/gpt/domains/message";
-import generateFilledArray from "@/utils/generate-filled-array";
-
-export const messages = generateFilledArray(
-  100,
-  (index) =>
-    new MessageDomain({
-      id: index.toString(),
-      content: new Date().toLocaleTimeString(),
-      createdAt: new Date(),
-      sender: {
-        id: index % 2 === 0 ? "me" : "gpt",
-        name: index % 2 === 0 ? "me" : "gpt",
-        avatar:
-          "https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w=",
-      },
-    }),
-);
+import TextBox from "@/features/gpt/components/text-box";
+import useGetChat from "@/features/gpt/hooks/use-get-chat";
 
 export default function ChatBox() {
   const theme = useMantineTheme();
-  const [chatGPT] = useFeatureFlag(FLAGS.CHAT_GPT);
+  const query = useGetChat();
+  const viewport = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (viewport.current)
+      viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: "smooth" });
+  }, [query.dataUpdatedAt]);
 
   return (
     <Popover
@@ -77,30 +66,19 @@ export default function ChatBox() {
                 </Center>
               }
             >
-              <ScrollArea h={400} type="always" offsetScrollbars>
+              <ScrollArea viewportRef={viewport} h={400} type="always" offsetScrollbars>
                 <Stack px="xs" spacing="xl">
-                  {messages.map((message) =>
-                    message.isSentByMe ? (
-                      <SelfMessage key={message.id} domain={message} />
-                    ) : (
-                      <GPTMessage key={message.id} domain={message} />
-                    ),
-                  )}
+                  {query.data?.map((message) => (
+                    <Fragment key={message.id}>
+                      <SelfMessage domain={message} />
+                      <GPTMessage domain={message} />
+                    </Fragment>
+                  ))}
                 </Stack>
               </ScrollArea>
             </FeatureFlag>
           </Box>
-          <Flex p="md" align="center" gap="xs">
-            <Textarea disabled={!chatGPT} maxRows={4} minRows={1} autosize className="w-full" />
-            <ActionIcon
-              disabled={!chatGPT}
-              variant="transparent"
-              size={24}
-              color={theme.primaryColor}
-            >
-              <IconSend size={24} />
-            </ActionIcon>
-          </Flex>
+          <TextBox />
         </Stack>
       </Popover.Dropdown>
     </Popover>

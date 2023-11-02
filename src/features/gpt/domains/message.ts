@@ -1,27 +1,19 @@
+import { components } from "@/api/v1";
 import dayjs from "@/configs/dayjs";
 
-interface Params {
-  id: string;
-  content: string;
-  createdAt: Date;
-  sender: {
-    id: string;
-    name: string;
-    avatar: string;
-  };
-}
-
 export class MessageDomain {
-  id: string;
-  content: string;
-  createdAt: Date;
-  sender: { id: string; name: string; avatar: string };
+  id?: string | undefined;
+  userId?: string | undefined;
+  content?: string | undefined;
+  gptAnswer?: string | undefined;
+  createdAt?: string | undefined;
 
-  constructor(params: Params) {
+  constructor(params: components["schemas"]["GptMessageResponse"]) {
     this.id = params.id;
+    this.userId = params.userId;
     this.content = params.content;
+    this.gptAnswer = params.gptAnswer;
     this.createdAt = params.createdAt;
-    this.sender = params.sender;
   }
 
   get formatChatDate() {
@@ -41,9 +33,5 @@ export class MessageDomain {
       // Otherwise, show the full date
       return sentDateTime.format("MMM D, YYYY h:mm A");
     }
-  }
-
-  get isSentByMe() {
-    return this.sender.id === "me";
   }
 }

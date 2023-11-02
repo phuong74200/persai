@@ -9,7 +9,7 @@ import generateQueryId from "@/utils/generate-query-id";
 import isInstanceOfResponseError from "@/utils/is-instance-of";
 
 export const queryCache = new QueryCache({
-  onError: (error, query) => {
+  onError: (error) => {
     Sentry.captureException(error);
 
     // 🎉 only show error toasts if we already have data in the cache
@@ -46,6 +46,7 @@ export const mutationCache = new MutationCache({
 
     notification.error({
       id: generateQueryId(vars),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       message: (error as any).detail,
     });
   },

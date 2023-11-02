@@ -28,6 +28,7 @@ const UserPage = lazyWithRetries(() => import("@/pages/user"));
 
 import AuthRouter from "@/modules/auth-router";
 import ComingSoonPage from "@/pages/coming-soon";
+import ReferralPage from "@/pages/referral";
 import { lazyWithRetries } from "@/utils/lazy-with-retries";
 
 export const BrowserRouter = new AuthRouter(
@@ -171,6 +172,10 @@ export const BrowserRouter = new AuthRouter(
             {
               path: "subscription-request",
               Component: SubscriptionRequestPage,
+            },
+            {
+              path: "referral",
+              Component: ReferralPage,
             },
           ],
         },

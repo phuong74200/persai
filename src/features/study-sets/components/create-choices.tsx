@@ -28,6 +28,7 @@ export default function CreateChoice({ nestIndex, form }: Props) {
   const theme = useMantineTheme();
 
   const answer = form.watch(`studySets.${nestIndex}.answer`);
+  const gptGenerated = form.watch(`studySets.${nestIndex}.gptGenerated`);
 
   const handleAppend = () => append({} as StudySet);
   const handleMarkAsAnswer = (index: number) => () =>
@@ -90,13 +91,20 @@ export default function CreateChoice({ nestIndex, form }: Props) {
               </ActionIcon>
             </Group>
           </HoverCard.Target>
-          <HoverCard.Dropdown p={0} className="border-none shadow-none md:hidden">
+          <HoverCard.Dropdown
+            style={{
+              background: "transparent",
+            }}
+            p={0}
+            className="border-none shadow-none md:hidden"
+          >
             <Group spacing="xs">
               <Button
                 onClick={handleMarkAsAnswer(k)}
                 leftIcon={<IconCheck size="1.125rem" />}
                 color="green"
                 size="xs"
+                disabled={gptGenerated}
               >
                 Mark as answer
               </Button>

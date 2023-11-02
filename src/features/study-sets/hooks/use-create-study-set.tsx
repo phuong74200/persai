@@ -32,12 +32,26 @@ export default function useCreateStudySet() {
         bodySerializer(body) {
           const formData = new FormData();
 
-          formData.append(
-            "create_study_set_request",
-            new Blob([JSON.stringify(body?.create_study_set_request)], {
-              type: "application/json",
-            }),
-          );
+          if (body?.create_study_set_request.questionsList) {
+            body.create_study_set_request.questionsList =
+              body.create_study_set_request.questionsList.map((quest) => {
+                if (!quest.correctAnswer)
+                  return {
+                    question: quest.question,
+                    answers: quest.answers,
+                    gptGenerated: true,
+                  };
+
+                return quest;
+              });
+
+            formData.append(
+              "create_study_set_request",
+              new Blob([JSON.stringify(body?.create_study_set_request)], {
+                type: "application/json",
+              }),
+            );
+          }
 
           if (body?.image) formData.append("image", body?.image);
 

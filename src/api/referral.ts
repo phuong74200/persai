@@ -20,4 +20,21 @@ export const referralKeys = createQueryKeys("referral", {
       return response;
     },
   }),
+
+  all: () => ({
+    queryKey: ["all"],
+    queryFn: async () => {
+      const response = await client.GET(`/api/v1/user/used-referral-code`, {
+        params: {
+          query: {
+            status: "SUCCEED",
+          },
+        },
+      });
+
+      if (!response.response.ok) throw response.error;
+
+      return response;
+    },
+  }),
 });

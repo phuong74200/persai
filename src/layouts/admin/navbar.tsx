@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { clsx, createStyles, Navbar, rem, Text } from "@mantine/core";
-import { IconPremiumRights, IconUsersGroup } from "@tabler/icons-react";
+import { IconMailCode, IconPremiumRights, IconUsersGroup } from "@tabler/icons-react";
 
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import { UserButton } from "@/features/user/components/user-button";
@@ -12,6 +12,7 @@ const mockdata: {
   Management: [
     { label: "User", icon: IconUsersGroup, link: "/user" },
     { label: "Subscription", icon: IconPremiumRights, link: "/subscription-request" },
+    { label: "Referral", icon: IconMailCode, link: "/referral" },
   ],
 };
 

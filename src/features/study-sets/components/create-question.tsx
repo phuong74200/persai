@@ -1,8 +1,9 @@
 import { useFieldArray, UseFormReturn } from "react-hook-form";
-import { ActionIcon, Avatar, Button, Group, Paper, Stack, Textarea } from "@mantine/core";
+import { ActionIcon, Avatar, Button, Group, Paper, Stack, Textarea, Tooltip } from "@mantine/core";
 import { IconFolderPlus, IconPlus, IconTrashXFilled } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 
+import GPTIcon from "@/assets/svg/gpt-icon";
 import CreateChoice from "@/features/study-sets/components/create-choices";
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
 
@@ -12,7 +13,7 @@ type Props = {
 };
 
 export default function CreateQuestion({ form, isLoading }: Props) {
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control: form.control,
     name: "studySets",
   });
@@ -35,6 +36,32 @@ export default function CreateQuestion({ form, isLoading }: Props) {
       gptGenerated: false,
     });
 
+  const handleGPT = (index: number) => () => {
+    if (fields[index].gptGenerated) {
+      form.setValue(`studySets.${index}`, {
+        ...form.getValues(`studySets.${index}`),
+        gptGenerated: false,
+        answer: 0,
+      });
+      update(index, {
+        ...form.getValues(`studySets.${index}`),
+        gptGenerated: false,
+        answer: 0,
+      });
+    } else {
+      form.setValue(`studySets.${index}`, {
+        ...form.getValues(`studySets.${index}`),
+        gptGenerated: true,
+        answer: undefined,
+      });
+      update(index, {
+        ...form.getValues(`studySets.${index}`),
+        gptGenerated: true,
+        answer: undefined,
+      });
+    }
+  };
+
   return (
     <Stack spacing="1rem">
       {fields.map((_, index) => (
@@ -49,13 +76,29 @@ export default function CreateQuestion({ form, isLoading }: Props) {
             y: 0,
           }}
         >
-          <Paper p="md" shadow="sm" className="relative">
+          <Paper
+            p="md"
+            shadow="sm"
+            className="relative"
+            bg={fields[index].gptGenerated ? "#3DB6A9" : undefined}
+          >
             <Stack>
               <Group position="apart">
                 <Avatar size="2rem" variant="light">
                   {index + 1}
                 </Avatar>
                 <Group>
+                  <Tooltip label="Let GPT answer">
+                    <ActionIcon
+                      onClick={handleGPT(index)}
+                      radius="lg"
+                      className="overflow-hidden"
+                      size="2rem"
+                      variant="light"
+                    >
+                      <GPTIcon />
+                    </ActionIcon>
+                  </Tooltip>
                   <ActionIcon size="2rem" color="red" variant="light" onClick={() => remove(index)}>
                     <IconTrashXFilled size="1.125rem" />
                   </ActionIcon>
