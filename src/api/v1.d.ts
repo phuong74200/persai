@@ -509,7 +509,7 @@ export interface operations {
   updateAvatarOfCurrentUser: {
     requestBody?: {
       content: {
-        "application/json": string;
+        "application/json": File;
       };
     };
     responses: {
