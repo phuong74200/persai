@@ -5,11 +5,12 @@ import {
   Flex,
   Group,
   Input,
+  Select,
   Stack,
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { IconFilter, IconSearch } from "@tabler/icons-react";
 import { DataTable, DataTableColumn } from "mantine-datatable";
 
 import UpgradeAction from "@/features/subscription/components/upgrade-action";
@@ -84,20 +85,45 @@ const columns: DataTableColumn<UpgradeRequest>[] = [
   },
 ];
 
+const filers = [
+  {
+    value: "ALL",
+    label: "All",
+  },
+  {
+    value: "PENDING",
+    label: "Pending",
+  },
+  {
+    value: "SUCCEED",
+    label: "Succeed",
+  },
+  {
+    value: "REJECT",
+    label: "Reject",
+  },
+];
+
 export default function SubscriptionRequestPage() {
   const theme = useMantineTheme();
 
-  const { data, isFetching } = useGetAllUpgradeRequest(undefined);
+  const { data, isFetching, handFilter } = useGetAllUpgradeRequest();
 
   return (
     <Container my="lg" size="xl" className="">
       <Stack className="flex-1">
-        <Flex justify="space-between" align="center">
+        <Flex justify="space-between" align="center" gap="md">
           <Input
             variant="filled"
             icon={<IconSearch size={theme.fontSizes.md} />}
             placeholder="Tìm kiếm"
             w="100%"
+          />
+          <Select
+            defaultValue="ALL"
+            data={filers}
+            onChange={handFilter}
+            icon={<IconFilter size="1rem" />}
           />
         </Flex>
         <DataTable

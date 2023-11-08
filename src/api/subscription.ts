@@ -19,7 +19,7 @@ export const subscriptionKeys = createQueryKeys("subscription", {
   upgradeRequest: (
     status: NonUndefined<operations["getAllUpgradeRequests"]["parameters"]["query"]>["status"],
   ) => ({
-    queryKey: ["upgradeRequest"],
+    queryKey: ["upgradeRequest", status],
     queryFn: async () => {
       const response = await client.GET(`/api/v1/subscription/upgrade-request/list`, {
         params: {

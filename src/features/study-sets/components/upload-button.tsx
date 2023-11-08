@@ -1,4 +1,4 @@
-import { ActionIcon, Button, createStyles, Group, Menu, rem } from "@mantine/core";
+import { ActionIcon, Button, createStyles, FileButton, Group, Menu, rem } from "@mantine/core";
 import { IconChevronDown, IconTemplate, IconUpload } from "@tabler/icons-react";
 
 import { FeatureFlag, FLAGS } from "@/configs/feature-flag";
@@ -19,16 +19,32 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function UploadButton() {
+type Props = {
+  handleUpload: (excel: File) => void;
+};
+
+export function UploadButton({ handleUpload }: Props) {
   const { classes, theme } = useStyles();
   const menuIconColor = theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 6];
 
   return (
     <FeatureFlag feature={FLAGS.EXCEL}>
       <Group noWrap spacing={0}>
-        <Button size="md" className={classes.button} leftIcon={<IconUpload size="1rem" />}>
-          Upload template
-        </Button>
+        <FileButton
+          onChange={handleUpload}
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        >
+          {(props) => (
+            <Button
+              size="md"
+              className={classes.button}
+              leftIcon={<IconUpload size="1rem" />}
+              {...props}
+            >
+              Upload template
+            </Button>
+          )}
+        </FileButton>
         <Menu transitionProps={{ transition: "pop" }} withinPortal>
           <Menu.Target>
             <ActionIcon

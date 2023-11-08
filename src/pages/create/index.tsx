@@ -5,9 +5,11 @@ import TextInputWithCustomError from "@/components/textarea-with-custom-error";
 import { useGetCurrentUserFromCache } from "@/features/auth/hooks/use-get-current-user";
 import CreateQuestion from "@/features/study-sets/components/create-question";
 import SetImage from "@/features/study-sets/components/set-image";
+import { UploadButton } from "@/features/study-sets/components/upload-button";
 import useCreateStudySet from "@/features/study-sets/hooks/use-create-study-set";
+import useParseQuestions from "@/features/study-sets/hooks/use-parse-questions";
 import { CreateSetFormType } from "@/features/study-sets/types/create-set-form-type";
-import { UploadButton } from "@/features/test/components/upload-button";
+import serverStudySetToLocalStudySet from "@/features/study-sets/utils/server-study-set-to-local-stdu-set";
 
 const defaultValues: Partial<CreateSetFormType> = {
   studySets: [
@@ -37,6 +39,10 @@ export default function CreateSetPage() {
     defaultValues,
   });
 
+  const { submit: handleUpload, data: excel } = useParseQuestions(() => {
+    const response = serverStudySetToLocalStudySet(excel?.data || []);
+    form.setValue(`studySets`, [...form.getValues("studySets"), ...response]);
+  });
   const { submit, isLoading } = useCreateStudySet();
 
   return (
@@ -65,7 +71,7 @@ export default function CreateSetPage() {
                 )}
               </Stack>
             </Group>
-            <UploadButton />
+            <UploadButton handleUpload={handleUpload} />
           </Group>
           <CreateQuestion form={form} isLoading={isLoading} />
         </Stack>

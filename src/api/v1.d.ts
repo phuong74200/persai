@@ -750,7 +750,7 @@ export interface operations {
       content: {
         "application/json": {
           /** Format: binary */
-          excel: string;
+          excel: File;
         };
       };
     };
