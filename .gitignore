@@ -24,6 +24,7 @@ dist-ssr
 
 # Environment
 .env
+!.env.example
 
 # Extension generated
 
