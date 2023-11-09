@@ -39,8 +39,8 @@ export default function CreateSetPage() {
     defaultValues,
   });
 
-  const { submit: handleUpload, data: excel } = useParseQuestions(() => {
-    const response = serverStudySetToLocalStudySet(excel?.data || []);
+  const { submit: handleUpload } = useParseQuestions((data) => {
+    const response = serverStudySetToLocalStudySet(data);
     form.setValue(`studySets`, [...form.getValues("studySets"), ...response]);
   });
   const { submit, isLoading } = useCreateStudySet();

@@ -1,8 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { client } from "@/api/openapi-fetch";
+import { components } from "@/api/v1";
 
-export default function useParseQuestions(cb?: () => void) {
+export default function useParseQuestions(
+  cb?: (data: components["schemas"]["CreateQuestionRequest"][]) => void,
+) {
   const mutation = useMutation({
     mutationFn: async ({ excel }: { excel: File }) => {
       const response = await client.POST(`/api/v1/study-set/excel/parse-questions`, {
@@ -24,8 +27,8 @@ export default function useParseQuestions(cb?: () => void) {
       return response;
     },
 
-    onSuccess() {
-      cb && cb();
+    onSuccess(data) {
+      cb?.(data.data || []);
     },
 
     cacheTime: 0,
